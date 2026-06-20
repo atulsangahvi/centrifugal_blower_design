@@ -1,0 +1,9 @@
+streamlit>=1.31
+numpy>=1.26
+pandas>=2.0
+matplotlib>=3.8
+openpyxl>=3.1
+reportlab>=4.0
+ezdxf>=1.1
+# Optional for STEP export; may be heavy on Streamlit Cloud:
+# cadquery>=2.4
