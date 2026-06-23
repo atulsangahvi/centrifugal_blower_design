@@ -1,5 +1,5 @@
 """
-Centrifugal Blower Design & Manufacturing Toolkit v13 - SI Units
+Centrifugal Blower Design & Manufacturing Toolkit v14 - SI Units
 Static pressure input only. Improved auto-optimised geometry for backward curved, forward curved and radial blade blowers.
 
 Preliminary engineering tool only. Validate final design by prototype testing, AMCA/ISO test procedure,
@@ -194,7 +194,13 @@ def design_blower(inp:DutyInput)->DesignResult:
     ns=n_rps*math.sqrt(q)/max(h**0.75,1e-9)
     ds=d2*max(h**0.25,1e-9)/max(math.sqrt(q),1e-9)
     flange_area=q/target_v
-    vol_w=max(1.25*b2, 0.20*d2)
+    # Practical rectangular discharge sizing. Earlier versions kept outlet width
+    # tied too closely to impeller b2, which could create absurdly tall outlets.
+    # Here W is the casing/outlet depth and H is the discharge height. Limit H
+    # to a sensible multiple of impeller diameter and expand W if required.
+    min_w=max(1.25*b2, 0.20*d2)
+    max_h=1.15*d2
+    vol_w=max(min_w, flange_area/max(max_h,1e-9))
     vol_h=flange_area/max(vol_w,1e-9)
     cutoff=0.06*d2
     torque=shaft_kw*1000/max(omega,1e-9)
@@ -208,6 +214,8 @@ def design_blower(inp:DutyInput)->DesignResult:
     if b2d2<0.05: warnings.append('b₂/D₂ is very low. Passage may be narrow and losses/noise may increase.')
     if target_v>16: warnings.append('High outlet flange velocity may increase duct loss and noise.')
     if target_v<7: warnings.append('Low outlet velocity gives large outlet flange and casing.')
+    if vol_h/d2>1.25: warnings.append('Outlet height is large compared with impeller diameter; consider higher outlet velocity, DIDW, or two fans in parallel.')
+    if vol_w/b2>2.5: warnings.append('Outlet/casing width is much larger than impeller width; review casing transition and manufacturability.')
     t=inp.blade_thickness_mm/1000
     disc_area=math.pi*(d2**2-(0.35*d1)**2)/4
     blade_area=(d2-d1)*b2*1.25
@@ -279,12 +287,16 @@ def optimise_geometry(base:DutyInput)->Tuple[DutyInput,DesignResult,pd.DataFrame
                                 width_penalty=max(0,b2r-0.22)*60 + max(0,0.08-b2r)*40
                                 pitch_penalty=abs(pc-1.0)*8
                                 sound_penalty=max(0,res.sound_db_a_1m-78)*1.4
-                                vout_penalty=abs(res.flange_outlet_velocity_ms-10)*0.8
+                                # Prefer practical discharge package: not too slow/bulky, not too fast/noisy.
+                                vout_penalty=abs(res.flange_outlet_velocity_ms-12)*0.5
+                                outlet_h_ratio=res.volute_outlet_height_mm/max(res.impeller_od_mm,1e-9)
+                                outlet_w_ratio=res.volute_outlet_width_mm/max(res.outlet_width_mm,1e-9)
+                                outlet_package_penalty=max(0,outlet_h_ratio-1.15)*20 + max(0,outlet_w_ratio-2.2)*8
                                 type_penalty=0
                                 if bt.startswith('Forward') and base.static_pressure_pa>900: type_penalty+=18
                                 if bt.startswith('Radial') and base.static_pressure_pa<2500: type_penalty+=8
-                                score=res.shaft_power_kw + sound_penalty + res.vibration_score*7 + diameter_penalty + width_penalty + pitch_penalty + vout_penalty + type_penalty + (0 if feasible else 150)
-                                rows.append({"Blade type":bt,"β1":beta1,"β2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
+                                score=res.shaft_power_kw + sound_penalty + res.vibration_score*7 + diameter_penalty + width_penalty + pitch_penalty + vout_penalty + outlet_package_penalty + type_penalty + (0 if feasible else 150)
+                                rows.append({"Blade type":bt,"β1":beta1,"β2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Outlet W mm":res.volute_outlet_width_mm,"Outlet H mm":res.volute_outlet_height_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
                                 if best is None or score<best[0]: best=(score,trial,res)
     df=pd.DataFrame(rows).sort_values(['Feasible','Score'],ascending=[False,True]).head(100)
     return best[1],best[2],df
@@ -457,7 +469,7 @@ def create_excel(inp,res,opt_df=None)->bytes:
 
 def create_pdf(inp,res)->bytes:
     if not HAS_REPORTLAB: return b'Install reportlab to generate PDF reports.'
-    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v13',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
+    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v14',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
     main=[['Parameter','Value'],['Blade type',inp.blade_type],['Airflow',f'{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)'],['Static pressure',f'{res.static_pressure_pa:.0f} Pa'],['Velocity pressure',f'{res.velocity_pressure_pa:.0f} Pa'],['Calculated total pressure',f'{res.total_pressure_pa:.0f} Pa'],['Density',f'{res.density_kgm3:.3f} kg/m³'],['RPM',f'{res.rpm:.0f}'],['Impeller OD D₂',f'{res.impeller_od_mm:.1f} mm'],['Inlet diameter D₁',f'{res.impeller_id_mm:.1f} mm'],['Outlet width b₂',f'{res.outlet_width_mm:.1f} mm'],['β₁ / β₂',f'{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°'],['Blades',str(res.blade_count)],['Flange outlet W × H',f'{res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm'],['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'],['Sound estimate',f'{res.sound_db_a_1m:.1f} dB(A) at 1 m'],['Vibration risk',res.vibration_risk],['Shaft power',f'{res.shaft_power_kw:.2f} kW'],['Selected motor',f'{res.selected_motor_kw:.1f} kW']]
     tbl=Table(main,colWidths=[180,300]); tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.lightgrey),('GRID',(0,0),(-1,-1),.3,colors.grey),('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]))
     story += [tbl,Spacer(1,8),Paragraph('Practicality Checks',styles['Heading2'])]
@@ -491,8 +503,8 @@ if _pw:
     st.sidebar.header('Login'); ent=st.sidebar.text_input('Password',type='password')
     if ent!=_pw: st.warning('Enter password in sidebar to continue.'); st.stop()
 
-st.title('Centrifugal Blower Design & Manufacturing Toolkit v13')
-st.success('v13: wider blade-angle optimisation + practical score for power, sound, vibration and manufacturability')
+st.title('Centrifugal Blower Design & Manufacturing Toolkit v14')
+st.success('v14: optimisation now checks practical outlet flange package + power, sound, vibration and manufacturability')
 with st.sidebar:
     st.header('Duty Inputs')
     airflow=st.number_input('Airflow (m³/h)',min_value=100.0,value=40000.0,step=500.0)
