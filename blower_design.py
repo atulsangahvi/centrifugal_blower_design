@@ -1,6 +1,6 @@
 """
-Centrifugal Blower Design & Manufacturing Toolkit v15 - SI Units
-Static pressure input only. Improved auto-optimised geometry for backward curved, forward curved and radial blade blowers.
+Centrifugal Blower Design & Manufacturing Toolkit v16 - SI Units
+Static pressure input only. Improved auto-optimised geometry for backward curved, forward curved, multi-blade forward/Sirocco cage, and radial straight blade blowers.
 
 Preliminary engineering tool only. Validate final design by prototype testing, AMCA/ISO test procedure,
 dynamic balancing, vibration measurement, CFD/FEA and qualified engineering review before manufacture.
@@ -32,9 +32,44 @@ except Exception:
 STANDARD_MOTORS_KW=[0.18,0.25,0.37,0.55,0.75,1.1,1.5,2.2,3,4,5.5,7.5,11,15,18.5,22,30,37,45,55,75,90,110,132,160,200,250,315]
 
 BLADE_DEFAULTS={
-    "Backward Curved / Backward Inclined":{"beta1":24,"beta2":34,"eta":0.74,"phi":0.18,"psi":0.58,"z":12,"z_range":[8,10,12,14,16],"beta1_range":[20,24,28,32],"beta2_range":[28,34,40,46]},
-    "Forward Curved":{"beta1":28,"beta2":125,"eta":0.58,"phi":0.16,"psi":0.72,"z":36,"z_range":[28,32,36,40,44],"beta1_range":[22,26,30,34],"beta2_range":[115,125,135,145]},
-    "Radial Blade":{"beta1":25,"beta2":90,"eta":0.62,"phi":0.12,"psi":0.62,"z":8,"z_range":[6,8,10,12],"beta1_range":[20,25,30,35],"beta2_range":[88,90,92]},
+    # Efficient general HVAC/cooling tower centrifugal wheel. Non-overloading power curve.
+    "Backward Curved / Backward Inclined":{
+        "family":"backward", "beta1":24,"beta2":34,"eta":0.74,"phi":0.18,"psi":0.58,"z":12,
+        "z_range":[8,10,12,14,16],"beta1_range":[20,24,28,32],"beta2_range":[28,34,40,46],
+        "d1d2_range":[0.45,0.50,0.55,0.60,0.65],"b2d2_range":[0.08,0.10,0.12,0.15,0.18,0.22,0.25],"vout_range":[8,10,12,14],
+        "guide":"Best default for AHU/cooling tower duties where efficiency, noise and non-overloading operation matter."
+    },
+    # Ordinary forward curved wheel, lower pressure and compact duties.
+    "Forward Curved":{
+        "family":"forward", "beta1":28,"beta2":125,"eta":0.58,"phi":0.16,"psi":0.72,"z":36,
+        "z_range":[28,32,36,40,44,48],"beta1_range":[22,26,30,34],"beta2_range":[115,125,135,145],
+        "d1d2_range":[0.35,0.40,0.45,0.50,0.55],"b2d2_range":[0.06,0.08,0.10,0.12,0.15,0.18,0.20],"vout_range":[8,10,12],
+        "guide":"Compact low-to-medium pressure wheel; power can overload as flow increases."
+    },
+    # The squirrel-cage / Sirocco type used in many forced-draft cooling towers and compact AHU blowers.
+    # It has many short narrow blades, a smaller blade height, low tip speed, and is best for high volume,
+    # low-to-medium pressure work. It is deliberately separated from generic forward curved because the
+    # blade-count and width ranges are very different.
+    "Multi-Blade Forward (Sirocco / Cage)":{
+        "family":"sirocco", "beta1":28,"beta2":135,"eta":0.55,"phi":0.20,"psi":0.64,"z":48,
+        "z_range":[32,40,48,56,64,72],"beta1_range":[22,26,30,34],"beta2_range":[120,130,140,150],
+        "d1d2_range":[0.35,0.40,0.45,0.50,0.55,0.60],"b2d2_range":[0.04,0.06,0.08,0.10,0.12,0.15,0.18,0.20],"vout_range":[8,10,12,14],
+        "guide":"Many short blades; good for forced-draft cooling towers, ID/FD ventilation and compact high-volume low/medium pressure blowers. Keep clean and avoid dusty service."
+    },
+    # Straight/radial blade wheel for dirty air, dust, fumes or abrasive service.
+    "Radial Straight Blade":{
+        "family":"radial", "beta1":25,"beta2":90,"eta":0.60,"phi":0.12,"psi":0.62,"z":8,
+        "z_range":[6,8,10,12],"beta1_range":[20,25,30,35],"beta2_range":[88,90,92],
+        "d1d2_range":[0.40,0.45,0.50,0.55,0.60],"b2d2_range":[0.08,0.10,0.12,0.15,0.18,0.22,0.25,0.30],"vout_range":[10,12,14,16],
+        "guide":"Robust straight blade wheel for dusty/dirty air; lower efficiency and noisier, but self-cleaning and strong."
+    },
+    # Kept as compatibility alias for older saved inputs.
+    "Radial Blade":{
+        "family":"radial", "beta1":25,"beta2":90,"eta":0.60,"phi":0.12,"psi":0.62,"z":8,
+        "z_range":[6,8,10,12],"beta1_range":[20,25,30,35],"beta2_range":[88,90,92],
+        "d1d2_range":[0.40,0.45,0.50,0.55,0.60],"b2d2_range":[0.08,0.10,0.12,0.15,0.18,0.22,0.25,0.30],"vout_range":[10,12,14,16],
+        "guide":"Compatibility alias. Prefer selecting Radial Straight Blade."
+    },
 }
 MATERIALS={
     "Mild Steel IS2062 / S275":{"density":7850,"max_tip":90},
@@ -42,6 +77,31 @@ MATERIALS={
     "Stainless Steel 304":{"density":8000,"max_tip":90},
     "Aluminium 6061-T6":{"density":2700,"max_tip":70},
 }
+
+# Keep blade-family logic in one place so adding another wheel type does not break scoring.
+def blade_family(blade_type: str) -> str:
+    return BLADE_DEFAULTS.get(blade_type, {}).get('family', '').lower()
+
+def is_backward(blade_type: str) -> bool:
+    return blade_family(blade_type) == 'backward'
+
+def is_forward(blade_type: str) -> bool:
+    return blade_family(blade_type) in ('forward', 'sirocco')
+
+def is_sirocco(blade_type: str) -> bool:
+    return blade_family(blade_type) == 'sirocco'
+
+def is_radial(blade_type: str) -> bool:
+    return blade_family(blade_type) == 'radial'
+
+def practical_ranges(blade_type: str):
+    if is_sirocco(blade_type):
+        return dict(beta2=(110,155), beta1=(20,45), d1d2=(0.35,0.60), b2d2=(0.04,0.20), pc=(0.70,1.20), vout=(8,16), tip_max=60)
+    if is_forward(blade_type):
+        return dict(beta2=(110,150), beta1=(20,45), d1d2=(0.35,0.55), b2d2=(0.06,0.20), pc=(0.65,1.20), vout=(8,14), tip_max=60)
+    if is_radial(blade_type):
+        return dict(beta2=(85,95), beta1=(20,40), d1d2=(0.40,0.60), b2d2=(0.08,0.30), pc=(0.80,1.80), vout=(10,18), tip_max=85)
+    return dict(beta2=(25,50), beta1=(18,40), d1d2=(0.45,0.70), b2d2=(0.08,0.25), pc=(0.70,1.30), vout=(8,14), tip_max=70)
 
 @dataclass
 class DutyInput:
@@ -118,34 +178,34 @@ def selected_motor(kw:float)->float:
     return STANDARD_MOTORS_KW[-1]
 
 def adjusted_fan_coefficients(inp: DutyInput) -> Tuple[float, float, float]:
-    """Return preliminary phi, psi and efficiency adjusted by blade angles.
-    This makes optimisation meaningful: blade angle changes pressure loading,
-    efficiency, impeller diameter, noise and manufacturability. It is still a
-    preliminary engineering model and must be calibrated with test data.
+    """Return preliminary phi, psi and efficiency adjusted by blade family and angles.
+    These are pre-test design correlations used for ranking alternatives. They must be
+    calibrated later with AMCA/ISO test data for your own manufactured blower series.
     """
     d = BLADE_DEFAULTS[inp.blade_type]
     beta1 = inp.beta1_deg
     beta2 = inp.beta2_deg
-    phi = d['phi']
-    psi = d['psi']
-    eta = d['eta']
-    if inp.blade_type.startswith('Backward'):
-        # Higher backward angle gives more pressure at same tip speed, but optimum
-        # efficiency is usually around the mid-30s for HVAC-style wheels.
+    phi = d['phi']; psi = d['psi']; eta = d['eta']
+    fam = blade_family(inp.blade_type)
+    if fam == 'backward':
         psi = 0.50 + 0.0048 * (beta2 - 28.0)
         phi = 0.17 + 0.0008 * (beta2 - 34.0)
         eta = 0.765 - 0.0009 * (beta2 - 36.0) ** 2 - 0.00035 * (beta1 - 26.0) ** 2
-    elif inp.blade_type.startswith('Forward'):
-        # Forward-curved wheels carry higher pressure coefficient but lower
-        # efficiency and overloading/noise risk.
+    elif fam == 'forward':
         psi = 0.66 + 0.0022 * (beta2 - 115.0)
         phi = 0.155 + 0.0005 * (beta2 - 125.0)
         eta = 0.60 - 0.00035 * (beta2 - 125.0) ** 2 - 0.00025 * (beta1 - 28.0) ** 2
-    else:
+    elif fam == 'sirocco':
+        # Multi-blade forward/cage wheel: high volume at low-medium pressure, compact diameter,
+        # lower efficiency and higher sensitivity to fouling than backward curved.
+        psi = 0.58 + 0.0018 * (beta2 - 125.0)
+        phi = 0.18 + 0.0009 * (beta2 - 130.0)
+        eta = 0.565 - 0.00022 * (beta2 - 135.0) ** 2 - 0.00022 * (beta1 - 28.0) ** 2
+    elif fam == 'radial':
         psi = 0.61 + 0.0015 * (beta2 - 90.0)
         phi = 0.12
-        eta = 0.63 - 0.00045 * (beta2 - 90.0) ** 2 - 0.00025 * (beta1 - 25.0) ** 2
-    return max(0.08, phi), max(0.35, psi), max(0.45, min(0.82, eta))
+        eta = 0.61 - 0.00045 * (beta2 - 90.0) ** 2 - 0.00025 * (beta1 - 25.0) ** 2
+    return max(0.08, phi), max(0.35, psi), max(0.42, min(0.82, eta))
 
 def stodola_slip_factor(z:int,beta2_deg:float,d1d2:float)->float:
     beta=math.radians(beta2_deg)
@@ -156,7 +216,7 @@ def stodola_slip_factor(z:int,beta2_deg:float,d1d2:float)->float:
 def estimate_sound_db(inp:DutyInput,res_without_sound=None, shaft_kw=None, tip=None, tp=None, vout=None, pc=None)->float:
     if res_without_sound is not None:
         shaft_kw=res_without_sound.shaft_power_kw; tip=res_without_sound.tip_speed_ms; tp=res_without_sound.total_pressure_pa; vout=res_without_sound.flange_outlet_velocity_ms; pc=blade_pitch_chord_ratio(res_without_sound)
-    blade_corr={"Backward Curved / Backward Inclined":-3,"Forward Curved":2,"Radial Blade":5}.get(inp.blade_type,0)
+    blade_corr={"Backward Curved / Backward Inclined":-3,"Forward Curved":2,"Multi-Blade Forward (Sirocco / Cage)":3,"Radial Straight Blade":5,"Radial Blade":5}.get(inp.blade_type,0)
     pitch_corr=4 if (pc or 1)<0.55 else 2 if (pc or 1)<0.70 else 0
     return 62+10*math.log10(max(shaft_kw or 0.1,0.1))+25*math.log10(max(tip or 1,1)/35)+6*math.log10(max(tp or 100,100)/500)+max(0,(vout or 0)-12)*0.8+blade_corr+pitch_corr
 
@@ -208,7 +268,7 @@ def design_blower(inp:DutyInput)->DesignResult:
     shaft_d=max(20,math.ceil(shaft_d/5)*5)
     mat=MATERIALS[inp.material]
     if u2>mat['max_tip']: warnings.append(f'Tip speed {u2:.1f} m/s exceeds preliminary material limit {mat["max_tip"]} m/s.')
-    if inp.blade_type=='Forward Curved' and inp.static_pressure_pa>1000: warnings.append('Forward-curved wheel is not preferred for this pressure; backward-curved is usually safer.')
+    if is_forward(inp.blade_type) and inp.static_pressure_pa>1200: warnings.append('Forward-curved / Sirocco wheels are normally best for low-to-medium pressure; check overload, noise and motor margin.')
     d1d2=d1/d2; b2d2=b2/d2
     if b2d2>0.28: warnings.append('b2/D2 is high. Consider lower RPM/larger wheel, DIDW wheel or multiple fans in parallel.')
     if b2d2<0.05: warnings.append('b2/D2 is very low. Passage may be narrow and losses/noise may increase.')
@@ -240,8 +300,8 @@ def vibration_risk_raw(inp:DutyInput, tip:float, vout:float, pc:float, cutoff_ra
     score=0; notes=[]
     if tip>70: score+=2; notes.append('High tip speed: balance sensitivity is high.')
     elif tip>55: score+=1; notes.append('Moderate-high tip speed: dynamic balancing is important.')
-    if inp.blade_type=='Forward Curved': score+=1; notes.append('Many narrow passages: dust deposits can create unbalance.')
-    if inp.blade_type=='Radial Blade': score+=1.5; notes.append('Radial discharge is more pulsating/noisy.')
+    if is_forward(inp.blade_type): score+=1; notes.append('Forward-curved/multi-blade passages can collect dust; deposits create unbalance.')
+    if is_radial(inp.blade_type): score+=1.5; notes.append('Radial/straight-blade discharge is more pulsating/noisy.')
     if pc<0.65: score+=1; notes.append('Blade pitch is tight; blade-passing noise risk increases.')
     if pc>1.5: score+=0.7; notes.append('Blade pitch is wide; flow guidance/slip may worsen.')
     if vout>16: score+=1; notes.append('High outlet velocity can excite duct turbulence.')
@@ -255,12 +315,18 @@ def vibration_risk(inp:DutyInput,res:DesignResult)->Tuple[str,List[str]]:
 
 def practicality_penalty(inp:DutyInput,d1d2:float,b2d2:float,pc:float,tip:float,vout:float)->float:
     p=0
-    if not 0.45<=d1d2<=0.70: p+=abs(d1d2-0.575)*4
-    if not 0.06<=b2d2<=0.25: p+=abs(b2d2-0.15)*5
-    if not 0.70<=pc<=1.30: p+=abs(pc-1.0)*1.5
-    if tip>85: p+=(tip-85)/10
-    if not 8<=vout<=14: p+=abs(vout-11)/10
-    if inp.blade_type=='Forward Curved' and inp.static_pressure_pa>1000: p+=3
+    rng=practical_ranges(inp.blade_type)
+    def outside_penalty(x, lo, hi, scale):
+        if x < lo: return (lo-x)*scale
+        if x > hi: return (x-hi)*scale
+        return 0
+    p += outside_penalty(d1d2, *rng['d1d2'], 6)
+    p += outside_penalty(b2d2, *rng['b2d2'], 8)
+    p += outside_penalty(pc, *rng['pc'], 2.5)
+    p += outside_penalty(vout, *rng['vout'], 0.35)
+    if tip > rng['tip_max']: p += (tip-rng['tip_max'])/8
+    if is_forward(inp.blade_type) and inp.static_pressure_pa>1200: p+=2.5
+    if is_radial(inp.blade_type) and inp.static_pressure_pa<800: p+=1.5
     return p
 
 def make_trial_input(base:DutyInput, blade_type:str, beta1:float, beta2:float, z:int, d1d2:float, b2d2:float, vout:float)->DutyInput:
@@ -274,13 +340,13 @@ def optimise_geometry(base:DutyInput)->Tuple[DutyInput,DesignResult,pd.DataFrame
         for beta1 in defs.get('beta1_range',[defs['beta1']]):
             for beta2 in defs['beta2_range']:
                 for z in defs['z_range']:
-                    for d1d2 in [0.45,0.50,0.55,0.60,0.65]:
-                        for b2d2 in [0.08,0.10,0.12,0.15,0.18,0.22,0.25]:
-                            for vout in [8,10,12,14]:
+                    for d1d2 in defs.get('d1d2_range',[0.45,0.50,0.55,0.60,0.65]):
+                        for b2d2 in defs.get('b2d2_range',[0.08,0.10,0.12,0.15,0.18,0.22,0.25]):
+                            for vout in defs.get('vout_range',[8,10,12,14]):
                                 trial=make_trial_input(base,bt,beta1,beta2,z,d1d2,b2d2,vout)
                                 res=design_blower(trial)
                                 pc=blade_pitch_chord_ratio(res); b2r=res.outlet_width_mm/res.impeller_od_mm; d1r=res.impeller_id_mm/res.impeller_od_mm
-                                feasible=(0.06<=b2r<=0.25 and 0.45<=d1r<=0.70 and 0.70<=pc<=1.30 and 8<=res.flange_outlet_velocity_ms<=16 and res.tip_speed_ms<=MATERIALS[trial.material]['max_tip'])
+                                rng=practical_ranges(bt); feasible=(rng['b2d2'][0]<=b2r<=rng['b2d2'][1] and rng['d1d2'][0]<=d1r<=rng['d1d2'][1] and rng['pc'][0]<=pc<=rng['pc'][1] and rng['vout'][0]<=res.flange_outlet_velocity_ms<=rng['vout'][1] and res.tip_speed_ms<=min(MATERIALS[trial.material]['max_tip'], rng['tip_max']+10))
                                 # Extra practical score: lower is better. This prevents the optimiser from
                                 # choosing low-power but noisy, crowded or oversized geometry.
                                 diameter_penalty=max(0,(res.impeller_od_mm-1500)/100)*0.8
@@ -293,8 +359,9 @@ def optimise_geometry(base:DutyInput)->Tuple[DutyInput,DesignResult,pd.DataFrame
                                 outlet_w_ratio=res.volute_outlet_width_mm/max(res.outlet_width_mm,1e-9)
                                 outlet_package_penalty=max(0,outlet_h_ratio-1.15)*20 + max(0,outlet_w_ratio-2.2)*8
                                 type_penalty=0
-                                if bt.startswith('Forward') and base.static_pressure_pa>900: type_penalty+=18
-                                if bt.startswith('Radial') and base.static_pressure_pa<2500: type_penalty+=8
+                                if blade_family(bt) == 'forward' and base.static_pressure_pa>900: type_penalty+=18
+                                if blade_family(bt) == 'sirocco' and base.static_pressure_pa>1300: type_penalty+=10
+                                if blade_family(bt) == 'radial' and base.static_pressure_pa<1800: type_penalty+=8
                                 score=res.shaft_power_kw + sound_penalty + res.vibration_score*7 + diameter_penalty + width_penalty + pitch_penalty + vout_penalty + outlet_package_penalty + type_penalty + (0 if feasible else 150)
                                 rows.append({"Blade type":bt,"beta1":beta1,"beta2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Outlet W mm":res.volute_outlet_width_mm,"Outlet H mm":res.volute_outlet_height_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
                                 if best is None or score<best[0]: best=(score,trial,res)
@@ -355,16 +422,20 @@ def create_dxf(res:DesignResult)->bytes:
 # ---------- tables and reports ----------
 def practicality_table(inp:DutyInput,res:DesignResult)->pd.DataFrame:
     pc=blade_pitch_chord_ratio(res); d1d2=res.impeller_id_mm/res.impeller_od_mm; b2d2=res.outlet_width_mm/res.impeller_od_mm
+    rng=practical_ranges(inp.blade_type)
     def stat(ok): return 'OK' if ok else 'REVIEW'
+    beta2_guide=(f"{rng['beta2'][0]}-{rng['beta2'][1]} deg for selected type")
+    beta1_guide=(f"{rng['beta1'][0]}-{rng['beta1'][1]} deg preliminary")
     return pd.DataFrame([
-        ['beta2 outlet blade angle',f'{res.beta2_deg:.1f} deg','BC 25-50 deg, FC 110-150 deg, Radial ~90 deg',stat((inp.blade_type.startswith('Backward') and 25<=res.beta2_deg<=50) or (inp.blade_type.startswith('Forward') and 110<=res.beta2_deg<=150) or (inp.blade_type.startswith('Radial') and 85<=res.beta2_deg<=95)),'Controls pressure, power curve and stability.'],
-        ['beta1 inlet blade angle',f'{res.beta1_deg:.1f} deg','20-45 deg preliminary',stat(20<=res.beta1_deg<=45),'Controls inlet shock loss and noise.'],
-        ['D1/D2 inlet ratio',f'{d1d2:.2f}','0.45-0.70',stat(0.45<=d1d2<=0.70),'Too high reduces pressure; too low restricts inlet.'],
-        ['b2/D2 width ratio',f'{b2d2:.2f}','0.06-0.25 normal; >0.30 usually impractical',stat(0.06<=b2d2<=0.25),'High value suggests DIDW, lower RPM/larger wheel or parallel fans.'],
-        ['Blade pitch/chord',f'{pc:.2f}','0.70-1.30 preferred',stat(0.70<=pc<=1.30),'Too close raises blockage/noise; too wide gives poor guidance/slip.'],
-        ['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s','8-14 m/s preferred; <16 acceptable',stat(8<=res.flange_outlet_velocity_ms<=16),'High velocity adds duct loss and sound.'],
-        ['Impeller meridional velocity',f'{res.impeller_meridional_velocity_ms:.1f} m/s','Typically 6-14 m/s',stat(6<=res.impeller_meridional_velocity_ms<=16),'Internal passage velocity through wheel.'],
-        ['Tip speed',f'{res.tip_speed_ms:.1f} m/s','Below material limit',stat(res.tip_speed_ms<=MATERIALS[inp.material]['max_tip']),'Affects pressure, stress, sound and balancing.'],
+        ['Selected impeller family',inp.blade_type,BLADE_DEFAULTS[inp.blade_type].get('guide',''),'INFO','Explains where this wheel type is normally useful.'],
+        ['beta2 outlet blade angle',f'{res.beta2_deg:.1f} deg',beta2_guide,stat(rng['beta2'][0]<=res.beta2_deg<=rng['beta2'][1]),'Controls pressure, power curve and stability.'],
+        ['beta1 inlet blade angle',f'{res.beta1_deg:.1f} deg',beta1_guide,stat(rng['beta1'][0]<=res.beta1_deg<=rng['beta1'][1]),'Controls inlet shock loss and noise.'],
+        ['D1/D2 inlet ratio',f'{d1d2:.2f}',f"{rng['d1d2'][0]}-{rng['d1d2'][1]}",stat(rng['d1d2'][0]<=d1d2<=rng['d1d2'][1]),'Too high reduces pressure; too low restricts inlet.'],
+        ['b2/D2 width ratio',f'{b2d2:.2f}',f"{rng['b2d2'][0]}-{rng['b2d2'][1]}",stat(rng['b2d2'][0]<=b2d2<=rng['b2d2'][1]),'For Sirocco/cage wheels this is usually smaller because there are many short blades.'],
+        ['Blade pitch/chord',f'{pc:.2f}',f"{rng['pc'][0]}-{rng['pc'][1]}",stat(rng['pc'][0]<=pc<=rng['pc'][1]),'Too close raises blockage/noise; too wide gives poor guidance/slip.'],
+        ['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s',f"{rng['vout'][0]}-{rng['vout'][1]} m/s",stat(rng['vout'][0]<=res.flange_outlet_velocity_ms<=rng['vout'][1]),'High velocity adds duct loss and sound.'],
+        ['Impeller meridional velocity',f'{res.impeller_meridional_velocity_ms:.1f} m/s','Typically 6-16 m/s',stat(6<=res.impeller_meridional_velocity_ms<=16),'Internal passage velocity through wheel.'],
+        ['Tip speed',f'{res.tip_speed_ms:.1f} m/s',f"Prefer <= {rng['tip_max']} m/s for this type",stat(res.tip_speed_ms<=min(MATERIALS[inp.material]['max_tip'],rng['tip_max']+10)),'Affects pressure, stress, sound and balancing.'],
     ],columns=['Input / Check','Your value','Practical guide','Status','Meaning'])
 
 def recommendations(inp:DutyInput,res:DesignResult)->pd.DataFrame:
@@ -373,7 +444,9 @@ def recommendations(inp:DutyInput,res:DesignResult)->pd.DataFrame:
     if res.flange_outlet_velocity_ms>16: rec.append(['Outlet velocity high','Increase outlet flange area or reduce target outlet velocity.'])
     if pc<0.70: rec.append(['Blade pitch too close','Reduce blade count or increase diameter; check blade blockage and blade-passing noise.'])
     if pc>1.30: rec.append(['Blade pitch wide','Increase blade count or improve blade guidance to reduce slip.'])
-    if inp.blade_type=='Forward Curved' and inp.static_pressure_pa>1000: rec.append(['Fan type','Backward-curved is usually preferred for this pressure and non-overloading behaviour.'])
+    if is_forward(inp.blade_type) and inp.static_pressure_pa>1200: rec.append(['Fan type','Forward-curved/Sirocco is becoming high-pressure for this family; compare backward-curved option for efficiency and non-overloading behaviour.'])
+    if is_sirocco(inp.blade_type): rec.append(['Sirocco/cage wheel note','Good for high-volume forced draft cooling tower or compact AHU duty, but avoid dusty air and specify cleaning/balancing access.'])
+    if is_radial(inp.blade_type): rec.append(['Radial straight blade note','Good for dirty/dusty air and robust service; expect lower efficiency and higher noise than backward-curved.'])
     if res.vibration_risk!='Low': rec.append(['Vibration','Increase cutoff clearance, improve inlet/outlet ducting and specify dynamic balancing.'])
     if not rec: rec.append(['Design direction','Preliminary geometry is in practical range. Proceed to detailed CAD/CFD/prototype testing.'])
     return pd.DataFrame(rec,columns=['Issue','Corrective action'])
@@ -503,8 +576,8 @@ if _pw:
     st.sidebar.header('Login'); ent=st.sidebar.text_input('Password',type='password')
     if ent!=_pw: st.warning('Enter password in sidebar to continue.'); st.stop()
 
-st.title('Centrifugal Blower Design & Manufacturing Toolkit v15')
-st.success('v14: optimisation now checks practical outlet flange package + power, sound, vibration and manufacturability')
+st.title('Centrifugal Blower Design & Manufacturing Toolkit v16')
+st.success('v16: added Multi-Blade Forward (Sirocco / Cage) and Radial Straight Blade optimiser ranges + reports')
 with st.sidebar:
     st.header('Duty Inputs')
     airflow=st.number_input('Airflow (m^3/h)',min_value=100.0,value=40000.0,step=500.0)
@@ -537,9 +610,10 @@ else:
 
 c1,c2,c3,c4,c5=st.columns(5); c1.metric('Impeller OD',f'{res.impeller_od_mm:.0f} mm'); c2.metric('b2/D2',f'{res.outlet_width_mm/res.impeller_od_mm:.2f}'); c3.metric('Outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'); c4.metric('Shaft power',f'{res.shaft_power_kw:.1f} kW'); c5.metric('Sound',f'{res.sound_db_a_1m:.1f} dB(A)')
 st.caption(f'Static pressure {res.static_pressure_pa:.0f} Pa + velocity pressure {res.velocity_pressure_pa:.0f} Pa = calculated total pressure {res.total_pressure_pa:.0f} Pa. Selected blade: {inp.blade_type}.')
+st.info(BLADE_DEFAULTS[inp.blade_type].get('guide',''))
 for w in res.warnings: st.warning(w)
 
-tabs=st.tabs(['Corrective Dashboard','Design Summary','Optimisation Options','Practicality','Sound/Vibration','Curves','Geometry','Exports'])
+tabs=st.tabs(['Corrective Dashboard','Design Summary','Optimisation Options','Impeller Type Guide','Practicality','Sound/Vibration','Curves','Geometry','Exports'])
 with tabs[0]:
     st.subheader('Engineering corrective action dashboard')
     st.dataframe(recommendations(inp,res),use_container_width=True)
@@ -551,16 +625,23 @@ with tabs[1]:
 with tabs[2]:
     if opt_df is not None: st.dataframe(opt_df,use_container_width=True)
     else: st.info('Switch to Auto optimise geometry to compare alternatives.')
-with tabs[3]: st.dataframe(practicality_table(inp,res),use_container_width=True)
-with tabs[4]:
+with tabs[3]:
+    st.subheader('Impeller type design guide')
+    guide_df=pd.DataFrame([{
+        'Impeller type':k, 'Typical use':v.get('guide',''), 'beta2 range':str(v.get('beta2_range','')), 'Blade count range':str(v.get('z_range','')), 'D1/D2 range':str(v.get('d1d2_range','')), 'b2/D2 range':str(v.get('b2d2_range',''))
+    } for k,v in BLADE_DEFAULTS.items() if k!='Radial Blade'])
+    st.dataframe(guide_df,use_container_width=True)
+    st.markdown('**Multi-Blade Forward (Sirocco / Cage)** is the many-short-blade wheel often used in forced-draft cooling towers. It is treated separately from ordinary forward-curved wheels because blade count, blade height and practical b2/D2 limits are different.')
+with tabs[4]: st.dataframe(practicality_table(inp,res),use_container_width=True)
+with tabs[5]:
     st.metric('Estimated sound at 1 m',f'{res.sound_db_a_1m:.1f} dB(A)'); st.metric('Vibration risk',res.vibration_risk)
     for n in vibration_risk(inp,res)[1]: st.write('- '+n)
-with tabs[5]:
+with tabs[6]:
     curve=performance_curve(res); fig,ax=plt.subplots(); ax.plot(curve.Flow_m3h,curve.TotalPressure_Pa); ax.set_xlabel('Flow m^3/h'); ax.set_ylabel('Total Pressure Pa'); ax.grid(True); st.pyplot(fig)
     fig2,ax2=plt.subplots(); ax2.plot(curve.Flow_m3h,curve.ShaftPower_kW); ax2.set_xlabel('Flow m^3/h'); ax2.set_ylabel('Shaft Power kW'); ax2.grid(True); st.pyplot(fig2); st.dataframe(curve,use_container_width=True)
-with tabs[6]:
-    st.pyplot(impeller_figure(res)); st.pyplot(blade_figure(res)); st.info(f'Outlet flange: {res.volute_outlet_width_mm:.0f} mm x {res.volute_outlet_height_mm:.0f} mm; outlet velocity {res.flange_outlet_velocity_ms:.1f} m/s')
 with tabs[7]:
+    st.pyplot(impeller_figure(res)); st.pyplot(blade_figure(res)); st.info(f'Outlet flange: {res.volute_outlet_width_mm:.0f} mm x {res.volute_outlet_height_mm:.0f} mm; outlet velocity {res.flange_outlet_velocity_ms:.1f} m/s')
+with tabs[8]:
     st.download_button('Download PDF Report',create_pdf(inp,res),'blower_design_report.pdf')
     st.download_button('Download Excel Calculation',create_excel(inp,res,opt_df),'blower_design_calculations.xlsx')
     st.download_button('Download DXF Drawing',create_dxf(res),'blower_2d_manufacturing.dxf')
