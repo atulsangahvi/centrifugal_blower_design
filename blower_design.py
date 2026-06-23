@@ -209,6 +209,10 @@ def design_blower(inp: DutyInput) -> DesignResult:
     elif cm2 < 0.55 * cm2_target:
         warnings.append("Outlet width may be high for the selected duty; check efficiency and casing width.")
 
+    # Recalculate outlet area and meridional/outlet velocity after any automatic width adjustment.
+    outlet_area = math.pi * d2 * b2
+    cm2 = q / max(outlet_area, 1e-9)
+
     b1 = 1.15 * b2
     sigma = stodola_slip_factor(inp.blade_count, inp.beta2_deg, d1 / d2)
     theoretical_p = total_p / max(sigma, 1e-6)
@@ -783,70 +787,86 @@ This toolkit currently creates preliminary geometry. CADQuery/FreeCAD based full
 """
 
 
-# ----------------------------- Streamlit UI -----------------------------
-st.set_page_config(page_title="Centrifugal Blower Design Toolkit", layout="wide")
 
-# Optional password protection using Streamlit secrets.
-# In Streamlit Cloud secrets, use either:
-# APP_PASSWORD = "your_password"
-# or:
-# [auth]
-# password = "your_password"
-def _get_app_password():
-    try:
-        if "APP_PASSWORD" in st.secrets:
-            return str(st.secrets["APP_PASSWORD"])
-        if "auth" in st.secrets and "password" in st.secrets["auth"]:
-            return str(st.secrets["auth"]["password"])
-    except Exception:
-        return ""
-    return ""
+# ----------------------------- Automatic Geometry Selection -----------------------------
+def _candidate_ranges(blade_type: str):
+    """Return practical preliminary search ranges for automatic geometry selection."""
+    if blade_type == "Forward Curved":
+        return {
+            "beta2": [115, 125, 135, 145],
+            "beta1": [24, 28, 32, 36],
+            "blades": [24, 30, 36, 42, 48],
+            "b2d2": [0.08, 0.10, 0.12, 0.15, 0.18, 0.22],
+            "d1d2": [0.50, 0.55, 0.60, 0.65],
+        }
+    if blade_type == "Radial Blade":
+        return {
+            "beta2": [88, 90, 92],
+            "beta1": [22, 28, 34, 40],
+            "blades": [6, 8, 10, 12, 14],
+            "b2d2": [0.08, 0.10, 0.12, 0.15, 0.18, 0.22],
+            "d1d2": [0.45, 0.50, 0.55, 0.60],
+        }
+    return {
+        "beta2": [28, 32, 36, 40, 44, 48],
+        "beta1": [22, 26, 30, 34, 38],
+        "blades": [8, 10, 12, 14, 16, 18],
+        "b2d2": [0.08, 0.10, 0.12, 0.15, 0.18, 0.22],
+        "d1d2": [0.45, 0.50, 0.55, 0.60, 0.65],
+    }
 
-_APP_PASSWORD = _get_app_password()
-if _APP_PASSWORD:
-    st.sidebar.header("Login")
-    _entered = st.sidebar.text_input("Password", type="password")
-    if _entered != _APP_PASSWORD:
-        st.warning("Enter the app password in the sidebar to continue.")
-        st.stop()
 
-st.title("Centrifugal Blower Design & Manufacturing Toolkit v8")
-st.success("Running version: v8 - full UI review + complete ZIP outputs")
-st.caption("Forward curved, backward curved / backward inclined, and radial blade blowers — SI units only")
+def optimisation_score(inp: DutyInput, res: DesignResult) -> Tuple[float, List[str]]:
+    """Lower score is better. Balances power, sound, vibration and practicality."""
+    notes: List[str] = []
+    b2d2 = res.outlet_width_mm / max(res.impeller_od_mm, 1e-9)
+    d1d2 = res.impeller_id_mm / max(res.impeller_od_mm, 1e-9)
+    pc = blade_pitch_chord_ratio(res)
+    sound = estimate_sound_db(inp, res)
+    vib, _ = vibration_risk(inp, res)
+    vib_penalty = {"Low": 0.0, "Medium": 12.0, "High": 35.0}.get(vib, 20.0)
 
-with st.sidebar:
-    st.header("Duty Inputs")
-    airflow = st.number_input("Airflow (m³/h)", min_value=100.0, value=10000.0, step=500.0)
-    sp = st.number_input("Static pressure (Pa)", min_value=10.0, value=900.0, step=50.0)
-    rpm = st.number_input("Fan speed (RPM)", min_value=100.0, value=1450.0, step=50.0)
-    blade_type = st.selectbox("Blade type", list(BLADE_DEFAULTS.keys()))
+    penalty = 0.0
+    if b2d2 < 0.06:
+        penalty += 25 * (0.06 - b2d2) / 0.06; notes.append("wheel too narrow")
+    if b2d2 > 0.25:
+        penalty += 80 * (b2d2 - 0.25) / 0.25; notes.append("wheel too wide")
+    if not (0.45 <= d1d2 <= 0.70):
+        penalty += 25; notes.append("inlet ratio outside preferred range")
+    if pc < 0.70:
+        penalty += 35 * (0.70 - pc) / 0.70; notes.append("blade pitch too close")
+    if pc > 1.35:
+        penalty += 18 * (pc - 1.35) / 1.35; notes.append("blade guidance weak")
+    if res.outlet_velocity_ms > 16:
+        penalty += 5 * (res.outlet_velocity_ms - 16); notes.append("high outlet velocity")
+    if res.outlet_velocity_ms < 7:
+        penalty += 4 * (7 - res.outlet_velocity_ms); notes.append("large/low velocity outlet")
+    if any("Tip speed" in w for w in res.warnings):
+        penalty += 60; notes.append("tip speed above material limit")
+    if inp.blade_type == "Forward Curved" and inp.static_pressure_pa > 1200:
+        penalty += 40; notes.append("forward curved at high pressure")
+    if inp.blade_type == "Radial Blade" and inp.airflow_m3h > 25000:
+        penalty += 20; notes.append("radial blade large airflow noise risk")
 
-    st.header("Air Properties")
-    temp_c = st.number_input("Air temperature (°C)", value=35.0, step=1.0)
-    altitude = st.number_input("Altitude (m)", value=0.0, step=100.0)
-    auto_density = standard_air_density(temp_c, altitude)
-    use_auto_density = st.checkbox(f"Use calculated density ({auto_density:.3f} kg/m³)", value=True)
-    density = auto_density if use_auto_density else st.number_input("Air density (kg/m³)", value=1.20, step=0.01)
+    # Objective: power is important, then sound, then vibration/practicality penalties.
+    score = 1.8 * res.shaft_power_kw + 0.45 * sound + vib_penalty + penalty
+    if not notes:
+        notes.append("balanced preliminary selection")
+    return score, notes
 
-    st.header("Geometry Overrides")
-    defaults = BLADE_DEFAULTS[blade_type]
-    beta2 = st.number_input("Outlet blade angle β₂ (deg)", value=float(defaults["beta2_deg"]), step=1.0)
-    beta1 = st.number_input("Inlet blade angle β₁ (deg)", value=28.0, step=1.0)
-    blades = st.number_input("Number of blades", min_value=3, value=int(defaults["blade_count"]), step=1)
-    b2_ratio = st.number_input("Outlet width ratio b₂/D₂", min_value=0.03, max_value=0.50, value=0.12, step=0.01)
-    d1_ratio = st.number_input("Inlet diameter ratio D₁/D₂", min_value=0.25, max_value=0.85, value=0.55, step=0.01)
 
-    st.header("Mechanical / Drive")
-    material = st.selectbox("Impeller/casing material", list(MATERIALS.keys()))
-    blade_thk = st.number_input("Blade / disc thickness (mm)", min_value=1.0, value=3.0, step=0.5)
-    casing_thk = st.number_input("Casing thickness (mm)", min_value=1.0, value=3.0, step=0.5)
-    drive_type = st.selectbox("Drive type", ["Direct drive", "Belt drive", "Coupling drive"])
-    drive_eff = st.number_input("Drive efficiency", min_value=0.70, max_value=1.00, value=0.95 if drive_type == "Belt drive" else 0.98, step=0.01)
-    motor_eff = st.number_input("Motor efficiency", min_value=0.70, max_value=0.99, value=0.90, step=0.01)
-    margin = st.number_input("Motor design margin (%)", min_value=0.0, value=15.0, step=1.0)
-    shaft_tau = st.number_input("Allowable shaft shear stress (MPa)", min_value=20.0, value=40.0, step=5.0)
-
-inp = DutyInput(
+def auto_select_geometry(base_kwargs: Dict, allowed_blade_types: List[str], max_rows: int = 12) -> Tuple[DutyInput, DesignResult, pd.DataFrame]:
+    """Search practical discrete geometry options and select the lowest-risk preliminary design."""
+    candidates = []
+    best = None
+    for bt in allowed_blade_types:
+        ranges = _candidate_ranges(bt)
+        for beta2 in ranges["beta2"]:
+            for beta1 in ranges["beta1"]:
+                for blades in ranges["blades"]:
+                    for b2d2 in ranges["b2d2"]:
+                        for d1d2 in ranges["d1d2"]:
+                            base_kwargs = dict(
     airflow_m3h=airflow,
     static_pressure_pa=sp,
     total_pressure_pa=0.0,
@@ -854,23 +874,38 @@ inp = DutyInput(
     altitude_m=altitude,
     density_kgm3=density,
     rpm=rpm,
-    blade_type=blade_type,
     drive_type=drive_type,
     motor_eff=motor_eff,
     drive_eff=drive_eff,
     design_margin=margin,
-    beta2_deg=beta2,
-    beta1_deg=beta1,
-    blade_count=int(blades),
-    outlet_width_ratio=b2_ratio,
-    inlet_diameter_ratio=d1_ratio,
     material=material,
     blade_thickness_mm=blade_thk,
     casing_thickness_mm=casing_thk,
     shaft_allow_shear_mpa=shaft_tau,
 )
 
-res = design_blower(inp)
+optimisation_df = pd.DataFrame()
+if geometry_mode == "Auto optimise geometry":
+    allowed_types = list(BLADE_DEFAULTS.keys()) if blade_selection_mode.startswith("Auto") else [manual_blade_type]
+    inp, res, optimisation_df = auto_select_geometry(base_kwargs, allowed_types)
+    with st.sidebar:
+        st.subheader("Auto-selected geometry")
+        st.write(f"Blade type: **{inp.blade_type}**")
+        st.write(f"β₁ / β₂: **{inp.beta1_deg:.0f}° / {inp.beta2_deg:.0f}°**")
+        st.write(f"Blades: **{inp.blade_count}**")
+        st.write(f"D₁/D₂: **{inp.inlet_diameter_ratio:.2f}**")
+        st.write(f"b₂/D₂ input: **{inp.outlet_width_ratio:.2f}**")
+else:
+    inp = DutyInput(
+        **base_kwargs,
+        blade_type=blade_type,
+        beta2_deg=beta2,
+        beta1_deg=beta1,
+        blade_count=int(blades),
+        outlet_width_ratio=b2_ratio,
+        inlet_diameter_ratio=d1_ratio,
+    )
+    res = design_blower(inp)
 
 # Output dashboard
 c1, c2, c3, c4 = st.columns(4)
@@ -906,6 +941,11 @@ with tabs[0]:
         ["Cutoff clearance", f"{res.volute_cutoff_clearance_mm:.1f} mm", ""],
     ], columns=["Parameter", "Value", "Notes"])
     st.dataframe(summary, use_container_width=True)
+    if geometry_mode == "Auto optimise geometry":
+        st.subheader("Auto optimisation result")
+        st.success("The app selected these geometry values by comparing practical candidate designs for lower power, lower sound, lower vibration risk and manufacturable proportions.")
+        st.dataframe(optimisation_df, use_container_width=True)
+        st.caption("The top row is the selected design. You can switch to Manual geometry override only if you intentionally want to test another option from this table.")
 
 with tabs[1]:
     st.subheader("Corrective action recommendations")
