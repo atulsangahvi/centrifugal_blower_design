@@ -36,7 +36,7 @@ try:
     from reportlab.lib.pagesizes import A4
     from reportlab.lib import colors
     from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image, PageBreak
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
     HAS_REPORTLAB = True
 except Exception:
     HAS_REPORTLAB = False
@@ -209,10 +209,6 @@ def design_blower(inp: DutyInput) -> DesignResult:
     elif cm2 < 0.55 * cm2_target:
         warnings.append("Outlet width may be high for the selected duty; check efficiency and casing width.")
 
-    # Recalculate outlet area and meridional/outlet velocity after any automatic width adjustment.
-    outlet_area = math.pi * d2 * b2
-    cm2 = q / max(outlet_area, 1e-9)
-
     b1 = 1.15 * b2
     sigma = stodola_slip_factor(inp.blade_count, inp.beta2_deg, d1 / d2)
     theoretical_p = total_p / max(sigma, 1e-6)
@@ -381,164 +377,6 @@ def create_step_placeholder(res: DesignResult) -> bytes:
     return bio.getvalue()
 
 
-def input_table(inp: DutyInput) -> pd.DataFrame:
-    """User-facing inputs. Deliberately excludes total_pressure_pa because user enters static pressure only."""
-    rows = [
-        ["Airflow", f"{inp.airflow_m3h:,.0f} m³/h"],
-        ["Static pressure", f"{inp.static_pressure_pa:,.0f} Pa"],
-        ["Fan speed", f"{inp.rpm:,.0f} RPM"],
-        ["Blade type", inp.blade_type],
-        ["Air temperature", f"{inp.air_temp_c:.1f} °C"],
-        ["Altitude", f"{inp.altitude_m:.0f} m"],
-        ["Air density used", f"{inp.density_kgm3:.3f} kg/m³"],
-        ["Drive type", inp.drive_type],
-        ["Drive efficiency", f"{inp.drive_eff:.3f}"],
-        ["Motor efficiency", f"{inp.motor_eff:.3f}"],
-        ["Motor design margin", f"{inp.design_margin:.1f}%"],
-        ["Outlet blade angle β₂", f"{inp.beta2_deg:.1f}°"],
-        ["Inlet blade angle β₁", f"{inp.beta1_deg:.1f}°"],
-        ["Number of blades", f"{inp.blade_count}"],
-        ["Outlet width ratio b₂/D₂", f"{inp.outlet_width_ratio:.3f}"],
-        ["Inlet diameter ratio D₁/D₂", f"{inp.inlet_diameter_ratio:.3f}"],
-        ["Material", inp.material],
-        ["Blade/disc thickness", f"{inp.blade_thickness_mm:.1f} mm"],
-        ["Casing thickness", f"{inp.casing_thickness_mm:.1f} mm"],
-        ["Allowable shaft shear stress", f"{inp.shaft_allow_shear_mpa:.1f} MPa"],
-    ]
-    return pd.DataFrame(rows, columns=["Input", "Value"])
-
-
-def engineering_recommendations(inp: DutyInput, res: DesignResult) -> pd.DataFrame:
-    """Actionable guidance so the user can change inputs and improve the design."""
-    rows = []
-    def add(severity, issue, recommendation, input_to_change):
-        rows.append({"Severity": severity, "Issue / Observation": issue, "Recommended corrective action": recommendation, "Input to change": input_to_change})
-
-    d1d2 = res.impeller_id_mm / max(res.impeller_od_mm, 1e-9)
-    b2d2 = res.outlet_width_mm / max(res.impeller_od_mm, 1e-9)
-    pc = blade_pitch_chord_ratio(res)
-
-    if b2d2 > 0.35:
-        add("High", f"b₂/D₂ = {b2d2:.2f}, wheel is very wide for a single inlet/single width blower.", "Increase RPM or use larger wheel arrangement/DIDW/twin fans; reduce b₂/D₂ target only if outlet velocity remains acceptable.", "RPM, b₂/D₂, fan quantity")
-    elif b2d2 > 0.25:
-        add("Medium", f"b₂/D₂ = {b2d2:.2f}, wider than common preliminary range.", "Check casing width, bearing overhang and manufacturing stiffness; consider a higher RPM or two smaller blowers.", "RPM, b₂/D₂")
-
-    if res.outlet_velocity_ms > 18:
-        add("High", f"Outlet velocity = {res.outlet_velocity_ms:.1f} m/s, likely noisy and high duct loss.", "Increase outlet flange area; allow lower discharge velocity; reduce RPM only after checking diameter.", "Outlet velocity target / flange size")
-    elif res.outlet_velocity_ms > 16:
-        add("Medium", f"Outlet velocity = {res.outlet_velocity_ms:.1f} m/s.", "Try a larger outlet flange or wider volute discharge.", "Flange size")
-    elif res.outlet_velocity_ms < 7:
-        add("Low", f"Outlet velocity = {res.outlet_velocity_ms:.1f} m/s, low for compact blower.", "This is quieter but physically larger; acceptable if space allows.", "Flange size / RPM")
-
-    if pc < 0.60:
-        add("High", f"Blade pitch/chord = {pc:.2f}, blades are crowded.", "Reduce blade count or increase impeller diameter; crowded blades increase blockage, noise and fouling risk.", "Number of blades, RPM")
-    elif pc < 0.70:
-        add("Medium", f"Blade pitch/chord = {pc:.2f}.", "Slightly reduce blade count or check blade thickness/blockage.", "Number of blades")
-    elif pc > 1.50:
-        add("Medium", f"Blade pitch/chord = {pc:.2f}, blade guidance may be weak.", "Increase blade count or use a better curved blade profile to reduce slip.", "Number of blades")
-
-    if d1d2 < 0.45:
-        add("Medium", f"D₁/D₂ = {d1d2:.2f}, inlet is small.", "Increase inlet ratio to reduce inlet velocity and entry loss, but re-check pressure capability.", "D₁/D₂")
-    elif d1d2 > 0.70:
-        add("Medium", f"D₁/D₂ = {d1d2:.2f}, inlet is large.", "Reduce inlet ratio if pressure generation or blade length becomes weak.", "D₁/D₂")
-
-    if inp.blade_type == "Forward Curved" and res.static_pressure_pa > 1200:
-        add("High", "Forward-curved fan selected for relatively high static pressure.", "Prefer backward-curved/backward-inclined for higher pressure, non-overloading power and better efficiency.", "Blade type")
-    if inp.blade_type == "Radial Blade" and inp.airflow_m3h > 25000:
-        add("Medium", "Radial blade at large airflow may be noisy and less efficient.", "Use radial only for dust/dirty air; otherwise evaluate backward-curved.", "Blade type")
-
-    snd = estimate_sound_db(inp, res)
-    if snd > 95:
-        add("High", f"Estimated sound = {snd:.1f} dB(A) at 1 m.", "Reduce tip speed/RPM, use backward-curved blade, lower outlet velocity, add silencers/acoustic lining.", "RPM, blade type, outlet velocity")
-    elif snd > 85:
-        add("Medium", f"Estimated sound = {snd:.1f} dB(A) at 1 m.", "Review acoustic treatment and duct velocity; avoid operating near unstable region.", "RPM, outlet velocity")
-
-    risk, notes = vibration_risk(inp, res)
-    if risk == "High":
-        add("High", "Preliminary vibration risk is high.", "Increase cutoff clearance, reduce tip speed/outlet velocity, improve blade pitch, specify dynamic balancing and stiff base frame.", "RPM, blade count, cutoff/design")
-    elif risk == "Medium":
-        add("Medium", "Preliminary vibration risk is medium.", "Specify dynamic balancing, check bearing span/overhung load, and avoid blade passing frequency resonance.", "Mechanical design")
-
-    mat = MATERIALS[inp.material]
-    if res.tip_speed_ms > 0.9 * mat["max_tip_ms"]:
-        add("High", f"Tip speed is near material preliminary limit: {res.tip_speed_ms:.1f} m/s.", "Use stronger material, reduce RPM, or increase pressure by improved geometry instead of speed.", "RPM, material")
-
-    if not rows:
-        add("OK", "No major preliminary red flags.", "Proceed to detailed CAD, CFD/FEA, prototype testing and AMCA/ISO style validation.", "—")
-    return pd.DataFrame(rows)
-
-
-def plot_impeller_volute_png(res: DesignResult) -> bytes:
-    blade = blade_centerline_points(res)
-    vol = volute_spiral_points(res)
-    fig, ax = plt.subplots(figsize=(7.5, 7.5))
-    r2 = res.impeller_od_mm / 2
-    r1 = res.impeller_id_mm / 2
-    hub = max(res.shaft_diameter_mm * 1.6, r1 * 0.25)
-    ax.add_patch(plt.Circle((0,0), r2, fill=False, linewidth=2))
-    ax.add_patch(plt.Circle((0,0), r1, fill=False, linestyle='--'))
-    ax.add_patch(plt.Circle((0,0), hub, fill=False, linestyle=':'))
-    for k in range(res.blade_count):
-        ang = 2 * math.pi * k / res.blade_count
-        ca, sa = math.cos(ang), math.sin(ang)
-        pts = np.array([(x*ca-y*sa, x*sa+y*ca) for x,y in blade])
-        ax.plot(pts[:,0], pts[:,1], linewidth=0.8)
-    vol_np = np.array(vol)
-    ax.plot(vol_np[:,0], vol_np[:,1], linewidth=2.0)
-    # Dimension lines / labels
-    ax.annotate(f"D₂ OD = {res.impeller_od_mm:.0f} mm", xy=(-r2, -r2*1.12), xytext=(r2, -r2*1.12), arrowprops=dict(arrowstyle='<->'), ha='center')
-    ax.text(0, -r2*1.22, f"D₁ inlet = {res.impeller_id_mm:.0f} mm | b₂ = {res.outlet_width_mm:.0f} mm | blades = {res.blade_count}", ha='center')
-    ax.text(0, r2*1.15, f"Outlet flange {res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm | Vout {res.outlet_velocity_ms:.1f} m/s", ha='center')
-    lim = max(np.max(np.abs(vol_np))*1.08, r2*1.4)
-    ax.set_xlim(-lim, lim); ax.set_ylim(-lim, lim)
-    ax.set_aspect('equal', adjustable='box')
-    ax.set_xlabel('mm'); ax.set_ylabel('mm'); ax.grid(True)
-    ax.set_title('Impeller + volute preliminary layout')
-    bio = io.BytesIO(); fig.tight_layout(); fig.savefig(bio, format='png', dpi=180); plt.close(fig); return bio.getvalue()
-
-
-def plot_blade_profile_png(res: DesignResult) -> bytes:
-    blade = np.array(blade_centerline_points(res))
-    r_mid = 0.25 * (res.impeller_od_mm + res.impeller_id_mm)
-    pitch = math.pi * (2 * r_mid) / max(res.blade_count, 1)
-    chord = 0.55 * (res.impeller_od_mm - res.impeller_id_mm)
-    fig, ax = plt.subplots(figsize=(8, 4.8))
-    ax.plot(blade[:,0], blade[:,1], linewidth=3)
-    ax.scatter([blade[0,0], blade[-1,0]], [blade[0,1], blade[-1,1]])
-    ax.text(blade[0,0], blade[0,1], f" inlet β₁={res.beta1_deg:.1f}°", va='bottom')
-    ax.text(blade[-1,0], blade[-1,1], f" outlet β₂={res.beta2_deg:.1f}°", va='bottom')
-    # pitch indicator at mid radius
-    ax.annotate(f"Pitch at mean radius ≈ {pitch:.0f} mm", xy=(blade[len(blade)//2,0], blade[len(blade)//2,1]), xytext=(blade[len(blade)//2,0], blade[len(blade)//2,1]+pitch*0.45), arrowprops=dict(arrowstyle='->'))
-    ax.set_aspect('equal', adjustable='box')
-    ax.grid(True); ax.set_xlabel('mm'); ax.set_ylabel('mm')
-    ax.set_title(f"Single blade centreline | chord≈{chord:.0f} mm | pitch/chord={pitch/max(chord,1):.2f}")
-    bio = io.BytesIO(); fig.tight_layout(); fig.savefig(bio, format='png', dpi=180); plt.close(fig); return bio.getvalue()
-
-
-def plot_performance_curve_png(res: DesignResult) -> bytes:
-    curve = performance_curve(res)
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.plot(curve['Flow_m3h'], curve['TotalPressure_Pa'], label='Total pressure Pa')
-    ax2 = ax.twinx()
-    ax2.plot(curve['Flow_m3h'], curve['ShaftPower_kW'], linestyle='--', label='Shaft power kW')
-    ax.set_xlabel('Flow (m³/h)'); ax.set_ylabel('Pressure (Pa)'); ax2.set_ylabel('Power (kW)')
-    ax.grid(True); ax.set_title('Preliminary fan curve')
-    bio = io.BytesIO(); fig.tight_layout(); fig.savefig(bio, format='png', dpi=180); plt.close(fig); return bio.getvalue()
-
-
-def export_manifest_df(inp: DutyInput, res: DesignResult) -> pd.DataFrame:
-    return pd.DataFrame([
-        ["blower_design_report.pdf", "Complete PDF report including duty, dimensions, sound/vibration, recommendations and plots"],
-        ["blower_design_calculations.xlsx", "Inputs, results, practicality checks, recommendations, sound/vibration, fan curve and BOM"],
-        ["blower_2d_manufacturing.dxf", "Impeller OD/ID/hub, blade centre lines, volute spiral and outlet rectangle"],
-        ["impeller_volute_preview.png", "Same impeller/volute sketch shown on app interface"],
-        ["single_blade_profile.png", "Blade angle and pitch/chord visual check"],
-        ["fan_curve.png", "Pressure and power curve preview"],
-        ["impeller_basic.step_or_instruction.txt", "STEP placeholder or CADQuery instruction depending on server support"],
-        ["README_ANSYS_WORKFLOW.txt", "CFD workflow and boundary condition notes"],
-    ], columns=["Package file", "Purpose"])
-
-
 # ----------------------------- Reports -----------------------------
 def make_results_df(res: DesignResult) -> pd.DataFrame:
     rows = []
@@ -552,99 +390,62 @@ def make_results_df(res: DesignResult) -> pd.DataFrame:
 def create_excel(inp: DutyInput, res: DesignResult) -> bytes:
     bio = io.BytesIO()
     with pd.ExcelWriter(bio, engine="openpyxl") as writer:
-        input_table(inp).to_excel(writer, sheet_name="Inputs", index=False)
+        pd.DataFrame([asdict(inp)]).T.reset_index().rename(columns={"index": "Input", 0: "Value"}).to_excel(writer, sheet_name="Inputs", index=False)
         make_results_df(res).to_excel(writer, sheet_name="Results", index=False)
-        practicality_table(inp, res).to_excel(writer, sheet_name="Practicality", index=False)
-        engineering_recommendations(inp, res).to_excel(writer, sheet_name="Recommendations", index=False)
-        snd = estimate_sound_db(inp, res)
-        risk, notes = vibration_risk(inp, res)
-        pd.DataFrame([
-            ["Estimated sound at 1 m", f"{snd:.1f} dB(A)", "Preliminary only; not AMCA 300 certified"],
-            ["Vibration risk", risk, "Preliminary risk flag"],
-            ["Outlet velocity", f"{res.outlet_velocity_ms:.1f} m/s", "Use to correct flange/duct sizing"],
-            ["Outlet flange width", f"{res.volute_outlet_width_mm:.0f} mm", "Preliminary volute discharge"],
-            ["Outlet flange height", f"{res.volute_outlet_height_mm:.0f} mm", "Preliminary volute discharge"],
-        ] + [["Vibration note", n, ""] for n in notes], columns=["Item", "Value", "Note"]).to_excel(writer, sheet_name="Sound_Vibration", index=False)
         performance_curve(res).to_excel(writer, sheet_name="Performance Curve", index=False)
         bom_table(inp, res).to_excel(writer, sheet_name="BOM", index=False)
-        export_manifest_df(inp, res).to_excel(writer, sheet_name="Package Manifest", index=False)
     return bio.getvalue()
+
 
 def create_pdf(inp: DutyInput, res: DesignResult) -> bytes:
     if not HAS_REPORTLAB:
         return b"Install reportlab to generate PDF reports."
     bio = io.BytesIO()
-    doc = SimpleDocTemplate(bio, pagesize=A4, rightMargin=28, leftMargin=28, topMargin=28, bottomMargin=28)
+    doc = SimpleDocTemplate(bio, pagesize=A4)
     styles = getSampleStyleSheet()
     story = []
     story.append(Paragraph("Centrifugal Blower Preliminary Design Report", styles["Title"]))
-    story.append(Spacer(1, 8))
-    story.append(Paragraph("SI units only. User enters static pressure only; total pressure is calculated as static pressure plus estimated outlet velocity pressure. Preliminary design for engineering review and prototype validation.", styles["BodyText"]))
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 12))
+    story.append(Paragraph("SI units only. Preliminary design for engineering review and prototype validation.", styles["BodyText"]))
+    story.append(Spacer(1, 12))
 
-    def add_table(df, widths=None):
-        data = [list(df.columns)] + df.astype(str).values.tolist()
-        tbl = Table(data, colWidths=widths)
-        tbl.setStyle(TableStyle([
-            ("BACKGROUND", (0,0), (-1,0), colors.lightgrey),
-            ("GRID", (0,0), (-1,-1), 0.25, colors.grey),
-            ("FONTNAME", (0,0), (-1,0), "Helvetica-Bold"),
-            ("VALIGN", (0,0), (-1,-1), "TOP"),
-            ("FONTSIZE", (0,0), (-1,-1), 7),
-        ]))
-        story.append(tbl)
-        story.append(Spacer(1, 10))
-
-    key_df = pd.DataFrame([
-        ["Blade type", inp.blade_type],
-        ["Airflow", f"{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)"],
-        ["Static pressure entered", f"{res.static_pressure_pa:.0f} Pa"],
-        ["Velocity pressure calculated", f"{res.velocity_pressure_pa:.0f} Pa"],
-        ["Total pressure calculated", f"{res.total_pressure_pa:.0f} Pa"],
-        ["Outlet velocity", f"{res.outlet_velocity_ms:.1f} m/s"],
-        ["Density", f"{res.density_kgm3:.3f} kg/m³"],
-        ["RPM", f"{res.rpm:.0f}"],
-        ["Impeller OD D₂", f"{res.impeller_od_mm:.1f} mm"],
-        ["Inlet diameter D₁", f"{res.impeller_id_mm:.1f} mm"],
-        ["Outlet width b₂", f"{res.outlet_width_mm:.1f} mm"],
-        ["β₁ / β₂", f"{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°"],
-        ["Blades", str(res.blade_count)],
-        ["Outlet flange W × H", f"{res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm"],
-        ["Tip speed", f"{res.tip_speed_ms:.1f} m/s"],
-        ["Estimated sound", f"{estimate_sound_db(inp, res):.1f} dB(A) at 1 m"],
-        ["Vibration risk", vibration_risk(inp, res)[0]],
-        ["Shaft power", f"{res.shaft_power_kw:.2f} kW"],
-        ["Selected motor", f"{res.selected_motor_kw:.2f} kW"],
-        ["Shaft diameter", f"{res.shaft_diameter_mm:.0f} mm"],
-    ], columns=["Parameter", "Value"])
-    add_table(key_df, [190, 330])
-
-    story.append(Paragraph("Practicality checks", styles["Heading2"]))
-    add_table(practicality_table(inp, res), [100, 70, 95, 45, 210])
-
-    story.append(Paragraph("Engineering recommendations", styles["Heading2"]))
-    add_table(engineering_recommendations(inp, res), [45, 160, 220, 90])
-
-    risk, risk_notes = vibration_risk(inp, res)
-    if res.warnings or risk_notes:
-        story.append(Paragraph("Warnings / Vibration Notes", styles["Heading2"]))
+    data = [["Parameter", "Value"]]
+    key_vals = {
+        "Blade type": inp.blade_type,
+        "Airflow": f"{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)",
+        "Static pressure": f"{res.static_pressure_pa:.0f} Pa",
+        "Total pressure": f"{res.total_pressure_pa:.0f} Pa",
+        "Density": f"{res.density_kgm3:.3f} kg/m³",
+        "RPM": f"{res.rpm:.0f}",
+        "Impeller OD": f"{res.impeller_od_mm:.1f} mm",
+        "Inlet diameter": f"{res.impeller_id_mm:.1f} mm",
+        "Outlet width": f"{res.outlet_width_mm:.1f} mm",
+        "β1 / β2": f"{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°",
+        "Blades": str(res.blade_count),
+        "Tip speed": f"{res.tip_speed_ms:.1f} m/s",
+        "Slip factor": f"{res.slip_factor:.3f}",
+        "Estimated efficiency": f"{res.estimated_total_eff*100:.1f}%",
+        "Shaft power": f"{res.shaft_power_kw:.2f} kW",
+        "Selected motor": f"{res.selected_motor_kw:.2f} kW",
+        "Shaft diameter": f"{res.shaft_diameter_mm:.0f} mm",
+    }
+    for k, v in key_vals.items():
+        data.append([k, v])
+    tbl = Table(data, colWidths=[180, 300])
+    tbl.setStyle(TableStyle([
+        ("BACKGROUND", (0,0), (-1,0), colors.lightgrey),
+        ("GRID", (0,0), (-1,-1), 0.3, colors.grey),
+        ("FONTNAME", (0,0), (-1,0), "Helvetica-Bold"),
+    ]))
+    story.append(tbl)
+    story.append(Spacer(1, 12))
+    if res.warnings:
+        story.append(Paragraph("Warnings / Review Points", styles["Heading2"]))
         for w in res.warnings:
             story.append(Paragraph(f"• {w}", styles["BodyText"]))
-        for n in risk_notes:
-            story.append(Paragraph(f"• {n}", styles["BodyText"]))
-        story.append(Spacer(1, 8))
-
-    for title, img_bytes in [
-        ("Impeller and volute sketch", plot_impeller_volute_png(res)),
-        ("Single blade profile", plot_blade_profile_png(res)),
-        ("Preliminary fan curve", plot_performance_curve_png(res)),
-    ]:
-        story.append(Paragraph(title, styles["Heading2"]))
-        img = Image(io.BytesIO(img_bytes), width=500, height=330 if "Impeller" in title else 260)
-        story.append(img)
-        story.append(Spacer(1, 8))
     doc.build(story)
     return bio.getvalue()
+
 
 def bom_table(inp: DutyInput, res: DesignResult) -> pd.DataFrame:
     return pd.DataFrame([
@@ -676,12 +477,8 @@ def make_zip(inp: DutyInput, res: DesignResult) -> bytes:
         z.writestr("blower_design_report.pdf", create_pdf(inp, res))
         z.writestr("blower_design_calculations.xlsx", create_excel(inp, res))
         z.writestr("blower_2d_manufacturing.dxf", create_dxf(res))
-        z.writestr("impeller_volute_preview.png", plot_impeller_volute_png(res))
-        z.writestr("single_blade_profile.png", plot_blade_profile_png(res))
-        z.writestr("fan_curve.png", plot_performance_curve_png(res))
         z.writestr("impeller_basic.step_or_instruction.txt", create_step_placeholder(res))
         z.writestr("README_ANSYS_WORKFLOW.txt", ansys_workflow_text())
-        z.writestr("PACKAGE_MANIFEST.csv", export_manifest_df(inp, res).to_csv(index=False))
     return bio.getvalue()
 
 
@@ -828,34 +625,43 @@ def optimisation_score(inp: DutyInput, res: DesignResult) -> Tuple[float, List[s
 
     penalty = 0.0
     if b2d2 < 0.06:
-        penalty += 25 * (0.06 - b2d2) / 0.06; notes.append("wheel too narrow")
+        penalty += 25 * (0.06 - b2d2) / 0.06
+        notes.append("wheel too narrow")
     if b2d2 > 0.25:
-        penalty += 80 * (b2d2 - 0.25) / 0.25; notes.append("wheel too wide")
+        penalty += 80 * (b2d2 - 0.25) / 0.25
+        notes.append("wheel too wide")
     if not (0.45 <= d1d2 <= 0.70):
-        penalty += 25; notes.append("inlet ratio outside preferred range")
+        penalty += 25
+        notes.append("inlet ratio outside preferred range")
     if pc < 0.70:
-        penalty += 35 * (0.70 - pc) / 0.70; notes.append("blade pitch too close")
+        penalty += 35 * (0.70 - pc) / 0.70
+        notes.append("blade pitch too close")
     if pc > 1.35:
-        penalty += 18 * (pc - 1.35) / 1.35; notes.append("blade guidance weak")
+        penalty += 18 * (pc - 1.35) / 1.35
+        notes.append("blade guidance weak")
     if res.outlet_velocity_ms > 16:
-        penalty += 5 * (res.outlet_velocity_ms - 16); notes.append("high outlet velocity")
+        penalty += 5 * (res.outlet_velocity_ms - 16)
+        notes.append("high outlet velocity")
     if res.outlet_velocity_ms < 7:
-        penalty += 4 * (7 - res.outlet_velocity_ms); notes.append("large/low velocity outlet")
+        penalty += 4 * (7 - res.outlet_velocity_ms)
+        notes.append("large/low velocity outlet")
     if any("Tip speed" in w for w in res.warnings):
-        penalty += 60; notes.append("tip speed above material limit")
+        penalty += 60
+        notes.append("tip speed above material limit")
     if inp.blade_type == "Forward Curved" and inp.static_pressure_pa > 1200:
-        penalty += 40; notes.append("forward curved at high pressure")
+        penalty += 40
+        notes.append("forward curved at high pressure")
     if inp.blade_type == "Radial Blade" and inp.airflow_m3h > 25000:
-        penalty += 20; notes.append("radial blade large airflow noise risk")
+        penalty += 20
+        notes.append("radial blade large airflow noise risk")
 
-    # Objective: power is important, then sound, then vibration/practicality penalties.
     score = 1.8 * res.shaft_power_kw + 0.45 * sound + vib_penalty + penalty
     if not notes:
         notes.append("balanced preliminary selection")
     return score, notes
 
 
-def auto_select_geometry(base_kwargs: Dict, allowed_blade_types: List[str], max_rows: int = 12) -> Tuple[DutyInput, DesignResult, pd.DataFrame]:
+def auto_select_geometry(base_kwargs: Dict, allowed_blade_types: List[str], max_rows: int = 15) -> Tuple[DutyInput, DesignResult, pd.DataFrame]:
     """Search practical discrete geometry options and select the lowest-risk preliminary design."""
     candidates = []
     best = None
@@ -866,7 +672,124 @@ def auto_select_geometry(base_kwargs: Dict, allowed_blade_types: List[str], max_
                 for blades in ranges["blades"]:
                     for b2d2 in ranges["b2d2"]:
                         for d1d2 in ranges["d1d2"]:
-                            base_kwargs = dict(
+                            inp = DutyInput(
+                                **base_kwargs,
+                                blade_type=bt,
+                                beta2_deg=float(beta2),
+                                beta1_deg=float(beta1),
+                                blade_count=int(blades),
+                                outlet_width_ratio=float(b2d2),
+                                inlet_diameter_ratio=float(d1d2),
+                            )
+                            res = design_blower(inp)
+                            score, notes = optimisation_score(inp, res)
+                            risk, _ = vibration_risk(inp, res)
+                            row = {
+                                "Score": round(score, 2),
+                                "Blade type": bt,
+                                "β1 deg": beta1,
+                                "β2 deg": beta2,
+                                "Blades": blades,
+                                "D1/D2": d1d2,
+                                "b2/D2 input": b2d2,
+                                "Actual b2/D2": round(res.outlet_width_mm / max(res.impeller_od_mm, 1e-9), 3),
+                                "D2 mm": round(res.impeller_od_mm, 1),
+                                "b2 mm": round(res.outlet_width_mm, 1),
+                                "Outlet velocity m/s": round(res.outlet_velocity_ms, 2),
+                                "Shaft kW": round(res.shaft_power_kw, 2),
+                                "Motor kW": round(res.selected_motor_kw, 2),
+                                "Sound dBA": round(estimate_sound_db(inp, res), 1),
+                                "Vibration risk": risk,
+                                "Review notes": "; ".join(notes[:3]),
+                            }
+                            candidates.append((score, inp, res, row))
+                            if best is None or score < best[0]:
+                                best = (score, inp, res, row)
+    if best is None:
+        raise ValueError("No automatic geometry candidates were generated.")
+    candidates.sort(key=lambda x: x[0])
+    df = pd.DataFrame([c[3] for c in candidates[:max_rows]])
+    return best[1], best[2], df
+
+
+# ----------------------------- Streamlit UI -----------------------------
+st.set_page_config(page_title="Centrifugal Blower Design Toolkit", layout="wide")
+
+# Optional password protection using Streamlit secrets.
+# In Streamlit Cloud secrets, use either:
+# APP_PASSWORD = "your_password"
+# or:
+# [auth]
+# password = "your_password"
+def _get_app_password():
+    try:
+        if "APP_PASSWORD" in st.secrets:
+            return str(st.secrets["APP_PASSWORD"])
+        if "auth" in st.secrets and "password" in st.secrets["auth"]:
+            return str(st.secrets["auth"]["password"])
+    except Exception:
+        return ""
+    return ""
+
+_APP_PASSWORD = _get_app_password()
+if _APP_PASSWORD:
+    st.sidebar.header("Login")
+    _entered = st.sidebar.text_input("Password", type="password")
+    if _entered != _APP_PASSWORD:
+        st.warning("Enter the app password in the sidebar to continue.")
+        st.stop()
+
+st.title("Centrifugal Blower Design & Manufacturing Toolkit v10")
+st.success("Running version: v10 - auto geometry optimisation + static pressure only")
+st.caption("Forward curved, backward curved / backward inclined, and radial blade blowers — SI units only")
+
+with st.sidebar:
+    st.header("Duty Inputs")
+    airflow = st.number_input("Airflow (m³/h)", min_value=100.0, value=10000.0, step=500.0)
+    sp = st.number_input("Static pressure (Pa)", min_value=10.0, value=900.0, step=50.0)
+    rpm = st.number_input("Fan speed (RPM)", min_value=100.0, value=1450.0, step=50.0)
+
+    st.header("Automatic Selection")
+    blade_selection_mode = st.radio("Blade type selection", ["Auto select blade type", "Manual select blade type"], index=0)
+    manual_blade_type = st.selectbox("Manual blade type", list(BLADE_DEFAULTS.keys()), disabled=(blade_selection_mode == "Auto select blade type"))
+    geometry_mode = st.radio("Geometry mode", ["Auto optimise geometry", "Manual geometry override"], index=0)
+    st.caption("In auto mode, the app searches practical β₁, β₂, blade count, D₁/D₂ and b₂/D₂ combinations and selects the lowest-risk design.")
+
+    st.header("Air Properties")
+    temp_c = st.number_input("Air temperature (°C)", value=35.0, step=1.0)
+    altitude = st.number_input("Altitude (m)", value=0.0, step=100.0)
+    auto_density = standard_air_density(temp_c, altitude)
+    use_auto_density = st.checkbox(f"Use calculated density ({auto_density:.3f} kg/m³)", value=True)
+    density = auto_density if use_auto_density else st.number_input("Air density (kg/m³)", value=1.20, step=0.01)
+
+    # Manual geometry is intentionally hidden unless the user asks for override.
+    blade_type = manual_blade_type if blade_selection_mode == "Manual select blade type" else "Backward Curved / Backward Inclined"
+    defaults = BLADE_DEFAULTS[blade_type]
+    beta2 = float(defaults["beta2_deg"])
+    beta1 = 28.0
+    blades = int(defaults["blade_count"])
+    b2_ratio = 0.12
+    d1_ratio = 0.55
+    if geometry_mode == "Manual geometry override":
+        st.header("Manual Geometry Overrides")
+        st.warning("Use manual geometry only when you intentionally want to test a specific design. For normal design, keep Auto optimise geometry.")
+        beta2 = st.number_input("Outlet blade angle β₂ (deg)", value=float(defaults["beta2_deg"]), step=1.0)
+        beta1 = st.number_input("Inlet blade angle β₁ (deg)", value=28.0, step=1.0)
+        blades = st.number_input("Number of blades", min_value=3, value=int(defaults["blade_count"]), step=1)
+        b2_ratio = st.number_input("Outlet width ratio b₂/D₂", min_value=0.03, max_value=0.50, value=0.12, step=0.01)
+        d1_ratio = st.number_input("Inlet diameter ratio D₁/D₂", min_value=0.25, max_value=0.85, value=0.55, step=0.01)
+
+    st.header("Mechanical / Drive")
+    material = st.selectbox("Impeller/casing material", list(MATERIALS.keys()))
+    blade_thk = st.number_input("Blade / disc thickness (mm)", min_value=1.0, value=3.0, step=0.5)
+    casing_thk = st.number_input("Casing thickness (mm)", min_value=1.0, value=3.0, step=0.5)
+    drive_type = st.selectbox("Drive type", ["Direct drive", "Belt drive", "Coupling drive"])
+    drive_eff = st.number_input("Drive efficiency", min_value=0.70, max_value=1.00, value=0.95 if drive_type == "Belt drive" else 0.98, step=0.01)
+    motor_eff = st.number_input("Motor efficiency", min_value=0.70, max_value=0.99, value=0.90, step=0.01)
+    margin = st.number_input("Motor design margin (%)", min_value=0.0, value=15.0, step=1.0)
+    shaft_tau = st.number_input("Allowable shaft shear stress (MPa)", min_value=20.0, value=40.0, step=5.0)
+
+base_kwargs = dict(
     airflow_m3h=airflow,
     static_pressure_pa=sp,
     total_pressure_pa=0.0,
@@ -886,7 +809,7 @@ def auto_select_geometry(base_kwargs: Dict, allowed_blade_types: List[str], max_
 
 optimisation_df = pd.DataFrame()
 if geometry_mode == "Auto optimise geometry":
-    allowed_types = list(BLADE_DEFAULTS.keys()) if blade_selection_mode.startswith("Auto") else [manual_blade_type]
+    allowed_types = list(BLADE_DEFAULTS.keys()) if blade_selection_mode == "Auto select blade type" else [manual_blade_type]
     inp, res, optimisation_df = auto_select_geometry(base_kwargs, allowed_types)
     with st.sidebar:
         st.subheader("Auto-selected geometry")
@@ -919,7 +842,7 @@ if res.warnings:
     for w in res.warnings:
         st.warning(w)
 
-tabs = st.tabs(["Design Summary", "Corrective Guidance", "Velocity / Coefficients", "Performance Curves", "2D Geometry", "Mechanical + BOM", "Export Package Review", "Exports", "Ansys Workflow"])
+tabs = st.tabs(["Design Summary", "Velocity / Coefficients", "Performance Curves", "2D Geometry", "Mechanical + BOM", "Exports", "Ansys Workflow"])
 
 with tabs[0]:
     st.subheader("Main Dimensions")
@@ -942,19 +865,12 @@ with tabs[0]:
     ], columns=["Parameter", "Value", "Notes"])
     st.dataframe(summary, use_container_width=True)
     if geometry_mode == "Auto optimise geometry":
-        st.subheader("Auto optimisation result")
-        st.success("The app selected these geometry values by comparing practical candidate designs for lower power, lower sound, lower vibration risk and manufacturable proportions.")
+        st.subheader("Auto optimisation comparison")
+        st.success("The first row is selected. The table compares practical candidate designs for power, sound, vibration and manufacturable proportions.")
         st.dataframe(optimisation_df, use_container_width=True)
-        st.caption("The top row is the selected design. You can switch to Manual geometry override only if you intentionally want to test another option from this table.")
+        st.caption("Use Manual geometry override only if you intentionally want to test one of these alternatives.")
 
 with tabs[1]:
-    st.subheader("Corrective action recommendations")
-    st.dataframe(engineering_recommendations(inp, res), use_container_width=True)
-    st.subheader("Practicality check table")
-    st.dataframe(practicality_table(inp, res), use_container_width=True)
-    st.info("Change the inputs mentioned in the last column, then re-check the status until critical items become OK or acceptable for your manufacturing method.")
-
-with tabs[2]:
     st.subheader("Aerodynamic Coefficients")
     coeffs = pd.DataFrame([
         ["Flow coefficient φ", res.flow_coeff_phi],
@@ -976,7 +892,7 @@ with tabs[2]:
     for n in risk_notes:
         st.write("- " + n)
 
-with tabs[3]:
+with tabs[2]:
     st.subheader("Preliminary Fan Curves")
     curve = performance_curve(res)
     fig, ax = plt.subplots()
@@ -996,7 +912,7 @@ with tabs[3]:
     st.pyplot(fig2)
     st.dataframe(curve, use_container_width=True)
 
-with tabs[4]:
+with tabs[3]:
     st.subheader("2D Impeller and Volute Preview")
     blade = blade_centerline_points(res)
     vol = volute_spiral_points(res)
@@ -1034,7 +950,7 @@ with tabs[4]:
     st.info(f"Volute/blower outlet flange: {res.volute_outlet_width_mm:.0f} mm wide × {res.volute_outlet_height_mm:.0f} mm high. Outlet velocity: {res.outlet_velocity_ms:.1f} m/s.")
     st.info("DXF export contains impeller OD, inlet, hub, blade centerlines, volute spiral and outlet rectangle.")
 
-with tabs[5]:
+with tabs[4]:
     st.subheader("Mechanical Design + BOM")
     mech = pd.DataFrame([
         ["Tip speed", f"{res.tip_speed_ms:.1f} m/s"],
@@ -1049,29 +965,7 @@ with tabs[5]:
     st.subheader("Preliminary BOM")
     st.dataframe(bom_table(inp, res), use_container_width=True)
 
-with tabs[6]:
-    st.subheader("Export package review")
-    st.write("The same information below is included in the ZIP package so the user can review and correct the design before manufacturing.")
-    st.dataframe(export_manifest_df(inp, res), use_container_width=True)
-    st.subheader("Inputs included in Excel/PDF")
-    st.dataframe(input_table(inp), use_container_width=True)
-    st.subheader("Results included in Excel/PDF")
-    st.dataframe(make_results_df(res), use_container_width=True)
-    st.subheader("Recommendations included in Excel/PDF")
-    st.dataframe(engineering_recommendations(inp, res), use_container_width=True)
-    st.subheader("Sound and vibration included in Excel/PDF")
-    snd = estimate_sound_db(inp, res)
-    risk, risk_notes = vibration_risk(inp, res)
-    st.metric("Estimated sound at 1 m", f"{snd:.1f} dB(A)")
-    st.metric("Vibration risk", risk)
-    for n in risk_notes:
-        st.write("- " + n)
-    st.subheader("Images included in ZIP")
-    cimg1, cimg2 = st.columns(2)
-    cimg1.image(plot_impeller_volute_png(res), caption="impeller_volute_preview.png")
-    cimg2.image(plot_blade_profile_png(res), caption="single_blade_profile.png")
-
-with tabs[7]:
+with tabs[5]:
     st.subheader("Download Files")
     st.download_button("Download PDF Report", create_pdf(inp, res), file_name="blower_design_report.pdf")
     st.download_button("Download Excel Calculation", create_excel(inp, res), file_name="blower_design_calculations.xlsx")
@@ -1079,7 +973,7 @@ with tabs[7]:
     st.download_button("Download STEP placeholder / CAD instruction", create_step_placeholder(res), file_name="impeller_basic.step_or_instruction.txt")
     st.download_button("Download Complete ZIP Package", make_zip(inp, res), file_name="blower_design_package.zip")
 
-with tabs[8]:
+with tabs[6]:
     st.subheader("Ansys / CFD Export Plan")
     st.text(ansys_workflow_text())
     st.info("Next development step: full CadQuery/FreeCAD solid impeller, volute, and fluid-domain export as separate STEP files.")
