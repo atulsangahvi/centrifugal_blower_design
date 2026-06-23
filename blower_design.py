@@ -1,5 +1,5 @@
 """
-Centrifugal Blower Design & Manufacturing Toolkit v11 - SI Units
+Centrifugal Blower Design & Manufacturing Toolkit v12 - SI Units
 Static pressure input only. Auto-optimised geometry for backward curved, forward curved and radial blade blowers.
 
 Preliminary engineering tool only. Validate final design by prototype testing, AMCA/ISO test procedure,
@@ -338,21 +338,85 @@ def bom_table(inp:DutyInput,res:DesignResult)->pd.DataFrame:
     ],columns=['Item','Material','Thickness mm','Approx Qty'])
 
 def create_excel(inp,res,opt_df=None)->bytes:
+    """Create Excel safely using openpyxl directly.
+    This avoids the pandas/openpyxl 'At least one sheet must be visible'
+    error seen on Streamlit Cloud / Python 3.14.
+    """
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment
     bio=io.BytesIO()
-    with pd.ExcelWriter(bio,engine='openpyxl') as w:
-        pd.DataFrame([asdict(inp)]).T.reset_index().rename(columns={'index':'Input',0:'Value'}).to_excel(w,'Inputs',index=False)
-        pd.DataFrame([asdict(res)]).T.reset_index().rename(columns={'index':'Result',0:'Value'}).to_excel(w,'Results',index=False)
-        practicality_table(inp,res).to_excel(w,'Practicality',index=False)
-        recommendations(inp,res).to_excel(w,'Recommendations',index=False)
-        performance_curve(res).to_excel(w,'Performance Curve',index=False)
-        bom_table(inp,res).to_excel(w,'BOM',index=False)
-        if opt_df is not None: opt_df.to_excel(w,'Optimisation Options',index=False)
-        pd.DataFrame([['PDF report'],['Excel calculation'],['DXF drawing'],['Impeller PNG'],['Blade profile PNG'],['Ansys workflow']],columns=['ZIP Manifest']).to_excel(w,'Manifest',index=False)
+    wb=Workbook()
+    # Keep default sheet and rename it, so at least one visible sheet always exists.
+    ws=wb.active
+    ws.title='Inputs'
+
+    def write_df(ws, df):
+        # header
+        for c, col in enumerate(df.columns, start=1):
+            cell=ws.cell(row=1, column=c, value=str(col))
+            cell.font=Font(bold=True)
+            cell.fill=PatternFill('solid', fgColor='DDDDDD')
+            cell.alignment=Alignment(wrap_text=True, vertical='top')
+        for r_idx, row in enumerate(df.itertuples(index=False), start=2):
+            for c_idx, val in enumerate(row, start=1):
+                if isinstance(val, (list, tuple, dict)):
+                    val=str(val)
+                ws.cell(row=r_idx, column=c_idx, value=val)
+        for col_cells in ws.columns:
+            max_len=10
+            col_letter=col_cells[0].column_letter
+            for cell in col_cells:
+                try:
+                    max_len=max(max_len, min(60, len(str(cell.value))))
+                except Exception:
+                    pass
+            ws.column_dimensions[col_letter].width=max_len+2
+
+    def add_sheet(name, df):
+        # Sheet names must be <=31 chars and unique.
+        name=name[:31]
+        if name in wb.sheetnames:
+            base=name[:28]
+            i=1
+            while f'{base}_{i}' in wb.sheetnames:
+                i+=1
+            name=f'{base}_{i}'
+        ws=wb.create_sheet(name)
+        write_df(ws, df)
+        return ws
+
+    inputs_df=pd.DataFrame([asdict(inp)]).T.reset_index().rename(columns={'index':'Input',0:'Value'})
+    # Do not show total pressure as a user input; it is calculated.
+    inputs_df=inputs_df[inputs_df['Input']!='total_pressure_pa']
+    write_df(ws, inputs_df)
+
+    results_dict=asdict(res).copy()
+    # Convert warnings list into readable text for Excel.
+    if 'warnings' in results_dict:
+        results_dict['warnings']='; '.join(results_dict.get('warnings') or [])
+    add_sheet('Results', pd.DataFrame(list(results_dict.items()), columns=['Result','Value']))
+    add_sheet('Practicality', practicality_table(inp,res))
+    add_sheet('Recommendations', recommendations(inp,res))
+    add_sheet('Performance Curve', performance_curve(res))
+    add_sheet('BOM', bom_table(inp,res))
+    if opt_df is not None and hasattr(opt_df, 'empty') and not opt_df.empty:
+        add_sheet('Optimisation Options', opt_df)
+    elif opt_df is not None:
+        add_sheet('Optimisation Options', pd.DataFrame([['No optimisation options generated']], columns=['Message']))
+    add_sheet('Manifest', pd.DataFrame([
+        ['PDF report'],['Excel calculation'],['DXF drawing'],['Impeller PNG'],['Blade profile PNG'],['Ansys workflow']
+    ],columns=['ZIP Manifest']))
+
+    # Ensure at least one visible worksheet.
+    for sh in wb.worksheets:
+        sh.sheet_state='visible'
+    wb.active=0
+    wb.save(bio)
     return bio.getvalue()
 
 def create_pdf(inp,res)->bytes:
     if not HAS_REPORTLAB: return b'Install reportlab to generate PDF reports.'
-    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v11',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
+    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v12',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
     main=[['Parameter','Value'],['Blade type',inp.blade_type],['Airflow',f'{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)'],['Static pressure',f'{res.static_pressure_pa:.0f} Pa'],['Velocity pressure',f'{res.velocity_pressure_pa:.0f} Pa'],['Calculated total pressure',f'{res.total_pressure_pa:.0f} Pa'],['Density',f'{res.density_kgm3:.3f} kg/m³'],['RPM',f'{res.rpm:.0f}'],['Impeller OD D₂',f'{res.impeller_od_mm:.1f} mm'],['Inlet diameter D₁',f'{res.impeller_id_mm:.1f} mm'],['Outlet width b₂',f'{res.outlet_width_mm:.1f} mm'],['β₁ / β₂',f'{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°'],['Blades',str(res.blade_count)],['Flange outlet W × H',f'{res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm'],['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'],['Sound estimate',f'{res.sound_db_a_1m:.1f} dB(A) at 1 m'],['Vibration risk',res.vibration_risk],['Shaft power',f'{res.shaft_power_kw:.2f} kW'],['Selected motor',f'{res.selected_motor_kw:.1f} kW']]
     tbl=Table(main,colWidths=[180,300]); tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.lightgrey),('GRID',(0,0),(-1,-1),.3,colors.grey),('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]))
     story += [tbl,Spacer(1,8),Paragraph('Practicality Checks',styles['Heading2'])]
@@ -386,7 +450,7 @@ if _pw:
     st.sidebar.header('Login'); ent=st.sidebar.text_input('Password',type='password')
     if ent!=_pw: st.warning('Enter password in sidebar to continue.'); st.stop()
 
-st.title('Centrifugal Blower Design & Manufacturing Toolkit v11')
+st.title('Centrifugal Blower Design & Manufacturing Toolkit v12')
 st.success('v11: auto-optimised geometry + practical design scoring + report/ZIP outputs aligned with UI')
 with st.sidebar:
     st.header('Duty Inputs')
