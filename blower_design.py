@@ -1,6 +1,6 @@
 """
-Centrifugal Blower Design & Manufacturing Toolkit v12 - SI Units
-Static pressure input only. Auto-optimised geometry for backward curved, forward curved and radial blade blowers.
+Centrifugal Blower Design & Manufacturing Toolkit v13 - SI Units
+Static pressure input only. Improved auto-optimised geometry for backward curved, forward curved and radial blade blowers.
 
 Preliminary engineering tool only. Validate final design by prototype testing, AMCA/ISO test procedure,
 dynamic balancing, vibration measurement, CFD/FEA and qualified engineering review before manufacture.
@@ -32,9 +32,9 @@ except Exception:
 STANDARD_MOTORS_KW=[0.18,0.25,0.37,0.55,0.75,1.1,1.5,2.2,3,4,5.5,7.5,11,15,18.5,22,30,37,45,55,75,90,110,132,160,200,250,315]
 
 BLADE_DEFAULTS={
-    "Backward Curved / Backward Inclined":{"beta1":24,"beta2":34,"eta":0.74,"phi":0.18,"psi":0.58,"z":12,"z_range":range(8,17),"beta2_range":[28,32,36,40,44]},
-    "Forward Curved":{"beta1":28,"beta2":125,"eta":0.58,"phi":0.16,"psi":0.72,"z":36,"z_range":range(28,49,4),"beta2_range":[115,125,135,145]},
-    "Radial Blade":{"beta1":25,"beta2":90,"eta":0.62,"phi":0.12,"psi":0.62,"z":8,"z_range":range(6,13),"beta2_range":[88,90,92]},
+    "Backward Curved / Backward Inclined":{"beta1":24,"beta2":34,"eta":0.74,"phi":0.18,"psi":0.58,"z":12,"z_range":[8,10,12,14,16],"beta1_range":[20,24,28,32],"beta2_range":[28,34,40,46]},
+    "Forward Curved":{"beta1":28,"beta2":125,"eta":0.58,"phi":0.16,"psi":0.72,"z":36,"z_range":[28,32,36,40,44],"beta1_range":[22,26,30,34],"beta2_range":[115,125,135,145]},
+    "Radial Blade":{"beta1":25,"beta2":90,"eta":0.62,"phi":0.12,"psi":0.62,"z":8,"z_range":[6,8,10,12],"beta1_range":[20,25,30,35],"beta2_range":[88,90,92]},
 }
 MATERIALS={
     "Mild Steel IS2062 / S275":{"density":7850,"max_tip":90},
@@ -117,6 +117,36 @@ def selected_motor(kw:float)->float:
         if m>=kw: return m
     return STANDARD_MOTORS_KW[-1]
 
+def adjusted_fan_coefficients(inp: DutyInput) -> Tuple[float, float, float]:
+    """Return preliminary phi, psi and efficiency adjusted by blade angles.
+    This makes optimisation meaningful: blade angle changes pressure loading,
+    efficiency, impeller diameter, noise and manufacturability. It is still a
+    preliminary engineering model and must be calibrated with test data.
+    """
+    d = BLADE_DEFAULTS[inp.blade_type]
+    beta1 = inp.beta1_deg
+    beta2 = inp.beta2_deg
+    phi = d['phi']
+    psi = d['psi']
+    eta = d['eta']
+    if inp.blade_type.startswith('Backward'):
+        # Higher backward angle gives more pressure at same tip speed, but optimum
+        # efficiency is usually around the mid-30s for HVAC-style wheels.
+        psi = 0.50 + 0.0048 * (beta2 - 28.0)
+        phi = 0.17 + 0.0008 * (beta2 - 34.0)
+        eta = 0.765 - 0.0009 * (beta2 - 36.0) ** 2 - 0.00035 * (beta1 - 26.0) ** 2
+    elif inp.blade_type.startswith('Forward'):
+        # Forward-curved wheels carry higher pressure coefficient but lower
+        # efficiency and overloading/noise risk.
+        psi = 0.66 + 0.0022 * (beta2 - 115.0)
+        phi = 0.155 + 0.0005 * (beta2 - 125.0)
+        eta = 0.60 - 0.00035 * (beta2 - 125.0) ** 2 - 0.00025 * (beta1 - 28.0) ** 2
+    else:
+        psi = 0.61 + 0.0015 * (beta2 - 90.0)
+        phi = 0.12
+        eta = 0.63 - 0.00045 * (beta2 - 90.0) ** 2 - 0.00025 * (beta1 - 25.0) ** 2
+    return max(0.08, phi), max(0.35, psi), max(0.45, min(0.82, eta))
+
 def stodola_slip_factor(z:int,beta2_deg:float,d1d2:float)->float:
     beta=math.radians(beta2_deg)
     sig=1.0-(math.pi*abs(math.sin(beta)))/max(z,3)
@@ -134,7 +164,7 @@ def design_blower(inp:DutyInput)->DesignResult:
     q=inp.airflow_m3h/3600
     rho=inp.density_kgm3 if inp.density_kgm3>0 else standard_air_density(inp.air_temp_c, inp.altitude_m)
     defaults=BLADE_DEFAULTS[inp.blade_type]
-    phi=defaults['phi']; psi=defaults['psi']; eta=defaults['eta']
+    phi, psi, eta = adjusted_fan_coefficients(inp)
     target_v=max(6,min(18,inp.target_flange_velocity_ms))
     vel_p=0.5*rho*target_v**2
     total_p=inp.static_pressure_pa+vel_p
@@ -225,27 +255,38 @@ def practicality_penalty(inp:DutyInput,d1d2:float,b2d2:float,pc:float,tip:float,
     if inp.blade_type=='Forward Curved' and inp.static_pressure_pa>1000: p+=3
     return p
 
-def make_trial_input(base:DutyInput, blade_type:str, beta2:float, z:int, d1d2:float, b2d2:float, vout:float)->DutyInput:
-    return replace(base, blade_type=blade_type, beta1_deg=BLADE_DEFAULTS[blade_type]['beta1'], beta2_deg=beta2, blade_count=z, inlet_diameter_ratio=d1d2, outlet_width_ratio=b2d2, target_flange_velocity_ms=vout)
+def make_trial_input(base:DutyInput, blade_type:str, beta1:float, beta2:float, z:int, d1d2:float, b2d2:float, vout:float)->DutyInput:
+    return replace(base, blade_type=blade_type, beta1_deg=beta1, beta2_deg=beta2, blade_count=z, inlet_diameter_ratio=d1d2, outlet_width_ratio=b2d2, target_flange_velocity_ms=vout)
 
 def optimise_geometry(base:DutyInput)->Tuple[DutyInput,DesignResult,pd.DataFrame]:
     rows=[]; best=None
     candidate_types=list(BLADE_DEFAULTS.keys()) if base.blade_type=='Auto select best' else [base.blade_type]
     for bt in candidate_types:
         defs=BLADE_DEFAULTS[bt]
-        for beta2 in defs['beta2_range']:
-            for z in defs['z_range']:
-                for d1d2 in [0.45,0.50,0.55,0.60,0.65]:
-                    for b2d2 in [0.08,0.10,0.12,0.15,0.18,0.22,0.25]:
-                        for vout in [8,10,12,14]:
-                            trial=make_trial_input(base,bt,beta2,z,d1d2,b2d2,vout)
-                            res=design_blower(trial)
-                            pc=blade_pitch_chord_ratio(res); b2r=res.outlet_width_mm/res.impeller_od_mm; d1r=res.impeller_id_mm/res.impeller_od_mm
-                            feasible=(0.05<=b2r<=0.30 and 0.42<=d1r<=0.72 and 0.55<=pc<=1.60 and res.tip_speed_ms<=MATERIALS[trial.material]['max_tip'])
-                            score=res.design_score+(0 if feasible else 100)
-                            rows.append({"Blade type":bt,"β1":trial.beta1_deg,"β2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
-                            if best is None or score<best[0]: best=(score,trial,res)
-    df=pd.DataFrame(rows).sort_values(['Feasible','Score'],ascending=[False,True]).head(50)
+        for beta1 in defs.get('beta1_range',[defs['beta1']]):
+            for beta2 in defs['beta2_range']:
+                for z in defs['z_range']:
+                    for d1d2 in [0.45,0.50,0.55,0.60,0.65]:
+                        for b2d2 in [0.08,0.10,0.12,0.15,0.18,0.22,0.25]:
+                            for vout in [8,10,12,14]:
+                                trial=make_trial_input(base,bt,beta1,beta2,z,d1d2,b2d2,vout)
+                                res=design_blower(trial)
+                                pc=blade_pitch_chord_ratio(res); b2r=res.outlet_width_mm/res.impeller_od_mm; d1r=res.impeller_id_mm/res.impeller_od_mm
+                                feasible=(0.06<=b2r<=0.25 and 0.45<=d1r<=0.70 and 0.70<=pc<=1.30 and 8<=res.flange_outlet_velocity_ms<=16 and res.tip_speed_ms<=MATERIALS[trial.material]['max_tip'])
+                                # Extra practical score: lower is better. This prevents the optimiser from
+                                # choosing low-power but noisy, crowded or oversized geometry.
+                                diameter_penalty=max(0,(res.impeller_od_mm-1500)/100)*0.8
+                                width_penalty=max(0,b2r-0.22)*60 + max(0,0.08-b2r)*40
+                                pitch_penalty=abs(pc-1.0)*8
+                                sound_penalty=max(0,res.sound_db_a_1m-78)*1.4
+                                vout_penalty=abs(res.flange_outlet_velocity_ms-10)*0.8
+                                type_penalty=0
+                                if bt.startswith('Forward') and base.static_pressure_pa>900: type_penalty+=18
+                                if bt.startswith('Radial') and base.static_pressure_pa<2500: type_penalty+=8
+                                score=res.shaft_power_kw + sound_penalty + res.vibration_score*7 + diameter_penalty + width_penalty + pitch_penalty + vout_penalty + type_penalty + (0 if feasible else 150)
+                                rows.append({"Blade type":bt,"β1":beta1,"β2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
+                                if best is None or score<best[0]: best=(score,trial,res)
+    df=pd.DataFrame(rows).sort_values(['Feasible','Score'],ascending=[False,True]).head(100)
     return best[1],best[2],df
 
 # ---------- geometry and images ----------
@@ -416,7 +457,7 @@ def create_excel(inp,res,opt_df=None)->bytes:
 
 def create_pdf(inp,res)->bytes:
     if not HAS_REPORTLAB: return b'Install reportlab to generate PDF reports.'
-    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v12',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
+    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v13',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
     main=[['Parameter','Value'],['Blade type',inp.blade_type],['Airflow',f'{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)'],['Static pressure',f'{res.static_pressure_pa:.0f} Pa'],['Velocity pressure',f'{res.velocity_pressure_pa:.0f} Pa'],['Calculated total pressure',f'{res.total_pressure_pa:.0f} Pa'],['Density',f'{res.density_kgm3:.3f} kg/m³'],['RPM',f'{res.rpm:.0f}'],['Impeller OD D₂',f'{res.impeller_od_mm:.1f} mm'],['Inlet diameter D₁',f'{res.impeller_id_mm:.1f} mm'],['Outlet width b₂',f'{res.outlet_width_mm:.1f} mm'],['β₁ / β₂',f'{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°'],['Blades',str(res.blade_count)],['Flange outlet W × H',f'{res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm'],['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'],['Sound estimate',f'{res.sound_db_a_1m:.1f} dB(A) at 1 m'],['Vibration risk',res.vibration_risk],['Shaft power',f'{res.shaft_power_kw:.2f} kW'],['Selected motor',f'{res.selected_motor_kw:.1f} kW']]
     tbl=Table(main,colWidths=[180,300]); tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.lightgrey),('GRID',(0,0),(-1,-1),.3,colors.grey),('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]))
     story += [tbl,Spacer(1,8),Paragraph('Practicality Checks',styles['Heading2'])]
@@ -450,8 +491,8 @@ if _pw:
     st.sidebar.header('Login'); ent=st.sidebar.text_input('Password',type='password')
     if ent!=_pw: st.warning('Enter password in sidebar to continue.'); st.stop()
 
-st.title('Centrifugal Blower Design & Manufacturing Toolkit v12')
-st.success('v11: auto-optimised geometry + practical design scoring + report/ZIP outputs aligned with UI')
+st.title('Centrifugal Blower Design & Manufacturing Toolkit v13')
+st.success('v13: wider blade-angle optimisation + practical score for power, sound, vibration and manufacturability')
 with st.sidebar:
     st.header('Duty Inputs')
     airflow=st.number_input('Airflow (m³/h)',min_value=100.0,value=40000.0,step=500.0)
