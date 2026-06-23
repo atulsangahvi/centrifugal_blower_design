@@ -1,5 +1,5 @@
 """
-Centrifugal Blower Design & Manufacturing Toolkit v14 - SI Units
+Centrifugal Blower Design & Manufacturing Toolkit v15 - SI Units
 Static pressure input only. Improved auto-optimised geometry for backward curved, forward curved and radial blade blowers.
 
 Preliminary engineering tool only. Validate final design by prototype testing, AMCA/ISO test procedure,
@@ -180,10 +180,10 @@ def design_blower(inp:DutyInput)->DesignResult:
     cm2_target=phi*u2
     if cm2>1.25*cm2_target:
         b2=q/(math.pi*d2*cm2_target)
-        warnings.append('b₂ was auto-increased to keep internal impeller meridional velocity in practical range.')
+        warnings.append('b2 was auto-increased to keep internal impeller meridional velocity in practical range.')
         cm2=cm2_target
     elif cm2<0.55*cm2_target:
-        warnings.append('b₂ may be wide for this duty; check efficiency and casing width.')
+        warnings.append('b2 may be wide for this duty; check efficiency and casing width.')
     b1=1.15*b2
     sigma=stodola_slip_factor(inp.blade_count,inp.beta2_deg,d1/d2)
     air_kw=q*total_p/1000
@@ -210,8 +210,8 @@ def design_blower(inp:DutyInput)->DesignResult:
     if u2>mat['max_tip']: warnings.append(f'Tip speed {u2:.1f} m/s exceeds preliminary material limit {mat["max_tip"]} m/s.')
     if inp.blade_type=='Forward Curved' and inp.static_pressure_pa>1000: warnings.append('Forward-curved wheel is not preferred for this pressure; backward-curved is usually safer.')
     d1d2=d1/d2; b2d2=b2/d2
-    if b2d2>0.28: warnings.append('b₂/D₂ is high. Consider lower RPM/larger wheel, DIDW wheel or multiple fans in parallel.')
-    if b2d2<0.05: warnings.append('b₂/D₂ is very low. Passage may be narrow and losses/noise may increase.')
+    if b2d2>0.28: warnings.append('b2/D2 is high. Consider lower RPM/larger wheel, DIDW wheel or multiple fans in parallel.')
+    if b2d2<0.05: warnings.append('b2/D2 is very low. Passage may be narrow and losses/noise may increase.')
     if target_v>16: warnings.append('High outlet flange velocity may increase duct loss and noise.')
     if target_v<7: warnings.append('Low outlet velocity gives large outlet flange and casing.')
     if vol_h/d2>1.25: warnings.append('Outlet height is large compared with impeller diameter; consider higher outlet velocity, DIDW, or two fans in parallel.')
@@ -296,7 +296,7 @@ def optimise_geometry(base:DutyInput)->Tuple[DutyInput,DesignResult,pd.DataFrame
                                 if bt.startswith('Forward') and base.static_pressure_pa>900: type_penalty+=18
                                 if bt.startswith('Radial') and base.static_pressure_pa<2500: type_penalty+=8
                                 score=res.shaft_power_kw + sound_penalty + res.vibration_score*7 + diameter_penalty + width_penalty + pitch_penalty + vout_penalty + outlet_package_penalty + type_penalty + (0 if feasible else 150)
-                                rows.append({"Blade type":bt,"β1":beta1,"β2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Outlet W mm":res.volute_outlet_width_mm,"Outlet H mm":res.volute_outlet_height_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
+                                rows.append({"Blade type":bt,"beta1":beta1,"beta2":beta2,"Blades":z,"D1/D2":d1r,"b2/D2":b2r,"Pitch/chord":pc,"Outlet velocity m/s":res.flange_outlet_velocity_ms,"Impeller OD mm":res.impeller_od_mm,"b2 mm":res.outlet_width_mm,"Outlet W mm":res.volute_outlet_width_mm,"Outlet H mm":res.volute_outlet_height_mm,"Shaft kW":res.shaft_power_kw,"Sound dB(A)":res.sound_db_a_1m,"Vibration":res.vibration_risk,"Feasible":feasible,"Score":score})
                                 if best is None or score<best[0]: best=(score,trial,res)
     df=pd.DataFrame(rows).sort_values(['Feasible','Score'],ascending=[False,True]).head(100)
     return best[1],best[2],df
@@ -326,15 +326,15 @@ def impeller_figure(res:DesignResult):
     for k in range(res.blade_count):
         a=2*math.pi*k/res.blade_count; ca,sa=math.cos(a),math.sin(a); pts=np.array([(x*ca-y*sa,x*sa+y*ca) for x,y in blade]); ax.plot(pts[:,0],pts[:,1],lw=.8)
     ax.plot(vol[:,0],vol[:,1],lw=2)
-    ax.annotate(f'D₂ {res.impeller_od_mm:.0f} mm',xy=(0,-r2),xytext=(0,-r2*1.25),ha='center',arrowprops=dict(arrowstyle='<->'))
-    ax.annotate(f'D₁ {res.impeller_id_mm:.0f} mm',xy=(r1,0),xytext=(r1*1.25,r1*.35),arrowprops=dict(arrowstyle='->'))
+    ax.annotate(f'D2 {res.impeller_od_mm:.0f} mm',xy=(0,-r2),xytext=(0,-r2*1.25),ha='center',arrowprops=dict(arrowstyle='<->'))
+    ax.annotate(f'D1 {res.impeller_id_mm:.0f} mm',xy=(r1,0),xytext=(r1*1.25,r1*.35),arrowprops=dict(arrowstyle='->'))
     ax.set_aspect('equal'); ax.grid(True); ax.set_xlabel('mm'); ax.set_ylabel('mm'); ax.set_title('Impeller + preliminary volute')
     return fig
 
 def blade_figure(res:DesignResult):
     pts=np.array(blade_centerline_points(res)); fig,ax=plt.subplots(figsize=(7,4)); ax.plot(pts[:,0],pts[:,1],lw=2)
     pc=blade_pitch_chord_ratio(res); rmid=.25*(res.impeller_od_mm+res.impeller_id_mm); pitch=math.pi*(2*rmid)/res.blade_count; chord=.55*(res.impeller_od_mm-res.impeller_id_mm)
-    ax.set_aspect('equal'); ax.grid(True); ax.set_title(f'Blade profile: β₁={res.beta1_deg:.1f}°, β₂={res.beta2_deg:.1f}°, pitch={pitch:.0f} mm, chord≈{chord:.0f} mm, pitch/chord={pc:.2f}')
+    ax.set_aspect('equal'); ax.grid(True); ax.set_title(f'Blade profile: beta1={res.beta1_deg:.1f} deg, beta2={res.beta2_deg:.1f} deg, pitch={pitch:.0f} mm, chord~{chord:.0f} mm, pitch/chord={pc:.2f}')
     ax.set_xlabel('mm'); ax.set_ylabel('mm'); return fig
 
 def fig_png_bytes(fig)->bytes:
@@ -357,10 +357,10 @@ def practicality_table(inp:DutyInput,res:DesignResult)->pd.DataFrame:
     pc=blade_pitch_chord_ratio(res); d1d2=res.impeller_id_mm/res.impeller_od_mm; b2d2=res.outlet_width_mm/res.impeller_od_mm
     def stat(ok): return 'OK' if ok else 'REVIEW'
     return pd.DataFrame([
-        ['β₂ outlet blade angle',f'{res.beta2_deg:.1f}°','BC 25-50°, FC 110-150°, Radial ≈90°',stat((inp.blade_type.startswith('Backward') and 25<=res.beta2_deg<=50) or (inp.blade_type.startswith('Forward') and 110<=res.beta2_deg<=150) or (inp.blade_type.startswith('Radial') and 85<=res.beta2_deg<=95)),'Controls pressure, power curve and stability.'],
-        ['β₁ inlet blade angle',f'{res.beta1_deg:.1f}°','20-45° preliminary',stat(20<=res.beta1_deg<=45),'Controls inlet shock loss and noise.'],
-        ['D₁/D₂ inlet ratio',f'{d1d2:.2f}','0.45-0.70',stat(0.45<=d1d2<=0.70),'Too high reduces pressure; too low restricts inlet.'],
-        ['b₂/D₂ width ratio',f'{b2d2:.2f}','0.06-0.25 normal; >0.30 usually impractical',stat(0.06<=b2d2<=0.25),'High value suggests DIDW, lower RPM/larger wheel or parallel fans.'],
+        ['beta2 outlet blade angle',f'{res.beta2_deg:.1f} deg','BC 25-50 deg, FC 110-150 deg, Radial ~90 deg',stat((inp.blade_type.startswith('Backward') and 25<=res.beta2_deg<=50) or (inp.blade_type.startswith('Forward') and 110<=res.beta2_deg<=150) or (inp.blade_type.startswith('Radial') and 85<=res.beta2_deg<=95)),'Controls pressure, power curve and stability.'],
+        ['beta1 inlet blade angle',f'{res.beta1_deg:.1f} deg','20-45 deg preliminary',stat(20<=res.beta1_deg<=45),'Controls inlet shock loss and noise.'],
+        ['D1/D2 inlet ratio',f'{d1d2:.2f}','0.45-0.70',stat(0.45<=d1d2<=0.70),'Too high reduces pressure; too low restricts inlet.'],
+        ['b2/D2 width ratio',f'{b2d2:.2f}','0.06-0.25 normal; >0.30 usually impractical',stat(0.06<=b2d2<=0.25),'High value suggests DIDW, lower RPM/larger wheel or parallel fans.'],
         ['Blade pitch/chord',f'{pc:.2f}','0.70-1.30 preferred',stat(0.70<=pc<=1.30),'Too close raises blockage/noise; too wide gives poor guidance/slip.'],
         ['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s','8-14 m/s preferred; <16 acceptable',stat(8<=res.flange_outlet_velocity_ms<=16),'High velocity adds duct loss and sound.'],
         ['Impeller meridional velocity',f'{res.impeller_meridional_velocity_ms:.1f} m/s','Typically 6-14 m/s',stat(6<=res.impeller_meridional_velocity_ms<=16),'Internal passage velocity through wheel.'],
@@ -369,7 +369,7 @@ def practicality_table(inp:DutyInput,res:DesignResult)->pd.DataFrame:
 
 def recommendations(inp:DutyInput,res:DesignResult)->pd.DataFrame:
     rec=[]; pc=blade_pitch_chord_ratio(res); b2d2=res.outlet_width_mm/res.impeller_od_mm
-    if b2d2>0.25: rec.append(['b₂/D₂ high','Use lower RPM/larger impeller, DIDW construction or multiple fans in parallel.'])
+    if b2d2>0.25: rec.append(['b2/D2 high','Use lower RPM/larger impeller, DIDW construction or multiple fans in parallel.'])
     if res.flange_outlet_velocity_ms>16: rec.append(['Outlet velocity high','Increase outlet flange area or reduce target outlet velocity.'])
     if pc<0.70: rec.append(['Blade pitch too close','Reduce blade count or increase diameter; check blade blockage and blade-passing noise.'])
     if pc>1.30: rec.append(['Blade pitch wide','Increase blade count or improve blade guidance to reduce slip.'])
@@ -469,8 +469,8 @@ def create_excel(inp,res,opt_df=None)->bytes:
 
 def create_pdf(inp,res)->bytes:
     if not HAS_REPORTLAB: return b'Install reportlab to generate PDF reports.'
-    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v14',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
-    main=[['Parameter','Value'],['Blade type',inp.blade_type],['Airflow',f'{inp.airflow_m3h:,.0f} m³/h ({res.q_m3s:.3f} m³/s)'],['Static pressure',f'{res.static_pressure_pa:.0f} Pa'],['Velocity pressure',f'{res.velocity_pressure_pa:.0f} Pa'],['Calculated total pressure',f'{res.total_pressure_pa:.0f} Pa'],['Density',f'{res.density_kgm3:.3f} kg/m³'],['RPM',f'{res.rpm:.0f}'],['Impeller OD D₂',f'{res.impeller_od_mm:.1f} mm'],['Inlet diameter D₁',f'{res.impeller_id_mm:.1f} mm'],['Outlet width b₂',f'{res.outlet_width_mm:.1f} mm'],['β₁ / β₂',f'{res.beta1_deg:.1f}° / {res.beta2_deg:.1f}°'],['Blades',str(res.blade_count)],['Flange outlet W × H',f'{res.volute_outlet_width_mm:.0f} × {res.volute_outlet_height_mm:.0f} mm'],['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'],['Sound estimate',f'{res.sound_db_a_1m:.1f} dB(A) at 1 m'],['Vibration risk',res.vibration_risk],['Shaft power',f'{res.shaft_power_kw:.2f} kW'],['Selected motor',f'{res.selected_motor_kw:.1f} kW']]
+    bio=io.BytesIO(); doc=SimpleDocTemplate(bio,pagesize=A4); styles=getSampleStyleSheet(); story=[Paragraph('Centrifugal Blower Preliminary Design Report v15',styles['Title']),Spacer(1,8),Paragraph('Static pressure input only. Total pressure is calculated from outlet velocity pressure. Preliminary design for engineering review and prototype validation.',styles['BodyText']),Spacer(1,10)]
+    main=[['Parameter','Value'],['Blade type',inp.blade_type],['Airflow',f'{inp.airflow_m3h:,.0f} m^3/h ({res.q_m3s:.3f} m^3/s)'],['Static pressure',f'{res.static_pressure_pa:.0f} Pa'],['Velocity pressure',f'{res.velocity_pressure_pa:.0f} Pa'],['Calculated total pressure',f'{res.total_pressure_pa:.0f} Pa'],['Density',f'{res.density_kgm3:.3f} kg/m^3'],['RPM',f'{res.rpm:.0f}'],['Impeller OD D2',f'{res.impeller_od_mm:.1f} mm'],['Inlet diameter D1',f'{res.impeller_id_mm:.1f} mm'],['Outlet width b2',f'{res.outlet_width_mm:.1f} mm'],['beta1 / beta2',f'{res.beta1_deg:.1f} deg / {res.beta2_deg:.1f} deg'],['Blades',str(res.blade_count)],['Flange outlet W x H',f'{res.volute_outlet_width_mm:.0f} x {res.volute_outlet_height_mm:.0f} mm'],['Flange outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'],['Sound estimate',f'{res.sound_db_a_1m:.1f} dB(A) at 1 m'],['Vibration risk',res.vibration_risk],['Shaft power',f'{res.shaft_power_kw:.2f} kW'],['Selected motor',f'{res.selected_motor_kw:.1f} kW']]
     tbl=Table(main,colWidths=[180,300]); tbl.setStyle(TableStyle([('BACKGROUND',(0,0),(-1,0),colors.lightgrey),('GRID',(0,0),(-1,-1),.3,colors.grey),('FONTNAME',(0,0),(-1,0),'Helvetica-Bold')]))
     story += [tbl,Spacer(1,8),Paragraph('Practicality Checks',styles['Heading2'])]
     pt=[list(practicality_table(inp,res).columns)]+practicality_table(inp,res).values.tolist(); t2=Table(pt,colWidths=[110,70,120,55,120]); t2.setStyle(TableStyle([('GRID',(0,0),(-1,-1),.25,colors.grey),('BACKGROUND',(0,0),(-1,0),colors.lightgrey),('FONTSIZE',(0,0),(-1,-1),7)])); story.append(t2)
@@ -503,18 +503,18 @@ if _pw:
     st.sidebar.header('Login'); ent=st.sidebar.text_input('Password',type='password')
     if ent!=_pw: st.warning('Enter password in sidebar to continue.'); st.stop()
 
-st.title('Centrifugal Blower Design & Manufacturing Toolkit v14')
+st.title('Centrifugal Blower Design & Manufacturing Toolkit v15')
 st.success('v14: optimisation now checks practical outlet flange package + power, sound, vibration and manufacturability')
 with st.sidebar:
     st.header('Duty Inputs')
-    airflow=st.number_input('Airflow (m³/h)',min_value=100.0,value=40000.0,step=500.0)
+    airflow=st.number_input('Airflow (m^3/h)',min_value=100.0,value=40000.0,step=500.0)
     sp=st.number_input('Static pressure (Pa)',min_value=10.0,value=1400.0,step=50.0)
     rpm=st.number_input('Fan speed (RPM)',min_value=100.0,value=800.0,step=50.0)
     geom_mode=st.radio('Geometry mode',['Auto optimise geometry','Manual override'],index=0)
     blade_choice=st.selectbox('Blade type',['Auto select best']+list(BLADE_DEFAULTS.keys()))
     st.header('Air Properties')
-    temp_c=st.number_input('Air temperature (°C)',value=35.0,step=1.0); altitude=st.number_input('Altitude (m)',value=0.0,step=100.0)
-    auto_density=standard_air_density(temp_c,altitude); use_auto=st.checkbox(f'Use calculated density ({auto_density:.3f} kg/m³)',value=True); density=auto_density if use_auto else st.number_input('Air density (kg/m³)',value=1.20,step=.01)
+    temp_c=st.number_input('Air temperature ( degC)',value=35.0,step=1.0); altitude=st.number_input('Altitude (m)',value=0.0,step=100.0)
+    auto_density=standard_air_density(temp_c,altitude); use_auto=st.checkbox(f'Use calculated density ({auto_density:.3f} kg/m^3)',value=True); density=auto_density if use_auto else st.number_input('Air density (kg/m^3)',value=1.20,step=.01)
     st.header('Outlet and Mechanical')
     target_v=st.number_input('Target blower outlet velocity (m/s)',min_value=6.0,max_value=20.0,value=12.0,step=1.0)
     material=st.selectbox('Impeller/casing material',list(MATERIALS.keys()))
@@ -524,7 +524,7 @@ with st.sidebar:
     if geom_mode=='Manual override':
         bt=blade_choice if blade_choice!='Auto select best' else 'Backward Curved / Backward Inclined'; defs=BLADE_DEFAULTS[bt]
         st.header('Manual Geometry')
-        beta2=st.number_input('Outlet blade angle β₂ (deg)',value=float(defs['beta2']),step=1.0); beta1=st.number_input('Inlet blade angle β₁ (deg)',value=float(defs['beta1']),step=1.0); blades=st.number_input('Number of blades',min_value=3,value=int(defs['z']),step=1); b2r=st.number_input('Outlet width ratio b₂/D₂',min_value=.03,max_value=.50,value=.12,step=.01); d1r=st.number_input('Inlet diameter ratio D₁/D₂',min_value=.25,max_value=.85,value=.55,step=.01)
+        beta2=st.number_input('Outlet blade angle beta2 (deg)',value=float(defs['beta2']),step=1.0); beta1=st.number_input('Inlet blade angle beta1 (deg)',value=float(defs['beta1']),step=1.0); blades=st.number_input('Number of blades',min_value=3,value=int(defs['z']),step=1); b2r=st.number_input('Outlet width ratio b2/D2',min_value=.03,max_value=.50,value=.12,step=.01); d1r=st.number_input('Inlet diameter ratio D1/D2',min_value=.25,max_value=.85,value=.55,step=.01)
     else:
         bt=blade_choice; beta1=24; beta2=34; blades=12; b2r=.12; d1r=.55
 
@@ -535,7 +535,7 @@ if geom_mode=='Auto optimise geometry':
 else:
     inp=base; res=design_blower(inp)
 
-c1,c2,c3,c4,c5=st.columns(5); c1.metric('Impeller OD',f'{res.impeller_od_mm:.0f} mm'); c2.metric('b₂/D₂',f'{res.outlet_width_mm/res.impeller_od_mm:.2f}'); c3.metric('Outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'); c4.metric('Shaft power',f'{res.shaft_power_kw:.1f} kW'); c5.metric('Sound',f'{res.sound_db_a_1m:.1f} dB(A)')
+c1,c2,c3,c4,c5=st.columns(5); c1.metric('Impeller OD',f'{res.impeller_od_mm:.0f} mm'); c2.metric('b2/D2',f'{res.outlet_width_mm/res.impeller_od_mm:.2f}'); c3.metric('Outlet velocity',f'{res.flange_outlet_velocity_ms:.1f} m/s'); c4.metric('Shaft power',f'{res.shaft_power_kw:.1f} kW'); c5.metric('Sound',f'{res.sound_db_a_1m:.1f} dB(A)')
 st.caption(f'Static pressure {res.static_pressure_pa:.0f} Pa + velocity pressure {res.velocity_pressure_pa:.0f} Pa = calculated total pressure {res.total_pressure_pa:.0f} Pa. Selected blade: {inp.blade_type}.')
 for w in res.warnings: st.warning(w)
 
@@ -556,10 +556,10 @@ with tabs[4]:
     st.metric('Estimated sound at 1 m',f'{res.sound_db_a_1m:.1f} dB(A)'); st.metric('Vibration risk',res.vibration_risk)
     for n in vibration_risk(inp,res)[1]: st.write('- '+n)
 with tabs[5]:
-    curve=performance_curve(res); fig,ax=plt.subplots(); ax.plot(curve.Flow_m3h,curve.TotalPressure_Pa); ax.set_xlabel('Flow m³/h'); ax.set_ylabel('Total Pressure Pa'); ax.grid(True); st.pyplot(fig)
-    fig2,ax2=plt.subplots(); ax2.plot(curve.Flow_m3h,curve.ShaftPower_kW); ax2.set_xlabel('Flow m³/h'); ax2.set_ylabel('Shaft Power kW'); ax2.grid(True); st.pyplot(fig2); st.dataframe(curve,use_container_width=True)
+    curve=performance_curve(res); fig,ax=plt.subplots(); ax.plot(curve.Flow_m3h,curve.TotalPressure_Pa); ax.set_xlabel('Flow m^3/h'); ax.set_ylabel('Total Pressure Pa'); ax.grid(True); st.pyplot(fig)
+    fig2,ax2=plt.subplots(); ax2.plot(curve.Flow_m3h,curve.ShaftPower_kW); ax2.set_xlabel('Flow m^3/h'); ax2.set_ylabel('Shaft Power kW'); ax2.grid(True); st.pyplot(fig2); st.dataframe(curve,use_container_width=True)
 with tabs[6]:
-    st.pyplot(impeller_figure(res)); st.pyplot(blade_figure(res)); st.info(f'Outlet flange: {res.volute_outlet_width_mm:.0f} mm × {res.volute_outlet_height_mm:.0f} mm; outlet velocity {res.flange_outlet_velocity_ms:.1f} m/s')
+    st.pyplot(impeller_figure(res)); st.pyplot(blade_figure(res)); st.info(f'Outlet flange: {res.volute_outlet_width_mm:.0f} mm x {res.volute_outlet_height_mm:.0f} mm; outlet velocity {res.flange_outlet_velocity_ms:.1f} m/s')
 with tabs[7]:
     st.download_button('Download PDF Report',create_pdf(inp,res),'blower_design_report.pdf')
     st.download_button('Download Excel Calculation',create_excel(inp,res,opt_df),'blower_design_calculations.xlsx')
