@@ -6,6 +6,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from blower_toolkit.auth import require_password
+
 from blower_toolkit.catalogue import CatalogueDB
 from blower_toolkit.catalogue.fanwall import (
     FanWallInputs,
@@ -15,6 +17,7 @@ from blower_toolkit.catalogue.fanwall import (
 )
 
 st.set_page_config(page_title="AHU & Cooling Tower Fan Wall", layout="wide")
+require_password()
 st.title("AHU & Cooling Tower Fan-Wall Selector v23")
 st.caption(
     "Parallel EC fan selection, N+1 redundancy, preliminary control staging, "

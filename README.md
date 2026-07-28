@@ -1,5 +1,5 @@
 
-# Centrifugal Blower Design & Manufacturer Intelligence Toolkit v23
+# Centrifugal Blower Design & Manufacturer Intelligence Toolkit v24
 
 This release combines the existing centrifugal blower design engine with the first serious version of a manufacturer catalogue intelligence platform.
 
@@ -18,6 +18,32 @@ The multipage navigation includes:
 - Development Roadmap
 
 
+
+
+## v24 — Shared application authentication
+
+The password stored in Streamlit Secrets now protects every page, not only the
+main blower-design page.
+
+Supported Secrets formats:
+
+```toml
+APP_PASSWORD = "your_password"
+```
+
+or:
+
+```toml
+[auth]
+password = "your_password"
+```
+
+The user logs in once per Streamlit session. The same authenticated session then
+covers Blower Design, Catalogue Knowledge Base, Development Roadmap, Performance
+Curve Digitiser, and AHU Cooling Tower Fan Wall. A Log out button appears in the
+sidebar after authentication.
+
+If no password is configured, the app stays open for local development.
 
 ## v23 — AHU and cooling-tower fan-wall selector
 

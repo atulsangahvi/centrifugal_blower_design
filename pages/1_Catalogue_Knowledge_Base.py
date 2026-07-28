@@ -6,6 +6,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from blower_toolkit.auth import require_password
+
 from blower_toolkit.catalogue import (
     CatalogueDB,
     MODEL_COLUMNS,
@@ -17,7 +19,8 @@ from blower_toolkit.catalogue import (
 )
 
 st.set_page_config(page_title="Fan Manufacturer Knowledge Base", layout="wide")
-st.title("Fan Manufacturer Knowledge Base v21")
+require_password()
+st.title("Fan Manufacturer Knowledge Base v24")
 st.caption(
     "Catalogue registry, model database, curve storage, real-duty interpolation, "
     "traceability, and data-quality control."

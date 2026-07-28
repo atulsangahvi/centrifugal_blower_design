@@ -1,11 +1,14 @@
 
 import streamlit as st
 
+from blower_toolkit.auth import require_password
+
 st.set_page_config(page_title="Development Roadmap", layout="wide")
+require_password()
 st.title("Blower Design & Manufacturer Intelligence Roadmap")
 
 st.markdown("""
-### Working modules in v21
+### Working modules through v24
 - Centrifugal blower preliminary design engine
 - Modular Streamlit architecture
 - SQLite manufacturer knowledge base

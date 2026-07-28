@@ -1516,29 +1516,11 @@ if __name__ == "__main__" and not _in_streamlit():
 # ----------------------------------------------------------------------------
 def run_app():
     import streamlit as st
+    from blower_toolkit.auth import require_password
 
-    def _get_app_password():
-        try:
-            if "APP_PASSWORD" in st.secrets:
-                return str(st.secrets["APP_PASSWORD"])
-            if "auth" in st.secrets and "password" in st.secrets["auth"]:
-                return str(st.secrets["auth"]["password"])
-        except Exception:
-            return ""
-        return ""
-
-    _APP_PASSWORD = _get_app_password()
-    if _APP_PASSWORD:
-        st.sidebar.header("Login")
-        _entered = st.sidebar.text_input("Password", type="password")
-        if _entered != _APP_PASSWORD:
-            st.warning("Enter the app password in the sidebar to continue.")
-            st.stop()
-
-    st.set_page_config(page_title="Blower Design Toolkit v19", layout="wide")
-    if not check_password():
-        st.stop()
-    st.title("Centrifugal Blower Design & Manufacturing Toolkit v19")
+    st.set_page_config(page_title="Blower Design Toolkit v24", layout="wide")
+    require_password()
+    st.title("Centrifugal Blower Design & Manufacturing Toolkit v24")
     st.caption("Velocity-triangle physics engine · 8 wheel families · AHRI 431 preliminary rating · "
                "SWSI/DWDI · octave-band acoustics · dimensioned DXF output")
 
