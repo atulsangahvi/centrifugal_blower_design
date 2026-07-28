@@ -1,4 +1,4 @@
-# Streamlit entrypoint wrapper
-from blower_design import run_app
+from blower_toolkit.ui.streamlit_app import run
 
-run_app()
+if __name__ == "__main__":
+    run()
