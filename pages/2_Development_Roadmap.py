@@ -8,7 +8,7 @@ require_password()
 st.title("Blower Design & Manufacturer Intelligence Roadmap")
 
 st.markdown("""
-### Working modules through v24
+### Working modules through v25
 - Centrifugal blower preliminary design engine
 - Modular Streamlit architecture
 - SQLite manufacturer knowledge base
@@ -20,6 +20,10 @@ st.markdown("""
 - Curve quality checks and fan-law scaling
 - AHU and cooling-tower fan-wall preliminary selector
 - N+1 redundancy, control staging, energy and ROI analysis
+- Reverse engineering from supplier outline drawings with dimension provenance
+- Drawing measurement, commercial sanity benchmark, test calibration and inverse RPM solve
+- Centre-hung DIDW shaft/belt/balance checks
+- Blade and volute manufacturing-coordinate exports
 - Endpoint benchmarking fallback
 - Data-quality and provenance controls
 - Seemtek and Longwell starter records

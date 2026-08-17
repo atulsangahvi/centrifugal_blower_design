@@ -1,5 +1,5 @@
 
-# Centrifugal Blower Design & Manufacturer Intelligence Toolkit v24
+# Centrifugal Blower Design & Manufacturer Intelligence Toolkit v25 — High-Effort Reverse-Engineering Rebuild
 
 This release combines the existing centrifugal blower design engine with the first serious version of a manufacturer catalogue intelligence platform.
 
@@ -16,8 +16,43 @@ The multipage navigation includes:
 - Blower Design
 - Fan Manufacturer Knowledge Base
 - Development Roadmap
+- Performance Curve Digitiser
+- AHU Cooling Tower Fan Wall
+- Reverse Engineer Existing Blower
 
 
+
+
+## v25 — High-Effort Reverse Engineering & Manufacturing Mode
+
+This v25 rebuild replaces the earlier quick reverse-engineering attempt. The main correction is methodological: an outline drawing is no longer treated as if it contains hidden impeller geometry or a complete fan rating.
+
+The new `Reverse Engineer Existing Blower` page includes:
+
+- two exact uploaded WDL/KQ800 outline-drawing presets, including the 2026 KQ800 V4.0 and 2020 WDL-800 V1.0 revisions
+- drawing scale calibration plus 2-point linear and 3-point circular measurement tools
+- a provenance/confidence tag for every aerodynamic dimension
+- explicit `D2`, `D1`, total wheel width, blade count, beta1, beta2, blade/plate thickness, tongue clearance and scroll width inputs
+- an independent commercial forward-curved DIDW similarity benchmark used only as a sanity scale
+- the existing velocity-triangle/loss-model mean-line calculation as a separate raw physics result
+- benchmark-normalized mean-line mode and a higher-confidence user-test calibration mode
+- an inverse duty-to-RPM search
+- forward-curved motor-overload sizing over the declared operating-flow range, not only one point
+- centre-hung DIDW shaft mechanics with bearing span, pulley diameter, pulley overhang and belt load
+- G-grade residual-unbalance calculation; the KQ800 drawing preset uses its stated G4.0 requirement
+- circular-arc blade manufacturing coordinates
+- three scroll choices: area-law rectangular, free-vortex/log spiral, or user-traced reference casing stations
+- an external-envelope fit check
+- a manufacturing-readiness grade plus a list of measurements still required before release
+- PDF, Excel, DXF, CSV and PNG manufacturing-reference exports
+
+### Why an independent benchmark is included
+
+A reverse-engineering model can produce a mathematically converged but physically implausible result if hidden dimensions are guessed. v25 therefore compares the raw model against a published forward-curved DIDW reference scale. This does **not** claim that WDL/KQ has the same performance; it simply prevents an 800-class fan from being accepted at an obviously wrong order of magnitude without a warning.
+
+### Release rule
+
+Any dimension tagged `LOW` confidence or `Assumed` must be physically measured or replaced by a controlled manufacturer/detail drawing before production release. A test-calibrated curve substantially improves performance confidence, but it does not replace mechanical drawing verification.
 
 
 ## v24 — Shared application authentication

@@ -1518,9 +1518,9 @@ def run_app():
     import streamlit as st
     from blower_toolkit.auth import require_password
 
-    st.set_page_config(page_title="Blower Design Toolkit v24", layout="wide")
+    st.set_page_config(page_title="Blower Design Toolkit v25", layout="wide")
     require_password()
-    st.title("Centrifugal Blower Design & Manufacturing Toolkit v24")
+    st.title("Centrifugal Blower Design & Manufacturing Toolkit v25")
     st.caption("Velocity-triangle physics engine · 8 wheel families · AHRI 431 preliminary rating · "
                "SWSI/DWDI · octave-band acoustics · dimensioned DXF output")
 

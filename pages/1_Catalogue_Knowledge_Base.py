@@ -20,7 +20,7 @@ from blower_toolkit.catalogue import (
 
 st.set_page_config(page_title="Fan Manufacturer Knowledge Base", layout="wide")
 require_password()
-st.title("Fan Manufacturer Knowledge Base v24")
+st.title("Fan Manufacturer Knowledge Base v25")
 st.caption(
     "Catalogue registry, model database, curve storage, real-duty interpolation, "
     "traceability, and data-quality control."
