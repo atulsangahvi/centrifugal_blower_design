@@ -1,3 +1,12 @@
+## v25.1 hotfix
+
+Fixed the Reverse Engineer Existing Blower page runtime error:
+
+`NameError: name 'air_density' is not defined`
+
+The page now imports `air_density` from `blower_toolkit.engine` before calculating
+air density from temperature, altitude and relative humidity.
+
 
 # Centrifugal Blower Design & Manufacturer Intelligence Toolkit v25 — High-Effort Reverse-Engineering Rebuild
 

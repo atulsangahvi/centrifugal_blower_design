@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw
 from streamlit_image_coordinates import streamlit_image_coordinates
 
 from blower_toolkit.auth import require_password
-from blower_toolkit.engine import FAMILIES, MATERIALS, wheel_performance
+from blower_toolkit.engine import FAMILIES, MATERIALS, wheel_performance, air_density
 from blower_toolkit.reverse_engineering import (
     REFERENCE_PRESETS,
     ReferenceEnvelope,
