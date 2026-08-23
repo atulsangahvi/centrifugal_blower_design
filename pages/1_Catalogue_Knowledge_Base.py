@@ -229,14 +229,58 @@ with tabs[4]:
         model = st.selectbox("Model", fans.model.tolist(), key="curve_model")
         existing = db.curves(model)
         if not existing.empty:
-            st.line_chart(
-                existing.pivot_table(
+            # Streamlit's built-in line_chart can fail when Pandas returns
+            # MultiIndex columns from pivot_table (notably with newer
+            # Pandas/Streamlit combinations on Python 3.14).  Flatten the
+            # curve-name/RPM column index into ordinary unique strings first.
+            chart_source = existing.dropna(
+                subset=["airflow_m3h", "pressure_pa"]
+            ).copy()
+
+            if not chart_source.empty:
+                chart_df = chart_source.pivot_table(
                     index="airflow_m3h",
                     columns=["curve_name", "speed_rpm"],
                     values="pressure_pa",
                     aggfunc="mean",
-                )
-            )
+                ).sort_index()
+
+                if isinstance(chart_df.columns, pd.MultiIndex):
+                    flat_names = []
+                    used_names = {}
+                    for curve_name, speed_rpm in chart_df.columns.to_list():
+                        curve_label = str(curve_name) if pd.notna(curve_name) else "Curve"
+                        if pd.notna(speed_rpm):
+                            try:
+                                speed_label = f"{float(speed_rpm):g} rpm"
+                            except (TypeError, ValueError):
+                                speed_label = f"{speed_rpm} rpm"
+                            base_name = f"{curve_label} | {speed_label}"
+                        else:
+                            base_name = curve_label
+
+                        # Guarantee unique plain-string column names.
+                        count = used_names.get(base_name, 0)
+                        used_names[base_name] = count + 1
+                        flat_names.append(
+                            base_name if count == 0 else f"{base_name} ({count + 1})"
+                        )
+
+                    chart_df.columns = flat_names
+                else:
+                    chart_df.columns = [str(c) for c in chart_df.columns]
+
+                if not chart_df.empty and len(chart_df.columns) > 0:
+                    st.line_chart(
+                        chart_df,
+                        x_label="Airflow (m³/h)",
+                        y_label="Pressure (Pa)",
+                    )
+                else:
+                    st.info("No plottable pressure-curve points are available for this model.")
+            else:
+                st.info("Stored curve records do not yet contain valid airflow/pressure points.")
+
             st.dataframe(existing, use_container_width=True, hide_index=True)
         else:
             st.info("No curve points stored for this model.")

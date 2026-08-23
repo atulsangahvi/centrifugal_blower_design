@@ -1,3 +1,12 @@
+## v25.3 catalogue chart hotfix
+
+Fixed a `KeyError` in **Catalogue Knowledge Base → Digitised performance curves**.
+
+The failure was caused by passing a Pandas `MultiIndex` column structure directly
+from `pivot_table()` into Streamlit's `st.line_chart()`.  The chart data is now
+cleaned, sorted, and flattened to ordinary unique string column names before
+rendering.  Invalid/empty airflow-pressure records are handled without crashing.
+
 ## v25.2 reverse-engineering drawing upload improvement
 
 The Reverse Engineer Existing Blower page now has a prominent **Upload new drawing**
