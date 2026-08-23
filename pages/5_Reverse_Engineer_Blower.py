@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import io
 import math
 from pathlib import Path
 
@@ -74,6 +75,8 @@ for key, default in {
     "re_measurements": [],
     "re_scale_mm_per_px": None,
     "re_results": None,
+    "re_uploaded_drawing_bytes": None,
+    "re_uploaded_drawing_name": None,
 }.items():
     if key not in st.session_state:
         st.session_state[key] = default
@@ -92,14 +95,34 @@ workflow = st.tabs([
 # -----------------------------------------------------------------------------
 with workflow[0]:
     st.subheader("Supplier outline drawing and verified external envelope")
-    preset_name = st.selectbox("Reference drawing preset", list(REFERENCE_PRESETS.keys()) + ["Custom reference"])
 
-    if preset_name != "Custom reference":
+    st.markdown("#### Drawing source")
+    st.caption(
+        "You can use one of the built-in WDL/KQ800 reference drawings or upload any new "
+        "blower drawing. An uploaded drawing is carried automatically into the measurement tab."
+    )
+
+    source_mode = st.radio(
+        "Choose drawing source",
+        ["Built-in reference drawing", "Upload new drawing"],
+        horizontal=True,
+        key="re_drawing_source_mode",
+    )
+
+    preset_name = "Custom reference"
+
+    if source_mode == "Built-in reference drawing":
+        preset_name = st.selectbox(
+            "Reference drawing preset",
+            list(REFERENCE_PRESETS.keys()),
+            key="re_reference_preset",
+        )
         p = REFERENCE_PRESETS[preset_name]
         env = preset_to_envelope(preset_name)
         asset_path = ROOT / p["asset"]
         if asset_path.exists():
             st.image(str(asset_path), caption=preset_name, use_container_width=True)
+
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Drawing", env.drawing_code or "—")
         c2.metric("Declared fan weight", f"{env.declared_fan_weight_kg:.0f} kg")
@@ -109,8 +132,49 @@ with workflow[0]:
             f"Drawing-stated fan standard: {env.fan_standard}. {p.get('fan_standard_note','')} "
             "The KQ800 2026 sheet visibly specifies impeller dynamic balance G4.0."
         )
+
     else:
-        env = ReferenceEnvelope(reference_name="Custom reference")
+        uploaded_reference = st.file_uploader(
+            "Upload a new blower drawing",
+            type=["png", "jpg", "jpeg", "webp"],
+            key="reverse_reference_upload",
+            help="Upload an outline drawing, impeller drawing, casing drawing, scan, or clear photograph.",
+        )
+
+        if uploaded_reference is not None:
+            uploaded_bytes = uploaded_reference.getvalue()
+            st.session_state["re_uploaded_drawing_bytes"] = uploaded_bytes
+            st.session_state["re_uploaded_drawing_name"] = uploaded_reference.name
+
+        if st.session_state.get("re_uploaded_drawing_bytes"):
+            try:
+                uploaded_image = Image.open(
+                    io.BytesIO(st.session_state["re_uploaded_drawing_bytes"])
+                ).convert("RGB")
+                st.image(
+                    uploaded_image,
+                    caption=st.session_state.get("re_uploaded_drawing_name") or "Uploaded drawing",
+                    use_container_width=True,
+                )
+                st.success(
+                    "New drawing loaded. Open the '2 Measure Drawing' tab to calibrate and measure it."
+                )
+                if st.button("Clear uploaded drawing", key="re_clear_uploaded_drawing"):
+                    st.session_state["re_uploaded_drawing_bytes"] = None
+                    st.session_state["re_uploaded_drawing_name"] = None
+                    st.session_state["re_measure_clicks"] = []
+                    st.session_state["re_measurements"] = []
+                    st.session_state["re_scale_mm_per_px"] = None
+                    st.rerun()
+            except Exception as exc:
+                st.error(f"Could not open uploaded drawing: {exc}")
+
+        else:
+            st.info("Upload a drawing above to begin a new reverse-engineering job.")
+
+        env = ReferenceEnvelope(
+            reference_name=st.session_state.get("re_uploaded_drawing_name") or "Custom reference"
+        )
 
     st.markdown("#### Editable drawing dimensions")
     e1, e2, e3, e4 = st.columns(4)
@@ -149,16 +213,45 @@ with workflow[1]:
 
     preset_name = st.session_state.get("re_preset_name", "Custom reference")
     image = None
-    if preset_name in REFERENCE_PRESETS:
+    image_caption = None
+
+    # Prefer a drawing uploaded in Tab 1.
+    if st.session_state.get("re_uploaded_drawing_bytes"):
+        try:
+            image = Image.open(
+                io.BytesIO(st.session_state["re_uploaded_drawing_bytes"])
+            ).convert("RGB")
+            image_caption = st.session_state.get("re_uploaded_drawing_name") or "Uploaded drawing"
+        except Exception as exc:
+            st.error(f"Could not reopen uploaded drawing: {exc}")
+
+    # Otherwise use the selected built-in reference.
+    if image is None and preset_name in REFERENCE_PRESETS:
         p = ROOT / REFERENCE_PRESETS[preset_name]["asset"]
         if p.exists():
             image = Image.open(p).convert("RGB")
-    up = st.file_uploader("Or upload another drawing image", type=["png", "jpg", "jpeg", "webp"], key="reverse_measure_upload")
+            image_caption = preset_name
+
+    st.caption(
+        "Drawing currently loaded: "
+        + (image_caption if image_caption else "none")
+        + ". You can also replace it here."
+    )
+
+    up = st.file_uploader(
+        "Replace / upload drawing for measurement",
+        type=["png", "jpg", "jpeg", "webp"],
+        key="reverse_measure_upload",
+    )
     if up:
-        image = Image.open(up).convert("RGB")
+        new_bytes = up.getvalue()
+        st.session_state["re_uploaded_drawing_bytes"] = new_bytes
+        st.session_state["re_uploaded_drawing_name"] = up.name
+        image = Image.open(io.BytesIO(new_bytes)).convert("RGB")
+        image_caption = up.name
 
     if image is None:
-        st.info("Choose one of the uploaded drawing presets or upload an image.")
+        st.info("Upload a new drawing in Tab 1 or choose a built-in reference drawing.")
     else:
         mode = st.radio("Measurement mode", ["Calibrate scale", "Line measurement", "Circle diameter (3 points)"], horizontal=True)
         expected_points = 2 if mode != "Circle diameter (3 points)" else 3

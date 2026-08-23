@@ -1,3 +1,15 @@
+## v25.2 reverse-engineering drawing upload improvement
+
+The Reverse Engineer Existing Blower page now has a prominent **Upload new drawing**
+option in the first **Reference Drawing** tab.
+
+The uploaded image is stored in Streamlit session state and is automatically reused
+in the **Measure Drawing** tab. The measurement tab also retains its own
+replace/upload control.
+
+This fixes the earlier UX problem where the upload control existed only inside the
+measurement tab and was easy to miss.
+
 ## v25.1 hotfix
 
 Fixed the Reverse Engineer Existing Blower page runtime error:
