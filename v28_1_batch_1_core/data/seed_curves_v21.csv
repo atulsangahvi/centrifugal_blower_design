@@ -1,5 +1,0 @@
-model,curve_name,curve_kind,speed_rpm,control_setting,airflow_m3h,pressure_pa,power_w,efficiency_pct,noise_dba,source_file,source_page,point_status,notes
-S3E-2A120-A7-01,Illustrative starter curve,static_pressure,1850,,0,250,,,,Internal starter data,,Illustrative only,Replace with digitised catalogue curve before engineering use.
-S3E-2A120-A7-01,Illustrative starter curve,static_pressure,1850,,250,220,,,,Internal starter data,,Illustrative only,Replace with digitised catalogue curve before engineering use.
-S3E-2A120-A7-01,Illustrative starter curve,static_pressure,1850,,500,80,,,,Internal starter data,,Illustrative only,Replace with digitised catalogue curve before engineering use.
-S3E-2A120-A7-01,Illustrative starter curve,static_pressure,1850,,580,0,,,,Internal starter data,,Illustrative only,Replace with digitised catalogue curve before engineering use.

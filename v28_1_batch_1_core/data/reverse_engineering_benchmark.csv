@@ -1,2 +1,0 @@
-manufacturer,series,reference_size_mm,reference_airflow_m3h,reference_total_pressure_pa,reference_rpm,reference_shaft_power_kw,reference_total_efficiency_pct,reference_density_kg_m3,reference_outlet_velocity_ms,reference_dynamic_pressure_pa,purpose
-Kruger,FDA double-inlet forward-curved,500,20000,737,828,6.5,62,1.22,13.6,114,"Independent similarity sanity check only; not a WDL/KQ rating"

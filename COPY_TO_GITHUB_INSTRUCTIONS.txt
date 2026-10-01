@@ -1,0 +1,15 @@
+READY TO COPY INTO YOUR CLONED GITHUB REPOSITORY
+
+1. Download and extract this ZIP on your laptop.
+2. Open the extracted folder named: centrifugal_blower_design
+3. Select ALL files and folders INSIDE that folder.
+4. Copy them into the local blower-repository folder that GitHub Desktop cloned.
+5. If Windows asks, choose: Replace the files in the destination.
+6. Do not delete the .git folder that already exists in your cloned repository.
+7. Open GitHub Desktop.
+8. Review the changed files.
+9. Enter a commit message, for example: Update blower toolkit to v28.1
+10. Click Commit to main.
+11. Click Push origin.
+
+Main Streamlit file: app.py

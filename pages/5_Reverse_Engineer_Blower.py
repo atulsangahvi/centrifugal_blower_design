@@ -57,6 +57,15 @@ require_password()
 ROOT = Path(__file__).resolve().parents[1]
 
 st.title("Reverse Engineer Existing Blower & Manufacturing Geometry — v25 High-Effort Rebuild")
+optimizer_notice = st.session_state.get("inverse_optimizer_geometry_handoff")
+if optimizer_notice:
+    st.success(
+        f"Catalogue inverse optimizer v27 geometry loaded for {optimizer_notice.get('model','')}. "
+        "These dimensions are calculated inverse-design values, not manufacturer-measured geometry."
+    )
+catalogue_handoff = st.session_state.get("catalogue_manufacture_handoff")
+if catalogue_handoff:
+    st.success(f"Catalogue reference loaded: {catalogue_handoff.get('manufacturer','')} {catalogue_handoff.get('model','')}. Known catalogue values are preserved; missing geometry starts as calculated/low-confidence.")
 st.caption(
     "Drawing measurement → geometry provenance → independent benchmark sanity check → "
     "mean-line performance → test calibration → centre-hung shaft/drive check → blade/scroll manufacturing data."
@@ -338,11 +347,39 @@ with workflow[2]:
     env = st.session_state.get("re_env", ReferenceEnvelope("Custom reference"))
     st.subheader("Impeller, blade and scroll geometry — every value gets a provenance tag")
 
-    default_g, default_prov = provisional_geometry(800.0, env.shaft_diameter_mm or 60.0)
+    handoff = st.session_state.get("catalogue_manufacture_handoff")
+    handoff_d2 = float(handoff.get("known_d2_mm",0.0)) if handoff else 0.0
+    default_g, default_prov = provisional_geometry(handoff_d2 or 800.0, env.shaft_diameter_mm or 60.0)
+    if handoff:
+        default_g.family = handoff.get("family", default_g.family)
+        default_g.arrangement = handoff.get("arrangement", default_g.arrangement)
+        default_g.d1_mm = float(handoff.get("calculated_d1_mm",default_g.d1_mm))
+        default_g.b2_total_mm = float(handoff.get("calculated_b2_mm",default_g.b2_total_mm))
+        default_g.b1_total_mm = float(handoff.get("calculated_b1_mm",default_g.b1_total_mm))
+        default_g.blade_count = int(handoff.get("calculated_blade_count",default_g.blade_count))
+        default_g.beta1_deg = float(handoff.get("calculated_beta1_deg",default_g.beta1_deg))
+        default_g.beta2_deg = float(handoff.get("calculated_beta2_deg",default_g.beta2_deg))
+        default_g.cutoff_clearance_mm = float(handoff.get("calculated_cutoff_mm",default_g.cutoff_clearance_mm))
     default_g.scroll_internal_width_mm = env.discharge_clear_width_mm or default_g.scroll_internal_width_mm
     default_g.discharge_width_mm = env.discharge_clear_width_mm or default_g.discharge_width_mm
     default_g.discharge_height_mm = env.discharge_clear_height_mm or default_g.discharge_height_mm
     default_g.shaft_diameter_mm = env.shaft_diameter_mm or default_g.shaft_diameter_mm
+
+    optimizer_handoff = st.session_state.get("inverse_optimizer_geometry_handoff")
+    optimized_loaded = bool(
+        optimizer_handoff
+        and optimizer_handoff.get("model") == (handoff or {}).get("model")
+    )
+    if optimized_loaded:
+        og = optimizer_handoff.get("geometry", {})
+        for attr in [
+            "d2_mm","d1_mm","b2_total_mm","b1_total_mm","blade_count",
+            "beta1_deg","beta2_deg","blade_thickness_mm","plate_thickness_mm",
+            "hub_diameter_mm","shaft_diameter_mm","cutoff_clearance_mm",
+            "scroll_internal_width_mm","discharge_width_mm","discharge_height_mm"
+        ]:
+            if attr in og and og[attr] is not None:
+                setattr(default_g, attr, og[attr])
 
     # Apply any drawing measurement with an exact recognized label.
     measurements = {str(x["Label"]).strip().lower(): float(x["Value_mm"]) for x in st.session_state.get("re_measurements", [])}
@@ -351,19 +388,29 @@ with workflow[2]:
             setattr(default_g, attr, measurements[key])
 
     g1, g2, g3 = st.columns(3)
-    family = g1.selectbox("Fan family", list(FAMILIES.keys()), index=list(FAMILIES.keys()).index("Multi-Blade Sirocco (Cage)"))
-    arrangement = g2.selectbox("Arrangement", ["DWDI (double inlet)", "SWSI (single inlet)"], index=0)
+    fam_options=list(FAMILIES.keys()); default_family=default_g.family if default_g.family in fam_options else "Multi-Blade Sirocco (Cage)"
+    family = g1.selectbox("Fan family", fam_options, index=fam_options.index(default_family))
+    arr_options=["DWDI (double inlet)","SWSI (single inlet)"]; default_arr=default_g.arrangement if default_g.arrangement in arr_options else arr_options[0]
+    arrangement = g2.selectbox("Arrangement", arr_options, index=arr_options.index(default_arr))
     material = g3.selectbox("Impeller material", list(MATERIALS.keys()), index=list(MATERIALS.keys()).index("Galvanized Steel"))
 
     fam = FAMILIES[family]
+    d2_source = f"Manufacturer catalogue page {handoff.get('source_page','')}" if handoff else "Nominal model designation — VERIFY physically"
+    calc_source = (
+        "Inverse-optimized to catalogue constraints in v27 — CALCULATED, not manufacturer-measured"
+        if optimized_loaded
+        else "Calculated starting geometry from app fan-family design ranges"
+        if handoff
+        else "Assumed family default"
+    )
     rows = [
-        {"Parameter":"D2", "Value":default_g.d2_mm, "Unit":"mm", "Source":"Nominal model designation — VERIFY physically", "Confidence":"LOW"},
-        {"Parameter":"D1", "Value":fam["d1d2"]*default_g.d2_mm, "Unit":"mm", "Source":"Assumed family default", "Confidence":"LOW"},
-        {"Parameter":"b2 total", "Value":fam["b2d2"]*default_g.d2_mm, "Unit":"mm", "Source":"Assumed family default", "Confidence":"LOW"},
-        {"Parameter":"b1 total", "Value":1.05*fam["b2d2"]*default_g.d2_mm, "Unit":"mm", "Source":"Assumed family default", "Confidence":"LOW"},
-        {"Parameter":"Blade count", "Value":float(fam["z"]), "Unit":"count", "Source":"Assumed family default", "Confidence":"LOW"},
-        {"Parameter":"beta1", "Value":float(fam["beta1"]), "Unit":"deg from tangent", "Source":"Assumed family default", "Confidence":"LOW"},
-        {"Parameter":"beta2", "Value":float(fam["beta2"]), "Unit":"deg from tangent", "Source":"Assumed family default", "Confidence":"LOW"},
+        {"Parameter":"D2", "Value":default_g.d2_mm, "Unit":"mm", "Source":d2_source, "Confidence":"HIGH" if handoff else "LOW"},
+        {"Parameter":"D1", "Value":default_g.d1_mm if handoff else fam["d1d2"]*default_g.d2_mm, "Unit":"mm", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
+        {"Parameter":"b2 total", "Value":default_g.b2_total_mm if handoff else fam["b2d2"]*default_g.d2_mm, "Unit":"mm", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
+        {"Parameter":"b1 total", "Value":default_g.b1_total_mm if handoff else 1.05*fam["b2d2"]*default_g.d2_mm, "Unit":"mm", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
+        {"Parameter":"Blade count", "Value":float(default_g.blade_count if handoff else fam["z"]), "Unit":"count", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
+        {"Parameter":"beta1", "Value":float(default_g.beta1_deg if handoff else fam["beta1"]), "Unit":"deg from tangent", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
+        {"Parameter":"beta2", "Value":float(default_g.beta2_deg if handoff else fam["beta2"]), "Unit":"deg from tangent", "Source":calc_source, "Confidence":"MEDIUM" if optimized_loaded else "LOW"},
         {"Parameter":"Blade thickness", "Value":2.0, "Unit":"mm", "Source":"Assumed fabrication value", "Confidence":"LOW"},
         {"Parameter":"Plate thickness", "Value":3.0, "Unit":"mm", "Source":"Assumed fabrication value", "Confidence":"LOW"},
         {"Parameter":"Hub diameter", "Value":max(120.0, 2.0*(env.shaft_diameter_mm or 60.0)), "Unit":"mm", "Source":"Assumed provisional value", "Confidence":"LOW"},
@@ -437,8 +484,14 @@ with workflow[3]:
             "RPM is not shown on the WDL/KQ800 outline drawings. The default 600 rpm is therefore only a starting point. "
             "The table below immediately shows how strongly flow, pressure and power change with RPM."
         )
+        handoff = st.session_state.get("catalogue_manufacture_handoff")
+        catalogue_rpm=float(handoff.get("known_rpm",0.0)) if handoff else 0.0
+        catalogue_q=float(handoff.get("known_airflow_m3h",0.0)) if handoff else 0.0
+        catalogue_sp=float(handoff.get("known_static_pressure_pa",0.0)) if handoff else 0.0
+        if handoff and (catalogue_q>0 or catalogue_sp>0):
+            st.success(f"Catalogue target: Q={catalogue_q:,.0f} m³/h, SP={catalogue_sp:,.0f} Pa, RPM={catalogue_rpm:,.0f}. Refine calculated geometry until the model matches this known duty.")
         p1,p2,p3,p4 = st.columns(4)
-        rpm = p1.number_input("Fan shaft speed (rpm)", 100.0, 3000.0, 600.0, 10.0)
+        rpm = p1.number_input("Fan shaft speed (rpm)", 100.0, 3000.0, catalogue_rpm if catalogue_rpm>=100 else 600.0, 10.0)
         temp = p2.number_input("Air temperature (°C)", -40.0, 150.0, 35.0, 1.0)
         altitude = p3.number_input("Altitude (m)", -500.0, 5000.0, 0.0, 50.0)
         rh = p4.number_input("RH (%)", 0.0, 100.0, 50.0, 5.0)
@@ -521,7 +574,7 @@ with workflow[3]:
             )
 
             # Report operating point.
-            q_default = float(res["meta"]["q_reference_m3h"])
+            q_default = float(catalogue_q) if handoff and catalogue_q>0 else float(res["meta"]["q_reference_m3h"])
             qmin=float(selected.Flow_m3h.min()); qmax=float(selected.Flow_m3h.max())
             report_q = st.number_input("Airflow at which to report performance (m³/h)", qmin, qmax, min(max(q_default,qmin),qmax), 500.0)
             point = operating_point(selected, report_q)

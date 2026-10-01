@@ -439,10 +439,12 @@ def validate_geometry(g: GeometryInput) -> List[str]:
         errors.append("Blade count must be at least 3.")
     if not 5 <= g.beta1_deg <= 175 or not 5 <= g.beta2_deg <= 175:
         errors.append("Blade angles must be between 5 and 175 degrees from tangent.")
-    if g.discharge_width_mm <= 0 or g.discharge_height_mm <= 0:
-        errors.append("Discharge clear width and height are required for static-pressure prediction.")
-    if g.scroll_internal_width_mm <= 0:
-        errors.append("Scroll internal axial width is required.")
+    fam = FAMILIES.get(g.family, {})
+    if not fam.get("plenum"):
+        if g.discharge_width_mm <= 0 or g.discharge_height_mm <= 0:
+            errors.append("Discharge clear width and height are required for static-pressure prediction.")
+        if g.scroll_internal_width_mm <= 0:
+            errors.append("Scroll internal axial width is required.")
     return errors
 
 
