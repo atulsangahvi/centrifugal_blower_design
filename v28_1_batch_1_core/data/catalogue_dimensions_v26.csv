@@ -1,0 +1,728 @@
+model,dimension_code,value_mm,tolerance_plus_mm,tolerance_minus_mm,description,source_file,source_page,data_status
+BAF-S315-131TL-01,D,323.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,D1,293.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,H,131.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,H2,114.8,,,Internal width,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,C,82.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,Da,90.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,THK,1.5,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,T,2.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S315-131TL-01,A,189.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,D,360.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,D1,330.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,H,143.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,H2,126.65,,,Internal width,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,C,90.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,Da,90.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,THK,2.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,T,2.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S355-143TL-01,A,215.5,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,6,Verified geometry table extraction
+BAF-S400-158TL-01,D,406.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,D1,372.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,H,158.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,H2,142.05,,,Internal width,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,C,100.5,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,Da,90.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,THK,2.5,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,T,2.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S400-158TL-01,A,241.5,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,D,456.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,D1,419.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,H,183.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,H2,160.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,C,113.5,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,Da,110.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,THK,2.5,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,T,2.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S450-183TL-01,A,271.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,7,Verified geometry table extraction
+BAF-S500-203TL-01,D,512.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,D1,471.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,H,203.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,H2,180.5,,,Internal width,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,C,127.8,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,Da,110.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,THK,3.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,T,2.5,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S500-203TL-01,A,304.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,D,570.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,D1,513.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,H,223.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,H2,200.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,C,142.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,Da,110.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,THK,3.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,T,2.5,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S560-223TL-01,A,337.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,8,Verified geometry table extraction
+BAF-S630-246TL-01,D,640.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,D1,587.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,H,246.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,H2,225.6,,,Internal width,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,C,160.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,Da,140.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,THK,4.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,T,2.5,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S630-246TL-01,A,377.4,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,D,720.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,D1,660.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,H,274.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,H2,253.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,C,180.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,Da,140.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,THK,4.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,T,3.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S720-274TL-01,A,424.6,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,9,Verified geometry table extraction
+BAF-S810-311TL-01,D,810.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,D1,743.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,H,311.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,H2,284.1,,,Internal width,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,C,202.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,Da,170.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,THK,4.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,T,3.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S810-311TL-01,A,478.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,D,912.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,D1,837.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,H,348.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,H2,321.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,C,229.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,Da,170.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,THK,4.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,T,3.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S910-348TL-01,A,539.2,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,10,Verified geometry table extraction
+BAF-S1000-391TL-01,D,1023.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,D1,941.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,H,391.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,H2,359.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,C,255.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,Da,190.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,THK,5.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,T,4.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1000-391TL-01,A,606.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,D,1120.0,,,Impeller outside diameter,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,D1,1047.0,,,Impeller inlet diameter,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,H,433.0,,,Overall wheel width,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,H2,401.0,,,Internal width,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,C,286.0,,,Catalogue C dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,Da,220.0,,,Catalogue Da dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,THK,5.0,,,Catalogue thickness,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,T,4.0,,,Catalogue plate thickness,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+BAF-S1100-433TL-01,A,674.0,,,Catalogue A dimension,SEEMTEK - Impeller Brochure.pdf,11,Verified geometry table extraction
+B23E133H54-72-00,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,7,Model nomenclature - verify source drawing
+B23E133H54-72-00,H,54.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,7,Model nomenclature - verify source drawing
+B23E155H54-72-A0,D2,155.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,8,Model nomenclature - verify source drawing
+B23E155H54-72-A0,H,54.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,8,Model nomenclature - verify source drawing
+B23E175H62-72-A0,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,9,Model nomenclature - verify source drawing
+B23E175H62-72-A0,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,9,Model nomenclature - verify source drawing
+B23E175H63-72-00,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,10,Model nomenclature - verify source drawing
+B23E175H63-72-00,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,10,Model nomenclature - verify source drawing
+B23E190H63-72-A0,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,11,Model nomenclature - verify source drawing
+B23E190H63-72-A0,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,11,Model nomenclature - verify source drawing
+B23E190H63-72-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,12,Model nomenclature - verify source drawing
+B23E190H63-72-00,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,12,Model nomenclature - verify source drawing
+B23E220H64-72-A0,D2,220.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,13,Model nomenclature - verify source drawing
+B23E220H64-72-A0,H,64.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,13,Model nomenclature - verify source drawing
+B23E220H64-92-A1,D2,220.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,14,Model nomenclature - verify source drawing
+B23E220H64-92-A1,H,64.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,14,Model nomenclature - verify source drawing
+B23E225H81-72-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,15,Model nomenclature - verify source drawing
+B23E225H81-72-A0,H,81.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,15,Model nomenclature - verify source drawing
+B23E225H89-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,16,Model nomenclature - verify source drawing
+B23E225H89-92-00,H,89.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,16,Model nomenclature - verify source drawing
+B23E250H73-72-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,17,Model nomenclature - verify source drawing
+B23E250H73-72-A0,H,73.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,17,Model nomenclature - verify source drawing
+B23E250H85-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,18,Model nomenclature - verify source drawing
+B23E250H85-92-00,H,85.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,18,Model nomenclature - verify source drawing
+B23E250H87-102-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,19,Model nomenclature - verify source drawing
+B23E250H87-102-00,H,87.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,19,Model nomenclature - verify source drawing
+B23E280H81-92-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,20,Model nomenclature - verify source drawing
+B23E280H81-92-00,H,81.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,20,Model nomenclature - verify source drawing
+B23E280H128-92-B0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,21,Model nomenclature - verify source drawing
+B23E280H128-92-B0,H,128.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,21,Model nomenclature - verify source drawing
+B23E280H128-102-B0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,22,Model nomenclature - verify source drawing
+B23E280H128-102-B0,H,128.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,22,Model nomenclature - verify source drawing
+B23E280H128-102-B1,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,23,Model nomenclature - verify source drawing
+B23E280H128-102-B1,H,128.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,23,Model nomenclature - verify source drawing
+B23E280H133-102-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,24,Model nomenclature - verify source drawing
+B23E280H133-102-00,H,133.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,24,Model nomenclature - verify source drawing
+B38E280H133-138-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,25,Model nomenclature - verify source drawing
+B38E280H133-138-00,H,133.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,25,Model nomenclature - verify source drawing
+B23E320H134-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,26,Model nomenclature - verify source drawing
+B23E320H134-102-00,H,134.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,26,Model nomenclature - verify source drawing
+B23E320H134-102-01,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,27,Model nomenclature - verify source drawing
+B23E320H134-102-01,H,134.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,27,Model nomenclature - verify source drawing
+B23E320H134-102-02,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,28,Model nomenclature - verify source drawing
+B23E320H134-102-02,H,134.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,28,Model nomenclature - verify source drawing
+B23E320H105-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,29,Model nomenclature - verify source drawing
+B23E320H105-102-00,H,105.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,29,Model nomenclature - verify source drawing
+B23E320H76-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,30,Model nomenclature - verify source drawing
+B23E320H76-102-00,H,76.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,30,Model nomenclature - verify source drawing
+B23E320H128-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,31,Model nomenclature - verify source drawing
+B23E320H128-102-00,H,128.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,31,Model nomenclature - verify source drawing
+B23E320H141-102-B0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,32,Model nomenclature - verify source drawing
+B23E320H141-102-B0,H,141.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,32,Model nomenclature - verify source drawing
+B23E320H141-102-B1,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,33,Model nomenclature - verify source drawing
+B23E320H141-102-B1,H,141.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,33,Model nomenclature - verify source drawing
+B38E320H141-102-B0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,34,Model nomenclature - verify source drawing
+B38E320H141-102-B0,H,141.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,34,Model nomenclature - verify source drawing
+B38E320H145-138-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,35,Model nomenclature - verify source drawing
+B38E320H145-138-00,H,145.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,35,Model nomenclature - verify source drawing
+B23E355H179-102-C0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,36,Model nomenclature - verify source drawing
+B23E355H179-102-C0,H,179.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,36,Model nomenclature - verify source drawing
+B23E355H147-102-00,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,37,Model nomenclature - verify source drawing
+B23E355H147-102-00,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,37,Model nomenclature - verify source drawing
+B38E355H179-102-C0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,38,Model nomenclature - verify source drawing
+B38E355H179-102-C0,H,179.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,38,Model nomenclature - verify source drawing
+B38E355H152-138-00,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,39,Model nomenclature - verify source drawing
+B38E355H152-138-00,H,152.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,39,Model nomenclature - verify source drawing
+B23E400H182-102-C1,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,40,Model nomenclature - verify source drawing
+B23E400H182-102-C1,H,182.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,40,Model nomenclature - verify source drawing
+B23E400H181-102-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,41,Model nomenclature - verify source drawing
+B23E400H181-102-00,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,41,Model nomenclature - verify source drawing
+B23E400H182-102-C0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,42,Model nomenclature - verify source drawing
+B23E400H182-102-C0,H,182.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,42,Model nomenclature - verify source drawing
+B38E400H182-102-B0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,43,Model nomenclature - verify source drawing
+B38E400H182-102-B0,H,182.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,43,Model nomenclature - verify source drawing
+B38E400H181-138-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,44,Model nomenclature - verify source drawing
+B38E400H181-138-00,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,44,Model nomenclature - verify source drawing
+B38E400H245-188-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,45,Model nomenclature - verify source drawing
+B38E400H245-188-00,H,245.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,45,Model nomenclature - verify source drawing
+B38E400H245-188-01,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,46,Model nomenclature - verify source drawing
+B38E400H245-188-01,H,245.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,46,Model nomenclature - verify source drawing
+B38E450H206-138-00,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,47,Model nomenclature - verify source drawing
+B38E450H206-138-00,H,206.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,47,Model nomenclature - verify source drawing
+B38E520H225-188-00,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,48,Model nomenclature - verify source drawing
+B38E520H225-188-00,H,225.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,48,Model nomenclature - verify source drawing
+B38E520H225-188-01,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,49,Model nomenclature - verify source drawing
+B38E520H225-188-01,H,225.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,49,Model nomenclature - verify source drawing
+B38E520H225-188-02,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,50,Model nomenclature - verify source drawing
+B38E520H225-188-02,H,225.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,50,Model nomenclature - verify source drawing
+B38E560H258-188-00,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,51,Model nomenclature - verify source drawing
+B38E560H258-188-00,H,258.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,51,Model nomenclature - verify source drawing
+B38E560H258-188-01,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,52,Model nomenclature - verify source drawing
+B38E560H258-188-01,H,258.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,52,Model nomenclature - verify source drawing
+B38E560H311-188-00,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,53,Model nomenclature - verify source drawing
+B38E560H311-188-00,H,311.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,53,Model nomenclature - verify source drawing
+B38E630H293-188-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,54,Model nomenclature - verify source drawing
+B38E630H293-188-00,H,293.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,54,Model nomenclature - verify source drawing
+B38E630H293-188-01,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,55,Model nomenclature - verify source drawing
+B38E630H293-188-01,H,293.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,55,Model nomenclature - verify source drawing
+B23A133H54-72-00,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,57,Model nomenclature - verify source drawing
+B23A133H54-72-00,H,54.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,57,Model nomenclature - verify source drawing
+B23A155H75-92-A0,D2,155.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,58,Model nomenclature - verify source drawing
+B23A155H75-92-A0,H,75.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,58,Model nomenclature - verify source drawing
+B23A175H62-72-00,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,59,Model nomenclature - verify source drawing
+B23A175H62-72-00,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,59,Model nomenclature - verify source drawing
+B23A175H62-72-01,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,60,Model nomenclature - verify source drawing
+B23A175H62-72-01,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,60,Model nomenclature - verify source drawing
+B23A175H63-72-A0,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,61,Model nomenclature - verify source drawing
+B23A175H63-72-A0,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,61,Model nomenclature - verify source drawing
+B23A175H63-72-A1,D2,175.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,62,Model nomenclature - verify source drawing
+B23A175H63-72-A1,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,62,Model nomenclature - verify source drawing
+B23A180H49-92-A0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,63,Model nomenclature - verify source drawing
+B23A180H49-92-A0,H,49.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,63,Model nomenclature - verify source drawing
+B23A180H49-92-A1,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,64,Model nomenclature - verify source drawing
+B23A180H49-92-A1,H,49.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,64,Model nomenclature - verify source drawing
+B23A190H63-72-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,65,Model nomenclature - verify source drawing
+B23A190H63-72-00,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,65,Model nomenclature - verify source drawing
+B23A190H63-92-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,66,Model nomenclature - verify source drawing
+B23A190H63-92-00,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,66,Model nomenclature - verify source drawing
+B23A190H62-92-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,67,Model nomenclature - verify source drawing
+B23A190H62-92-00,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,67,Model nomenclature - verify source drawing
+B23A190H63-92-A0,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,68,Model nomenclature - verify source drawing
+B23A190H63-92-A0,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,68,Model nomenclature - verify source drawing
+B23A190H63-92-A1,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,69,Model nomenclature - verify source drawing
+B23A190H63-92-A1,H,63.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,69,Model nomenclature - verify source drawing
+B23A220H64-92-00,D2,220.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,70,Model nomenclature - verify source drawing
+B23A220H64-92-00,H,64.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,70,Model nomenclature - verify source drawing
+B23A220H64-92-A1,D2,220.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,71,Model nomenclature - verify source drawing
+B23A220H64-92-A1,H,64.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,71,Model nomenclature - verify source drawing
+B23A225H89-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,72,Model nomenclature - verify source drawing
+B23A225H89-92-00,H,89.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,72,Model nomenclature - verify source drawing
+B23A225H90-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,73,Model nomenclature - verify source drawing
+B23A225H90-92-00,H,90.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,73,Model nomenclature - verify source drawing
+B23A225H89-92-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,74,Model nomenclature - verify source drawing
+B23A225H89-92-A0,H,89.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,74,Model nomenclature - verify source drawing
+B38A225H89-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,75,Model nomenclature - verify source drawing
+B38A225H89-92-00,H,89.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,75,Model nomenclature - verify source drawing
+B23A225H89-92-A1,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,76,Model nomenclature - verify source drawing
+B23A225H89-92-A1,H,89.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,76,Model nomenclature - verify source drawing
+B23A250H85-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,77,Model nomenclature - verify source drawing
+B23A250H85-92-00,H,85.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,77,Model nomenclature - verify source drawing
+B38A250H85-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,78,Model nomenclature - verify source drawing
+B38A250H85-92-00,H,85.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,78,Model nomenclature - verify source drawing
+B23A250H77-92-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,79,Model nomenclature - verify source drawing
+B23A250H77-92-A0,H,77.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,79,Model nomenclature - verify source drawing
+B38A250H77-92-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,80,Model nomenclature - verify source drawing
+B38A250H77-92-A0,H,77.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,80,Model nomenclature - verify source drawing
+B23A250H77-92-A1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,81,Model nomenclature - verify source drawing
+B23A250H77-92-A1,H,77.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,81,Model nomenclature - verify source drawing
+B23A250H84-92-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,82,Model nomenclature - verify source drawing
+B23A250H84-92-A0,H,84.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,82,Model nomenclature - verify source drawing
+B23A250H100-92-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,83,Model nomenclature - verify source drawing
+B23A250H100-92-A0,H,100.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,83,Model nomenclature - verify source drawing
+B38A250H100-92-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,83,Model nomenclature - verify source drawing
+B38A250H100-92-A0,H,100.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,83,Model nomenclature - verify source drawing
+B23A280H81-92-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,84,Model nomenclature - verify source drawing
+B23A280H81-92-00,H,81.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,84,Model nomenclature - verify source drawing
+B23A280H71-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,85,Model nomenclature - verify source drawing
+B23A280H71-92-A0,H,71.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,85,Model nomenclature - verify source drawing
+B38A280H71-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,85,Model nomenclature - verify source drawing
+B38A280H71-92-A0,H,71.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,85,Model nomenclature - verify source drawing
+B23A280H81-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,86,Model nomenclature - verify source drawing
+B23A280H81-92-A0,H,81.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,86,Model nomenclature - verify source drawing
+B38A280H81-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,86,Model nomenclature - verify source drawing
+B38A280H81-92-A0,H,81.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,86,Model nomenclature - verify source drawing
+B23A280H92-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,87,Model nomenclature - verify source drawing
+B23A280H92-92-A0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,87,Model nomenclature - verify source drawing
+B38A280H92-92-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,87,Model nomenclature - verify source drawing
+B38A280H92-92-A0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,87,Model nomenclature - verify source drawing
+B38A280H115-102-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,88,Model nomenclature - verify source drawing
+B38A280H115-102-A0,H,115.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,88,Model nomenclature - verify source drawing
+B38A280H135-102-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,89,Model nomenclature - verify source drawing
+B38A280H135-102-A0,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,89,Model nomenclature - verify source drawing
+B23A320H134-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,90,Model nomenclature - verify source drawing
+B23A320H134-102-00,H,134.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,90,Model nomenclature - verify source drawing
+B24A320H137-102-00,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,91,Model nomenclature - verify source drawing
+B24A320H137-102-00,H,137.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,91,Model nomenclature - verify source drawing
+B24A320H137-102-01,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,92,Model nomenclature - verify source drawing
+B24A320H137-102-01,H,137.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,92,Model nomenclature - verify source drawing
+B23A320H87-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,93,Model nomenclature - verify source drawing
+B23A320H87-102-A0,H,87.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,93,Model nomenclature - verify source drawing
+B23A320H107-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,94,Model nomenclature - verify source drawing
+B23A320H107-102-A0,H,107.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,94,Model nomenclature - verify source drawing
+B23A320H135-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,95,Model nomenclature - verify source drawing
+B23A320H135-102-A0,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,95,Model nomenclature - verify source drawing
+B23A320H135-102-A1,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,96,Model nomenclature - verify source drawing
+B23A320H135-102-A1,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,96,Model nomenclature - verify source drawing
+B38A320H135-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,97,Model nomenclature - verify source drawing
+B38A320H135-102-A0,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,97,Model nomenclature - verify source drawing
+B23A320H135-102-A2,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,98,Model nomenclature - verify source drawing
+B23A320H135-102-A2,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,98,Model nomenclature - verify source drawing
+B23A320H146-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,99,Model nomenclature - verify source drawing
+B23A320H146-102-A0,H,146.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,99,Model nomenclature - verify source drawing
+B38A320H146-102-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,100,Model nomenclature - verify source drawing
+B38A320H146-102-A0,H,146.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,100,Model nomenclature - verify source drawing
+B38A320H105-137-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,101,Model nomenclature - verify source drawing
+B38A320H105-137-A0,H,105.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,101,Model nomenclature - verify source drawing
+B38A320H118-137-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,102,Model nomenclature - verify source drawing
+B38A320H118-137-A0,H,118.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,102,Model nomenclature - verify source drawing
+B38A320H146-137-A0,D2,320.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,103,Model nomenclature - verify source drawing
+B38A320H146-137-A0,H,146.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,103,Model nomenclature - verify source drawing
+B38A355H119-102-00,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,104,Model nomenclature - verify source drawing
+B38A355H119-102-00,H,119.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,104,Model nomenclature - verify source drawing
+B23A355H145-102-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,105,Model nomenclature - verify source drawing
+B23A355H145-102-A0,H,145.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,105,Model nomenclature - verify source drawing
+B23A355H145-102-A1,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,106,Model nomenclature - verify source drawing
+B23A355H145-102-A1,H,145.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,106,Model nomenclature - verify source drawing
+B38A355H145-102-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,107,Model nomenclature - verify source drawing
+B38A355H145-102-A0,H,145.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,107,Model nomenclature - verify source drawing
+B23A355H147-102-00,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,108,Model nomenclature - verify source drawing
+B23A355H147-102-00,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,108,Model nomenclature - verify source drawing
+B38A355H147-102-00,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,109,Model nomenclature - verify source drawing
+B38A355H147-102-00,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,109,Model nomenclature - verify source drawing
+B23A355H102-138-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,110,Model nomenclature - verify source drawing
+B23A355H102-138-A0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,110,Model nomenclature - verify source drawing
+B38A355H132-137-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,111,Model nomenclature - verify source drawing
+B38A355H132-137-A0,H,132.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,111,Model nomenclature - verify source drawing
+B23A355H164-137-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,112,Model nomenclature - verify source drawing
+B23A355H164-137-A0,H,164.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,112,Model nomenclature - verify source drawing
+B38A355H164-137-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,113,Model nomenclature - verify source drawing
+B38A355H164-137-A0,H,164.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,113,Model nomenclature - verify source drawing
+B38A355H164-137-A1,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,114,Model nomenclature - verify source drawing
+B38A355H164-137-A1,H,164.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,114,Model nomenclature - verify source drawing
+B23A355H169-137-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,115,Model nomenclature - verify source drawing
+B23A355H169-137-A0,H,169.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,115,Model nomenclature - verify source drawing
+B38A355H169-137-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,116,Model nomenclature - verify source drawing
+B38A355H169-137-A0,H,169.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,116,Model nomenclature - verify source drawing
+B23A400H147-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,117,Model nomenclature - verify source drawing
+B23A400H147-137-A0,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,117,Model nomenclature - verify source drawing
+B23A400H147-137-A1,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,118,Model nomenclature - verify source drawing
+B23A400H147-137-A1,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,118,Model nomenclature - verify source drawing
+B38A400H147-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,119,Model nomenclature - verify source drawing
+B38A400H147-137-A0,H,147.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,119,Model nomenclature - verify source drawing
+B38A400H170-138-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,120,Model nomenclature - verify source drawing
+B38A400H170-138-A0,H,170.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,120,Model nomenclature - verify source drawing
+B23A400H181-138-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,121,Model nomenclature - verify source drawing
+B23A400H181-138-00,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,121,Model nomenclature - verify source drawing
+B38A400H181-138-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,122,Model nomenclature - verify source drawing
+B38A400H181-138-00,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,122,Model nomenclature - verify source drawing
+B23A400H185-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,123,Model nomenclature - verify source drawing
+B23A400H185-137-A0,H,185.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,123,Model nomenclature - verify source drawing
+B38A400H185-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,123,Model nomenclature - verify source drawing
+B38A400H185-137-A0,H,185.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,123,Model nomenclature - verify source drawing
+B23A400H188-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,124,Model nomenclature - verify source drawing
+B23A400H188-137-A0,H,188.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,124,Model nomenclature - verify source drawing
+B38A400H188-137-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,124,Model nomenclature - verify source drawing
+B38A400H188-137-A0,H,188.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,124,Model nomenclature - verify source drawing
+B38A450H151-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,125,Model nomenclature - verify source drawing
+B38A450H151-138-A0,H,151.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,125,Model nomenclature - verify source drawing
+B23A450H181-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,126,Model nomenclature - verify source drawing
+B23A450H181-138-A0,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,126,Model nomenclature - verify source drawing
+B38A450H181-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,126,Model nomenclature - verify source drawing
+B38A450H181-138-A0,H,181.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,126,Model nomenclature - verify source drawing
+B38A450H206-138-00,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,127,Model nomenclature - verify source drawing
+B38A450H206-138-00,H,206.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,127,Model nomenclature - verify source drawing
+B23A450H206-138-00,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,128,Model nomenclature - verify source drawing
+B23A450H206-138-00,H,206.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,128,Model nomenclature - verify source drawing
+B38A450H209-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,129,Model nomenclature - verify source drawing
+B38A450H209-138-A0,H,209.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,129,Model nomenclature - verify source drawing
+B38A450H209-138-A1,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,130,Model nomenclature - verify source drawing
+B38A450H209-138-A1,H,209.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,130,Model nomenclature - verify source drawing
+B23A450H218-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,131,Model nomenclature - verify source drawing
+B23A450H218-138-A0,H,218.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,131,Model nomenclature - verify source drawing
+B38A450H218-138-A0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,132,Model nomenclature - verify source drawing
+B38A450H218-138-A0,H,218.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,132,Model nomenclature - verify source drawing
+B38A520H159-137-A0,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,133,Model nomenclature - verify source drawing
+B38A520H159-137-A0,H,159.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,133,Model nomenclature - verify source drawing
+B38A520H202-180-00,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,134,Model nomenclature - verify source drawing
+B38A520H202-180-00,H,202.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,134,Model nomenclature - verify source drawing
+B38A520H225-180-00,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,135,Model nomenclature - verify source drawing
+B38A520H225-180-00,H,225.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,135,Model nomenclature - verify source drawing
+B38A520H234-180-A0,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,136,Model nomenclature - verify source drawing
+B38A520H234-180-A0,H,234.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,136,Model nomenclature - verify source drawing
+B38A520H254-180-A0,D2,520.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,137,Model nomenclature - verify source drawing
+B38A520H254-180-A0,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,137,Model nomenclature - verify source drawing
+B38A560H198-180-A0,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,138,Model nomenclature - verify source drawing
+B38A560H198-180-A0,H,198.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,138,Model nomenclature - verify source drawing
+B38A560H220-180-A0,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,139,Model nomenclature - verify source drawing
+B38A560H220-180-A0,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,139,Model nomenclature - verify source drawing
+B38A560H220-180-A1,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,139,Model nomenclature - verify source drawing
+B38A560H220-180-A1,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,139,Model nomenclature - verify source drawing
+B38A560H243-180-A0,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,140,Model nomenclature - verify source drawing
+B38A560H243-180-A0,H,243.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,140,Model nomenclature - verify source drawing
+B38A560H243-180-A1,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,140,Model nomenclature - verify source drawing
+B38A560H243-180-A1,H,243.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,140,Model nomenclature - verify source drawing
+B38A560H256-180-00,D2,560.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,141,Model nomenclature - verify source drawing
+B38A560H256-180-00,H,256.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,141,Model nomenclature - verify source drawing
+B38A630H293-180-A0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,142,Model nomenclature - verify source drawing
+B38A630H293-180-A0,H,293.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,142,Model nomenclature - verify source drawing
+B38A630H293-180-A1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,142,Model nomenclature - verify source drawing
+B38A630H293-180-A1,H,293.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,142,Model nomenclature - verify source drawing
+F23E108H51-72-B0,D2,108.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,144,Model nomenclature - verify source drawing
+F23E108H51-72-B0,H,51.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,144,Model nomenclature - verify source drawing
+F23E120H61-72-B0,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,145,Model nomenclature - verify source drawing
+F23E120H61-72-B0,H,61.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,145,Model nomenclature - verify source drawing
+F23E133H46-72-B0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,146,Model nomenclature - verify source drawing
+F23E133H46-72-B0,H,46.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,146,Model nomenclature - verify source drawing
+F23E140H59-92-B0,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,147,Model nomenclature - verify source drawing
+F23E140H59-92-B0,H,59.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,147,Model nomenclature - verify source drawing
+F23E160H62-92-B0,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,148,Model nomenclature - verify source drawing
+F23E160H62-92-B0,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,148,Model nomenclature - verify source drawing
+F23E180H92-92-B0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,149,Model nomenclature - verify source drawing
+F23E180H92-92-B0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,149,Model nomenclature - verify source drawing
+F23A180H92-102-B0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,150,Model nomenclature - verify source drawing
+F23A180H92-102-B0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,150,Model nomenclature - verify source drawing
+F23E200H83-92-B0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,151,Model nomenclature - verify source drawing
+F23E200H83-92-B0,H,83.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,151,Model nomenclature - verify source drawing
+F23E200H102-102-B0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,152,Model nomenclature - verify source drawing
+F23E200H102-102-B0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,152,Model nomenclature - verify source drawing
+F23E225H100-102-B0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,153,Model nomenclature - verify source drawing
+F23E225H100-102-B0,H,100.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,153,Model nomenclature - verify source drawing
+F23A120H61-92-A0,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,155,Model nomenclature - verify source drawing
+F23A120H61-92-A0,H,61.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,155,Model nomenclature - verify source drawing
+F23A133H73-92-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,156,Model nomenclature - verify source drawing
+F23A133H73-92-A0,H,73.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,156,Model nomenclature - verify source drawing
+F23A140H60-92-A0,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,157,Model nomenclature - verify source drawing
+F23A140H60-92-A0,H,60.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,157,Model nomenclature - verify source drawing
+F23A140H60-92-A1,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,158,Model nomenclature - verify source drawing
+F23A140H60-92-A1,H,60.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,158,Model nomenclature - verify source drawing
+F23A150H70-92-A0,D2,150.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,159,Model nomenclature - verify source drawing
+F23A150H70-92-A0,H,70.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,159,Model nomenclature - verify source drawing
+F23A160H62-92-A0,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,160,Model nomenclature - verify source drawing
+F23A160H62-92-A0,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,160,Model nomenclature - verify source drawing
+F23A160H62-92-A1,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,160,Model nomenclature - verify source drawing
+F23A160H62-92-A1,H,62.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,160,Model nomenclature - verify source drawing
+F23A180H92-102-A0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,161,Model nomenclature - verify source drawing
+F23A180H92-102-A0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,161,Model nomenclature - verify source drawing
+F23A200H52-92-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,162,Model nomenclature - verify source drawing
+F23A200H52-92-A0,H,52.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,162,Model nomenclature - verify source drawing
+F23A200H102-102-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,163,Model nomenclature - verify source drawing
+F23A200H102-102-A0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,163,Model nomenclature - verify source drawing
+F38A200H102-102-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,163,Model nomenclature - verify source drawing
+F38A200H102-102-A0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,163,Model nomenclature - verify source drawing
+F23A225H92-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,164,Model nomenclature - verify source drawing
+F23A225H92-137-A0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,164,Model nomenclature - verify source drawing
+F38A225H92-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,164,Model nomenclature - verify source drawing
+F38A225H92-137-A0,H,92.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,164,Model nomenclature - verify source drawing
+F23A250H102-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,165,Model nomenclature - verify source drawing
+F23A250H102-137-A0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,165,Model nomenclature - verify source drawing
+F38A250H102-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,165,Model nomenclature - verify source drawing
+F38A250H102-137-A0,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,165,Model nomenclature - verify source drawing
+F23A250H102-137-A1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,166,Model nomenclature - verify source drawing
+F23A250H102-137-A1,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,166,Model nomenclature - verify source drawing
+F38A250H102-137-A1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,166,Model nomenclature - verify source drawing
+F38A250H102-137-A1,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,166,Model nomenclature - verify source drawing
+F38A250H102-137-A2,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,167,Model nomenclature - verify source drawing
+F38A250H102-137-A2,H,102.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,167,Model nomenclature - verify source drawing
+F23A280H114-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,168,Model nomenclature - verify source drawing
+F23A280H114-137-A0,H,114.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,168,Model nomenclature - verify source drawing
+F38A280H114-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,168,Model nomenclature - verify source drawing
+F38A280H114-137-A0,H,114.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,168,Model nomenclature - verify source drawing
+F38A280H114-137-A1,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,169,Model nomenclature - verify source drawing
+F38A280H114-137-A1,H,114.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,169,Model nomenclature - verify source drawing
+FS23E120H115-72-A0,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,171,Model nomenclature - verify source drawing
+FS23E120H115-72-A0,H,115.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,171,Model nomenclature - verify source drawing
+FS23E120H115-72-A1,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,172,Model nomenclature - verify source drawing
+FS23E120H115-72-A1,H,115.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,172,Model nomenclature - verify source drawing
+FS23E133H116-72-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,173,Model nomenclature - verify source drawing
+FS23E133H116-72-A0,H,116.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,173,Model nomenclature - verify source drawing
+FS23E133H116-72-A1,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,174,Model nomenclature - verify source drawing
+FS23E133H116-72-A1,H,116.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,174,Model nomenclature - verify source drawing
+FS23E140H135-72-A0,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,175,Model nomenclature - verify source drawing
+FS23E140H135-72-A0,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,175,Model nomenclature - verify source drawing
+FS23E140H135-72-A1,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,176,Model nomenclature - verify source drawing
+FS23E140H135-72-A1,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,176,Model nomenclature - verify source drawing
+FS23E160H135-72-A0,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,177,Model nomenclature - verify source drawing
+FS23E160H135-72-A0,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,177,Model nomenclature - verify source drawing
+FS23E160H135-72-A1,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,178,Model nomenclature - verify source drawing
+FS23E160H135-72-A1,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,178,Model nomenclature - verify source drawing
+FS23E160H135-72-A2,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,179,Model nomenclature - verify source drawing
+FS23E160H135-72-A2,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,179,Model nomenclature - verify source drawing
+FS23E160H135-72-A3,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,180,Model nomenclature - verify source drawing
+FS23E160H135-72-A3,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,180,Model nomenclature - verify source drawing
+FS23E160H135-72-A4,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,181,Model nomenclature - verify source drawing
+FS23E160H135-72-A4,H,135.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,181,Model nomenclature - verify source drawing
+FS23E180H170-72-00,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,182,Model nomenclature - verify source drawing
+FS23E180H170-72-00,H,170.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,182,Model nomenclature - verify source drawing
+FS23E180H183-92-A0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,183,Model nomenclature - verify source drawing
+FS23E180H183-92-A0,H,183.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,183,Model nomenclature - verify source drawing
+FS23E200H196-92-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,184,Model nomenclature - verify source drawing
+FS23E200H196-92-A0,H,196.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,184,Model nomenclature - verify source drawing
+FS23E225H202-102-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,185,Model nomenclature - verify source drawing
+FS23E225H202-102-A0,H,202.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,185,Model nomenclature - verify source drawing
+FS23E250H222-102-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,186,Model nomenclature - verify source drawing
+FS23E250H222-102-A0,H,222.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,186,Model nomenclature - verify source drawing
+FS38E280H242-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,187,Model nomenclature - verify source drawing
+FS38E280H242-137-A0,H,242.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,187,Model nomenclature - verify source drawing
+FS23A120H115-72-00,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,189,Model nomenclature - verify source drawing
+FS23A120H115-72-00,H,115.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,189,Model nomenclature - verify source drawing
+FS23A120H119-72-01,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,190,Model nomenclature - verify source drawing
+FS23A120H119-72-01,H,119.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,190,Model nomenclature - verify source drawing
+FS23A120H119-72-02,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,190,Model nomenclature - verify source drawing
+FS23A120H119-72-02,H,119.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,190,Model nomenclature - verify source drawing
+FS23A140H115-92-00,D2,140.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,191,Model nomenclature - verify source drawing
+FS23A140H115-92-00,H,115.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,191,Model nomenclature - verify source drawing
+FS38A160H130-92-00,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,192,Model nomenclature - verify source drawing
+FS38A160H130-92-00,H,130.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,192,Model nomenclature - verify source drawing
+FS23A160H130-92-00,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,193,Model nomenclature - verify source drawing
+FS23A160H130-92-00,H,130.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,193,Model nomenclature - verify source drawing
+FS23A160H169-92-01,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,194,Model nomenclature - verify source drawing
+FS23A160H169-92-01,H,169.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,194,Model nomenclature - verify source drawing
+FS23A160H169-92-02,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,195,Model nomenclature - verify source drawing
+FS23A160H169-92-02,H,169.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,195,Model nomenclature - verify source drawing
+FS23A180H169-92-00,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,196,Model nomenclature - verify source drawing
+FS23A180H169-92-00,H,169.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,196,Model nomenclature - verify source drawing
+FS23A225H202-102-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,197,Model nomenclature - verify source drawing
+FS23A225H202-102-A0,H,202.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,197,Model nomenclature - verify source drawing
+FS38A225H202-102-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,198,Model nomenclature - verify source drawing
+FS38A225H202-102-A0,H,202.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,198,Model nomenclature - verify source drawing
+FS38A250H222-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,199,Model nomenclature - verify source drawing
+FS38A250H222-137-A0,H,222.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,199,Model nomenclature - verify source drawing
+FS38A250H222-137-A1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,200,Model nomenclature - verify source drawing
+FS38A250H222-137-A1,H,222.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,200,Model nomenclature - verify source drawing
+FS23A280H172-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,201,Model nomenclature - verify source drawing
+FS23A280H172-137-A0,H,172.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,201,Model nomenclature - verify source drawing
+FS38A280H242-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,202,Model nomenclature - verify source drawing
+FS38A280H242-137-A0,H,242.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,202,Model nomenclature - verify source drawing
+FS38A315H262-188-A0,D2,315.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,203,Model nomenclature - verify source drawing
+FS38A315H262-188-A0,H,262.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,203,Model nomenclature - verify source drawing
+FD23E120H180-92-A0,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,205,Model nomenclature - verify source drawing
+FD23E120H180-92-A0,H,180.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,205,Model nomenclature - verify source drawing
+FD23E133H254-92-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,206,Model nomenclature - verify source drawing
+FD23E133H254-92-A0,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,206,Model nomenclature - verify source drawing
+FD23E133H254-92-A1,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,207,Model nomenclature - verify source drawing
+FD23E133H254-92-A1,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,207,Model nomenclature - verify source drawing
+FD23E146H309-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,208,Model nomenclature - verify source drawing
+FD23E146H309-92-A0,H,309.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,208,Model nomenclature - verify source drawing
+FD23E146H309-92-A1,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,209,Model nomenclature - verify source drawing
+FD23E146H309-92-A1,H,309.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,209,Model nomenclature - verify source drawing
+FD23E160H310-92-A0,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,210,Model nomenclature - verify source drawing
+FD23E160H310-92-A0,H,310.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,210,Model nomenclature - verify source drawing
+FD23E160H310-92-A1,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,211,Model nomenclature - verify source drawing
+FD23E160H310-92-A1,H,310.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,211,Model nomenclature - verify source drawing
+FD23E180H270-102-A0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,212,Model nomenclature - verify source drawing
+FD23E180H270-102-A0,H,270.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,212,Model nomenclature - verify source drawing
+FD23E200H265-102-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,213,Model nomenclature - verify source drawing
+FD23E200H265-102-A0,H,265.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,213,Model nomenclature - verify source drawing
+FD23E225H298-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,214,Model nomenclature - verify source drawing
+FD23E225H298-137-A0,H,298.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,214,Model nomenclature - verify source drawing
+FD38E225H290-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,215,Model nomenclature - verify source drawing
+FD38E225H290-137-A0,H,290.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,215,Model nomenclature - verify source drawing
+FD23E250H317-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,216,Model nomenclature - verify source drawing
+FD23E250H317-137-A0,H,317.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,216,Model nomenclature - verify source drawing
+FD38E250H17-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,217,Model nomenclature - verify source drawing
+FD38E250H17-137-A0,H,17.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,217,Model nomenclature - verify source drawing
+FD23E280H340-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,218,Model nomenclature - verify source drawing
+FD23E280H340-137-A0,H,340.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,218,Model nomenclature - verify source drawing
+FD38E280H340-137-A0,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,219,Model nomenclature - verify source drawing
+FD38E280H340-137-A0,H,340.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,219,Model nomenclature - verify source drawing
+FD38E315H450-188-A0,D2,315.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,220,Model nomenclature - verify source drawing
+FD38E315H450-188-A0,H,450.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,220,Model nomenclature - verify source drawing
+FD38E355H431-188-A0,D2,355.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,221,Model nomenclature - verify source drawing
+FD38E355H431-188-A0,H,431.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,221,Model nomenclature - verify source drawing
+FD38E400H516-188-A0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,222,Model nomenclature - verify source drawing
+FD38E400H516-188-A0,H,516.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,222,Model nomenclature - verify source drawing
+FD23A120H175-92-A0,D2,120.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,224,Model nomenclature - verify source drawing
+FD23A120H175-92-A0,H,175.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,224,Model nomenclature - verify source drawing
+FD23A133H190-92-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,225,Model nomenclature - verify source drawing
+FD23A133H190-92-A0,H,190.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,225,Model nomenclature - verify source drawing
+FD23A133H254-92-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,226,Model nomenclature - verify source drawing
+FD23A133H254-92-A0,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,226,Model nomenclature - verify source drawing
+FD23A133H254-92-A1,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,226,Model nomenclature - verify source drawing
+FD23A133H254-92-A1,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,226,Model nomenclature - verify source drawing
+FD23A133H254-92-A2,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,227,Model nomenclature - verify source drawing
+FD23A133H254-92-A2,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,227,Model nomenclature - verify source drawing
+FD23A133H309-92-A0,D2,133.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,228,Model nomenclature - verify source drawing
+FD23A133H309-92-A0,H,309.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,228,Model nomenclature - verify source drawing
+FD23A146H230-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,229,Model nomenclature - verify source drawing
+FD23A146H230-92-A0,H,230.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,229,Model nomenclature - verify source drawing
+FD23A146H220-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,230,Model nomenclature - verify source drawing
+FD23A146H220-92-A0,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,230,Model nomenclature - verify source drawing
+FD23A146H220-92-A1,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,231,Model nomenclature - verify source drawing
+FD23A146H220-92-A1,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,231,Model nomenclature - verify source drawing
+FD23A146H220-92-A2,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,232,Model nomenclature - verify source drawing
+FD23A146H220-92-A2,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,232,Model nomenclature - verify source drawing
+FD23A146H220-92-A3,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,233,Model nomenclature - verify source drawing
+FD23A146H220-92-A3,H,220.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,233,Model nomenclature - verify source drawing
+FD23A146H168-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,234,Model nomenclature - verify source drawing
+FD23A146H168-92-A0,H,168.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,234,Model nomenclature - verify source drawing
+FD23A146H309-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,235,Model nomenclature - verify source drawing
+FD23A146H309-92-A0,H,309.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,235,Model nomenclature - verify source drawing
+FD23A146H309-92-A1,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,235,Model nomenclature - verify source drawing
+FD23A146H309-92-A1,H,309.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,235,Model nomenclature - verify source drawing
+FD23A146H254-92-A0,D2,146.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,236,Model nomenclature - verify source drawing
+FD23A146H254-92-A0,H,254.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,236,Model nomenclature - verify source drawing
+FD23A160H310-92-A0,D2,160.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,237,Model nomenclature - verify source drawing
+FD23A160H310-92-A0,H,310.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,237,Model nomenclature - verify source drawing
+FD23A180H270-92-A0,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,238,Model nomenclature - verify source drawing
+FD23A180H270-92-A0,H,270.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,238,Model nomenclature - verify source drawing
+FD23A180H270-92-A1,D2,180.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,239,Model nomenclature - verify source drawing
+FD23A180H270-92-A1,H,270.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,239,Model nomenclature - verify source drawing
+FD23A200H230-102-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,240,Model nomenclature - verify source drawing
+FD23A200H230-102-A0,H,230.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,240,Model nomenclature - verify source drawing
+FD23A200H301-137-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,241,Model nomenclature - verify source drawing
+FD23A200H301-137-A0,H,301.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,241,Model nomenclature - verify source drawing
+FD38A200H301-137-A0,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,241,Model nomenclature - verify source drawing
+FD38A200H301-137-A0,H,301.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,241,Model nomenclature - verify source drawing
+FD23A200H301-137-A1,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,242,Model nomenclature - verify source drawing
+FD23A200H301-137-A1,H,301.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,242,Model nomenclature - verify source drawing
+FD23A225H304-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,243,Model nomenclature - verify source drawing
+FD23A225H304-137-A0,H,304.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,243,Model nomenclature - verify source drawing
+FD38A225H304-137-A0,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,243,Model nomenclature - verify source drawing
+FD38A225H304-137-A0,H,304.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,243,Model nomenclature - verify source drawing
+FD23A225H304-137-A1,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,244,Model nomenclature - verify source drawing
+FD23A225H304-137-A1,H,304.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,244,Model nomenclature - verify source drawing
+FD23A250H344-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,245,Model nomenclature - verify source drawing
+FD23A250H344-137-A0,H,344.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,245,Model nomenclature - verify source drawing
+FD38A250H344-137-A0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,245,Model nomenclature - verify source drawing
+FD38A250H344-137-A0,H,344.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,245,Model nomenclature - verify source drawing
+FD23A250H344-137-A1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,246,Model nomenclature - verify source drawing
+FD23A250H344-137-A1,H,344.0,,,Impeller height H decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,246,Model nomenclature - verify source drawing
+G23E250S-72-C0,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,248,Model nomenclature - verify source drawing
+G23E250S-92-C1,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,249,Model nomenclature - verify source drawing
+G23E300S-92-C0,D2,300.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,250,Model nomenclature - verify source drawing
+G23E350S-92-C0,D2,350.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,251,Model nomenclature - verify source drawing
+G23E350S-102-C1,D2,350.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,252,Model nomenclature - verify source drawing
+G23E400S-102-C0,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,253,Model nomenclature - verify source drawing
+G23E450S-102-C0,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,254,Model nomenclature - verify source drawing
+G23E500S-102-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,255,Model nomenclature - verify source drawing
+G23E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,256,Model nomenclature - verify source drawing
+G23E500S-137-C1,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,257,Model nomenclature - verify source drawing
+G38E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,258,Model nomenclature - verify source drawing
+S23E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,259,Model nomenclature - verify source drawing
+S23E500S-137-C1,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,260,Model nomenclature - verify source drawing
+S38E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,261,Model nomenclature - verify source drawing
+R23E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,262,Model nomenclature - verify source drawing
+R23E500S-137-C1,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,263,Model nomenclature - verify source drawing
+R38E500S-137-C0,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,264,Model nomenclature - verify source drawing
+G23E550S-102-C0,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,265,Model nomenclature - verify source drawing
+G23E550S-102-C1,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,266,Model nomenclature - verify source drawing
+G38E550S-137-C2,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,267,Model nomenclature - verify source drawing
+S23E550S-102-C0,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,268,Model nomenclature - verify source drawing
+S23E550S-102-C1,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,269,Model nomenclature - verify source drawing
+S38E550S-137-C0,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,270,Model nomenclature - verify source drawing
+G23E630S-102-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,271,Model nomenclature - verify source drawing
+G23E630S-102-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,272,Model nomenclature - verify source drawing
+G23E630S-102-C2,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,273,Model nomenclature - verify source drawing
+G23E630S-137-C2,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,274,Model nomenclature - verify source drawing
+G38E630S-137-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,275,Model nomenclature - verify source drawing
+S23E630S-102-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,276,Model nomenclature - verify source drawing
+S23E630S-102-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,277,Model nomenclature - verify source drawing
+S23E630S-102-C2,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,278,Model nomenclature - verify source drawing
+S38E630S-137-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,279,Model nomenclature - verify source drawing
+S38E630S-137-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,280,Model nomenclature - verify source drawing
+S38E630S-188-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,281,Model nomenclature - verify source drawing
+S38E630S-188-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,282,Model nomenclature - verify source drawing
+R23E630S-102-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,283,Model nomenclature - verify source drawing
+R23E630S-102-C1,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,284,Model nomenclature - verify source drawing
+R38E630S-137-C0,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,285,Model nomenclature - verify source drawing
+S23E710S-137-C0,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,286,Model nomenclature - verify source drawing
+S23E710S-137-C1,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,287,Model nomenclature - verify source drawing
+S38E710S-137-C0,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,288,Model nomenclature - verify source drawing
+S38E710S-188-C0,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,289,Model nomenclature - verify source drawing
+S38E710S-188-C1,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,290,Model nomenclature - verify source drawing
+S23E800S-137-C0,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,291,Model nomenclature - verify source drawing
+S38E800S-137-C0,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,292,Model nomenclature - verify source drawing
+S38E800S-188-C0,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,293,Model nomenclature - verify source drawing
+S38E800S-225-01,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,294,Model nomenclature - verify source drawing
+S38E800S-225-02,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,295,Model nomenclature - verify source drawing
+S38E800S-225-03,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,296,Model nomenclature - verify source drawing
+R38E800S-188-C0,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,297,Model nomenclature - verify source drawing
+S38E850S-225-00,D2,850.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,298,Model nomenclature - verify source drawing
+S23E900S-137-C0,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,299,Model nomenclature - verify source drawing
+S23E900S-137-C1,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,300,Model nomenclature - verify source drawing
+S38E900S-137-C1,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,301,Model nomenclature - verify source drawing
+S38E900S-188-C0,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,302,Model nomenclature - verify source drawing
+S38E900S-188-C1,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,303,Model nomenclature - verify source drawing
+S38E900S-188-C2,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,304,Model nomenclature - verify source drawing
+S38E900S-188-C3,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,305,Model nomenclature - verify source drawing
+S38E900S-188-C4,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,306,Model nomenclature - verify source drawing
+S38E900S-225-00,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,307,Model nomenclature - verify source drawing
+S38E900S-225-01,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,308,Model nomenclature - verify source drawing
+S23A200S-72-00,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,310,Model nomenclature - verify source drawing
+S23A200S-72-01,D2,200.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,311,Model nomenclature - verify source drawing
+R40A250S-72-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,312,Model nomenclature - verify source drawing
+R23A250S-72-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,312,Model nomenclature - verify source drawing
+A23A290S-72-00,D2,290.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,313,Model nomenclature - verify source drawing
+R40A300S-92-00,D2,300.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,314,Model nomenclature - verify source drawing
+R23A300S-92-00,D2,300.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,314,Model nomenclature - verify source drawing
+G40A350S-92-00,D2,350.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,315,Model nomenclature - verify source drawing
+G23A350S-92-00,D2,350.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,315,Model nomenclature - verify source drawing
+G23A400S-102-00,D2,400.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,316,Model nomenclature - verify source drawing
+G38A450S-102-00,D2,450.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,317,Model nomenclature - verify source drawing
+G40A500S-102-00,D2,500.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,318,Model nomenclature - verify source drawing
+G40A550S-138-00,D2,550.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,319,Model nomenclature - verify source drawing
+S23A630S-155-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,320,Model nomenclature - verify source drawing
+G23A630S-155-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,321,Model nomenclature - verify source drawing
+S38A630S-155-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,322,Model nomenclature - verify source drawing
+G38A630S-155-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,323,Model nomenclature - verify source drawing
+G38A630S-188-00,D2,630.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,324,Model nomenclature - verify source drawing
+S38A710S-155-00,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,325,Model nomenclature - verify source drawing
+G38A710S-155-00,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,326,Model nomenclature - verify source drawing
+S38A710S-155-01,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,327,Model nomenclature - verify source drawing
+G38A710S-155-01,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,328,Model nomenclature - verify source drawing
+S38A710S-180-01,D2,710.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,329,Model nomenclature - verify source drawing
+S38A800S-225-00,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,330,Model nomenclature - verify source drawing
+G38A800S-225-00,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,331,Model nomenclature - verify source drawing
+G38A800S-225-01,D2,800.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,332,Model nomenclature - verify source drawing
+S38A900S-225-00,D2,900.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,333,Model nomenclature - verify source drawing
+D23E190D100-92-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,335,Model nomenclature - verify source drawing
+D23E220D125-92-00,D2,220.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,336,Model nomenclature - verify source drawing
+D23E225D150-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,337,Model nomenclature - verify source drawing
+D23E225D160-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,338,Model nomenclature - verify source drawing
+D23E250D200-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,339,Model nomenclature - verify source drawing
+D23E250D250-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,340,Model nomenclature - verify source drawing
+D23E280D315-92-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,341,Model nomenclature - verify source drawing
+D23A190D100-92-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,343,Model nomenclature - verify source drawing
+D23A190D100-92-01,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,343,Model nomenclature - verify source drawing
+D23A190D125-92-00,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,344,Model nomenclature - verify source drawing
+D23A190D125-92-01,D2,190.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,344,Model nomenclature - verify source drawing
+D23A225D150-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,345,Model nomenclature - verify source drawing
+D23A225D150-92-01,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,345,Model nomenclature - verify source drawing
+D23A225D160-92-00,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,346,Model nomenclature - verify source drawing
+D23A225D160-92-01,D2,225.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,346,Model nomenclature - verify source drawing
+D23A250D200-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,347,Model nomenclature - verify source drawing
+D23A250D200-92-01,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,347,Model nomenclature - verify source drawing
+D23A250D250-92-00,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,348,Model nomenclature - verify source drawing
+D23A250D250-92-01,D2,250.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,348,Model nomenclature - verify source drawing
+D23A280D315-92-00,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,349,Model nomenclature - verify source drawing
+D23A280D315-92-01,D2,280.0,,,Nominal impeller/fan diameter decoded from Airtek V.2024 model nomenclature,Airtek Power Catalog (AC _ EC).pdf,349,Model nomenclature - verify source drawing

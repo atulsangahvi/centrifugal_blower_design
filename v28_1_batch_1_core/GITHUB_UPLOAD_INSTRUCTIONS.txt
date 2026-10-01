@@ -1,0 +1,32 @@
+GitHub browser upload instructions - v28.1
+
+WHY THE PREVIOUS COMMIT FAILED
+------------------------------
+The v28 project had 101 individual files.
+GitHub officially allows at most 100 files to be uploaded at the same time
+through the browser. The largest v28 file was only about 17.18 MiB, so the
+failure was not caused by an individual >25 MiB file.
+
+THIS RELEASE
+------------
+Project file count: calculated during packaging and kept below 100.
+Largest individual file: kept below 25 MiB.
+Airtek catalogue: one original 350-page PDF (17.88 MiB).
+
+RECOMMENDED METHOD
+------------------
+Safest browser method: use the four provided upload batch ZIPs in order.
+
+For each batch:
+1. Download and unzip the batch on your computer.
+2. Open your GitHub repository.
+3. Choose Add file -> Upload files.
+4. Drag the CONTENTS of the unzipped batch into the upload page.
+5. Wait until every file finishes uploading.
+6. Commit that batch.
+7. Repeat with the next batch.
+
+Do not upload any of the ZIP files themselves into the repository.
+
+Main Streamlit entry file:
+app.py
